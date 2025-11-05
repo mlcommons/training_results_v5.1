@@ -1,0 +1,13 @@
+diff --git a/nemo/collections/llm/modelopt/speculative/model_transform.py b/nemo/collections/llm/modelopt/speculative/model_transform.py
+index 9a165d8d8..b8383b8f6 100644
+--- a/nemo/collections/llm/modelopt/speculative/model_transform.py
++++ b/nemo/collections/llm/modelopt/speculative/model_transform.py
+@@ -27,7 +27,7 @@ try:
+         "eagle3": mtsp.EAGLE3_DEFAULT_CFG,
+         # more TBD
+     }
+-except UnavailableError:
++except:
+     ALGORITHMS = {}
+ 
+ 

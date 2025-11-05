@@ -1,0 +1,324 @@
+#!/bin/bash
+#SBATCH --job-name=llm-1n
+#SBATCH --nodes=1
+#SBATCH --gres=gpu:b200:8
+#SBATCH --ntasks-per-node=8
+#SBATCH --cpus-per-task=14
+#SBATCH --mem=0
+#SBATCH --time=36:00:00
+#SBATCH --exclusive
+#SBATCH --output=./logs/log_1n8g_%j.out
+#SBATCH --error=./logs/log_1n8g_%j.err
+
+module load apptainer
+
+set -euxo pipefail
+
+# ---- Paths
+export CONT=./llama31_8b-amd.sif
+export DATADIR=./llama3-1-8b
+export LOGDIR=$PWD/results
+export MLPERF_SUBMITTER="University of Florida"
+export MLPERF_SYSTEM_NAME="HiPerGator NVIDIA DGX B200"
+
+# ---- Useful defaults
+export NCCL_NET_MERGE_LEVEL=LOC
+export PYTHONNOUSERSITE=1
+export DEBUG_IN_CWD=1
+
+export TRITON_LIBCUDA_PATH=/usr/local/cuda/compat/lib/libcuda.so.1
+export LD_LIBRARY_PATH=/usr/local/cuda/compat/lib:${LD_LIBRARY_PATH}
+
+echo "PROLOG_START $(date +%s)"
+
+source config_DGXB200_1x8x2xtp1pp1cp1_8b.sh
+
+############################
+# Required env
+############################
+: "${CONT:?CONT not set}"
+: "${DGXSYSTEM:?DGXSYSTEM not set}"
+: "${WALLTIME:?WALLTIME not set}"
+: "${WALLTIME_RUNANDTIME:?WALLTIME_RUNANDTIME not set}"
+
+############################
+# Defaults (unchanged)
+############################
+: "${MLPERF_RULESET:=5.1.0}"
+: "${MLPERF_SYSTEM_NAME:=unknown}"
+: "${MLPERF_SCALE:=unknown}"
+: "${MLPERF_CLUSTER_NAME:=unknown}"
+: "${MILESTONE_YML:=unknown}"
+: "${NEXP:=1}"
+: "${FORCE_SUCCESS_STATUS:=0}"
+: "${CHECK_COMPLIANCE:=$(( ! ${FORCE_SUCCESS_STATUS:-0} ))}"
+: "${SEED_BASE:=${SEED-$RANDOM}}"
+: "${SHARE_RERUNS:=0}"
+: "${CLEAR_CACHES:=1}"
+: "${DATESTAMP:=$(date +'%y%m%d%H%M%S%N')}"
+: "${LOGDIR:=./results}"
+: "${POWERLOGDIR:=' '}"
+: "${POWERCMDDIR:=' '}"
+: "${NSYSCMD:=}"
+: "${NVTX_FLAG:=0}"
+: "${TIME_TAGS:=0}"
+: "${NCCL_TEST:=0}"
+: "${NCCL_TEST_WALLTIME:=10}"
+: "${NCCL_LLM_TEST:=0}"
+: "${NCCL_LLM_TEST_WALLTIME:=10}"
+: "${NCCL_TEST_SHARP:=}"
+: "${COMM_GEMM_OVERLAP_TEST:=0}"
+: "${COMM_GEMM_OVERLAP_TEST_CLEANUP:=1}"
+: "${RUN_ONLY_NCCL:=0}"
+: "${RUN_ONLY_COMM_GEMM_OVLP:=0}"
+: "${USE_SYNTHETIC_DATA:=0}"
+: "${EPOCH_PROF:=0}"
+: "${WORK_DIR:=/workspace/llm}"
+: "${DGXNGPU:=8}"
+: "${STORE_CKPTS_IN_LOGDIR:=1}"
+: "${CHECKPOINTS_DIR:=}"
+: "${GLOBAL_TMP_NPY_INDEX_DIR:=$LOGDIR}"
+: "${GLOBAL_TMP_CHECKPOINTS_DIR:=}"
+: "${SRUN_KILL_ON_BAD_EXIT:=0}"
+: "${USER_DROPCACHE:=}"
+: "${HANG_MONITOR_TIMEOUT:=$([[ "$WALLTIME" -ge 60 ]] && echo 7 || echo 0)}"
+: "${ATTEMPT_CUDA_GDB_CORE_DUMP:=1}"
+: "${POSTPROCESS_CUDA_GDB_CORE_DUMP:=1}"
+: "${REMOVE_CUDA_GDB_CORE_DUMP:=1}"
+: "${EXTRA_ASSETS:=}"
+: "${SET_MAXQ_CLK:=0}"
+: "${SET_MINEDP_CLK:=0}"
+: "${POWER_CAP:=0}"
+: "${VBOOST_VALUE:=0}"
+: "${MEM_MONITOR:=0}"
+: "${EXTRA_MOUNTS:=}"
+: "${MASTER_PORT:=29500}"
+export MASTER_PORT
+
+############################
+# Networking: prefer IB/RDMA (no forced sockets)
+############################
+export NCCL_DEBUG=${NCCL_DEBUG:-INFO}
+unset NCCL_IB_DISABLE; export NCCL_IB_DISABLE=0
+export NCCL_NET=${NCCL_NET:-IB}
+unset NCCL_IGNORE_PLUGIN_FILES
+unset NCCL_SOCKET_IFNAME
+export NCCL_IB_HCA=${NCCL_IB_HCA:-"mlx5_"}   # typical on IB nodes
+# keep async error handling
+export NCCL_ASYNC_ERROR_HANDLING=${NCCL_ASYNC_ERROR_HANDLING:-1}
+# neutralize UCX/OpenMPI knobs unless you rely on them explicitly
+unset UCX_TLS UCX_ERROR_SIGNALS UCX_WARN_UNUSED_ENV_VARS OMPI_MCA_pml OMPI_MCA_btl
+export PYTORCH_CUDA_ALLOC_CONF=${PYTORCH_CUDA_ALLOC_CONF:-expandable_segments:True}
+
+############################
+# Locate script dir
+############################
+if [[ "${SLURM_JOB_ID:-}" ]]; then
+  export RUNSUB_DIR="$(dirname "$(scontrol show job "${SLURM_JOB_ID}" | awk -F= '/Command=/{print $2}')")"
+else
+  export RUNSUB_DIR="$(dirname "${BASH_SOURCE[0]}")"
+fi
+
+############################
+# Hostfile
+############################
+mkdir -p "${LOGDIR}"
+export SORTED_HOSTFILE="$(realpath "$(mktemp "${LOGDIR}/hostfile.${SLURM_JOB_ID}.XXXX")")"
+scontrol show hostnames "$SLURM_JOB_NODELIST" | sort | awk '{ for (i=0; i<'${DGXNGPU}'; i++) print }' > "$SORTED_HOSTFILE"
+
+# Names
+export MODEL_NAME="llama31_${MODEL_SIZE:-8b}"
+export MODEL_FRAMEWORK="pytorch"
+LOGBASE="${DATESTAMP}"
+export SPREFIX="${MODEL_NAME}_${MODEL_FRAMEWORK}_${SLURM_JOB_NUM_NODES}x${DGXNGPU}_${DATESTAMP}"
+if (( SHARE_RERUNS )); then
+  export NEMO_RESULTS_SUBDIR='shared_logs'
+else
+  export NEMO_RESULTS_SUBDIR="${LOGBASE}"
+fi
+if (( TIME_TAGS )); then LOGBASE="${SPREFIX}_mllog"; fi
+if (( NVTX_FLAG )); then
+  if [[ "$LOGBASE" == *'-'* ]]; then LOGBASE="${LOGBASE}_nsys"; else LOGBASE="${SPREFIX}_nsys"; fi
+  export NSYS_PREFIX="/results/${MODEL_NAME}_${SLURM_JOB_NUM_NODES}x${DGXNGPU}_r"
+  export NSYS_SUFFIX=".nsys-rep"
+  export NSYS_WORLD_SIZE=$((SLURM_JOB_NUM_NODES * DGXNGPU))
+fi
+if (( USE_SYNTHETIC_DATA )); then
+  if [[ "$LOGBASE" == *'-'* ]]; then LOGBASE="${LOGBASE}_synth"; else LOGBASE="${SPREFIX}_synth"; fi
+fi
+if (( EPOCH_PROF )); then
+  if [[ "$LOGBASE" == *'-'* ]]; then LOGBASE="${LOGBASE}_epoch"; else LOGBASE="${SPREFIX}_epoch"; fi
+fi
+readonly LOG_FILE_BASE="${LOGDIR}/${LOGBASE}"
+
+############################
+# NPY index dir & cleanup (fixed)
+############################
+: "${NPY_INDEX_DIR:=${GLOBAL_TMP_NPY_INDEX_DIR}/${DATESTAMP}_npy_index}"
+: "${CLEANUP_NPY_INDEX_DIR:=1}"
+cleanup_npy_index_dir(){ (( CLEANUP_NPY_INDEX_DIR )) && rm -rf "${NPY_INDEX_DIR}"; }
+cleanup_all(){ cleanup_npy_index_dir; [[ -f "${SORTED_HOSTFILE:-}" ]] && rm -f "${SORTED_HOSTFILE}"; }
+trap cleanup_all TERM EXIT
+
+############################
+# Mounts
+############################
+source "${RUNSUB_DIR}/config_mounts.sh"
+BIND_STR="${_cont_mounts}"
+if [[ -n "${EXTRA_MOUNTS}" ]]; then
+  BIND_STR="${BIND_STR},${EXTRA_MOUNTS}"
+fi
+
+# Make /workspace/llm/nemo_experiments writable
+NX_EXP_HOST_DIR="$(realpath "${LOGDIR}")/nemo_experiments"
+mkdir -p "${NX_EXP_HOST_DIR}"
+BIND_STR="${BIND_STR},${NX_EXP_HOST_DIR}:/workspace/llm/nemo_experiments:rw"
+
+############################################
+# Mount checks (singleton)
+############################################
+if [[ "${INIT_EXPECTED_MOUNTS:-0}" -eq 1 ]]; then
+    srun -N1 -n1 \
+        apptainer exec --nv ${BIND_STR:+-B "${BIND_STR}"} "${CONT}" \
+        python3 -m mlperf_common.mountcheck \
+            --expected_mounts_csv "${LOGDIR}/${SPREFIX}_expected-mounts-${MODEL_SIZE}.csv" \
+            --mounts_to_verify $mounts_to_verify --initialize
+fi
+
+if [[ "${VERIFY_MOUNTS:-1}" -eq 1 ]]; then
+    (
+        srun --ntasks-per-node=1 \
+            apptainer exec --nv ${BIND_STR:+-B "${BIND_STR}"} "${CONT}" \
+            python3 -m mlperf_common.mountcheck \
+                --expected_mounts_csv "expected-mounts-${MODEL_SIZE}.csv" \
+                --mounts_to_verify $mounts_to_verify
+    ) |& tee "${LOGDIR}/${SPREFIX}_mountcheck.log"
+fi
+
+############################
+# Host OS string (fixed: /bin/bash)
+############################
+MLPERF_HOST_OS=$(srun -N1 -n1 /bin/bash <<'EOF'
+set -e
+source /etc/os-release || true
+source /etc/dgx-release || true
+echo "${PRETTY_NAME} / ${DGX_PRETTY_NAME:-???} ${DGX_OTA_VERSION:-${DGX_SWBUILD_VERSION:-???}}"
+EOF
+)
+export MLPERF_HOST_OS
+
+############################
+# Master addr
+############################
+export MASTER_ADDR="$(head -n1 "${SORTED_HOSTFILE}")"
+echo "using MASTER_ADDR \"${MASTER_ADDR}\" of list \"${SLURM_JOB_NODELIST}\""
+
+############################
+# Show data layout (optional)
+############################
+echo "SLOW_DATADIR=${SLOW_DATADIR:-}"
+echo "DATADIR=${DATADIR:-}"
+echo "MODEL_SIZE=${MODEL_SIZE:-}"
+find "${DATADIR:-/}" -maxdepth 2 -type f -print0 | LC_ALL=C sort -z | xargs -0 stat --format='%n %s %A %y' || true
+
+############################
+# Container/host sanity (fixed: /bin/bash)
+############################
+srun -N1 -n1 nvidia-smi --query-gpu=gpu_name,gpu_bus_id,vbios_version --format=csv || true
+srun -l -N1 -n1 /bin/bash -lc "nvidia-smi -q | grep Fabric -A 4 | (grep CliqueId || true)" || true
+
+############################
+# Hang monitor (unchanged)
+############################
+if [[ "${HANG_MONITOR_TIMEOUT:-0}" -gt 0 ]]; then
+  if [[ -f "${RUNSUB_DIR}/scripts/tracebacks/hang_monitor.sh" ]]; then
+    export CUDA_ENABLE_LIGHTWEIGHT_COREDUMP=1
+    export CUDA_ENABLE_USER_TRIGGERED_COREDUMP=1
+    export CUDA_COREDUMP_PIPE_DIR="/workspace/cuda-gdb-pipes/${DATESTAMP}"
+    export CUDA_COREDUMP_BASEDIR="/results/coredumps/${DATESTAMP}"
+    export CUDA_COREDUMP_HOSTDIR="${LOGDIR}/coredumps/${DATESTAMP}"
+    export CUDA_COREDUMP_PIPE="${CUDA_COREDUMP_PIPE_DIR}/corepipe.cuda.%h.%p"
+    export CUDA_COREDUMP_FILE="${CUDA_COREDUMP_BASEDIR}/core_%h_%p.nvcudmp"
+    mkdir -p "${CUDA_COREDUMP_HOSTDIR}"
+    # shellcheck disable=SC1090
+    source "${RUNSUB_DIR}/scripts/tracebacks/hang_monitor.sh"
+    ( TRACEBACKS_ID=$DATESTAMP hang_monitor &> "${LOGDIR}/${SPREFIX}_hang_monitor.log" ) &  # background
+    hang_monitor_pid=$!
+  else
+    echo "[warn] hang_monitor.sh not found; skipping hang monitor."
+    hang_monitor_pid=
+  fi
+else
+  hang_monitor_pid=
+fi
+
+env > "${LOGDIR}/${SPREFIX}_env.log"
+echo "PROLOG_STOP $(date +%s)"
+
+############################
+# Experiment loop
+############################
+# Minimal experiment loop (no helpers, no extras)
+for _experiment_index in $(seq -w 1 "${NEXP}"); do
+  (
+    echo "Beginning trial ${_experiment_index} of ${NEXP}"
+    echo ":::DLPAL ${CONT} ${SLURM_JOB_ID} ${SLURM_JOB_NUM_NODES} ${SLURM_JOB_NODELIST} ${MLPERF_CLUSTER_NAME} ${DGXSYSTEM}"
+    echo ":::SYSJSON $(srun_appt -N1 -n1 -- 'mlperf-sysjson.sh' | tail -n +1)"
+    srun -N1 -n1 -- mlperf-sysjson.sh || echo "[warn] sysjson failed"
+    srun -N1 -n1 /bin/bash -lc 'echo ":::GITCOMMITID ${GIT_COMMIT_ID:-NA} ${LAUNCHER_GIT_COMMIT_ID:-NA}"'
+   
+
+    export SEED=$(( SEED_BASE - 1 + 10#$_experiment_index ))
+
+    # User-space cache eviction (optional)
+    had_clear=false
+    if [[ "${CLEAR_CACHES}" -eq 1 ]]; then
+      if command -v vmtouch >/dev/null 2>&1; then
+        TARGET_PATH="${DATADIR:-/data}"
+        srun -N1 -n1 /bin/bash -lc "vmtouch -ev \"${TARGET_PATH}\" || true"
+        had_clear=true
+      else
+        echo "[cache_clear] vmtouch not found; skipping user-space eviction."
+      fi
+    fi
+    if [[ "${had_clear}" == true ]]; then
+      srun -N1 -n1 apptainer exec --nv "$CONT" \
+        python -c "from mlperf_common.callbacks import mllogger as M; M.event(key=M.constants.CACHE_CLEAR, value=True)"
+    else
+      srun -N1 -n1 apptainer exec --nv "$CONT" \
+        python -c "from mlperf_common.callbacks import mllogger as M; M.event(key=M.constants.CACHE_CLEAR, value=False)"
+    fi
+
+    # === Run workload ===
+    set +e
+    echo "RUNANDTIME_START $(date +%s)"
+    SLURM_HOSTFILE="${SORTED_HOSTFILE}" \
+    NV_MLPERF_DEBUG=1 \
+    srun -l \
+      --mpi="${SLURM_MPI_TYPE:-pmix}" \
+      --ntasks-per-node="${DGXNGPU}" \
+      --gpus-per-node="${DGXNGPU}" \
+      --gpu-bind=none \
+      --distribution=arbitrary \
+      --time="${WALLTIME_RUNANDTIME}" \
+      apptainer exec --nv ${BIND_STR:+-B "${BIND_STR}"} --pwd "${WORK_DIR}" \
+        --env MASTER_ADDR="${MASTER_ADDR}" --env MASTER_PORT="${MASTER_PORT}" \
+        "${CONT}" /bin/bash -lc 'slurm2pytorch ./run_and_time.sh'
+    echo "RUNANDTIME_STOP $(date +%s)"
+    set -e
+  ) |& tee "${LOG_FILE_BASE}_${_experiment_index}.log"
+  
+  if (( CHECK_COMPLIANCE )); then
+    srun apptainer exec --nv \
+      -B "$(realpath "${LOGDIR}"):/results" \
+      --pwd /results \
+      "${CONT}" \
+      python3 -m mlperf_logging.compliance_checker --usage training \
+        --ruleset "${MLPERF_RULESET}" \
+        --log_output "/results/compliance_${DATESTAMP}.out" \
+        "/results/${LOGBASE}_${_experiment_index}.log" || true
+    EXTRA_ASSETS="${EXTRA_ASSETS} --asset /results/compliance_${DATESTAMP}.out"
+  fi
+
+  echo "EXPERIMENT_STOP $(date +%s) [${_experiment_index}/${NEXP}]"
+done

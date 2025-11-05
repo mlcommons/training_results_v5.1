@@ -1,0 +1,22 @@
+[
+    {
+        "name": "/data",
+        "subdirs": [
+            {
+                "path": "/data",
+                "elements": 4,
+                "dir_size": 3895132320
+            }
+        ]
+    },
+    {
+        "name": "/data_val",
+        "subdirs": [
+            {
+                "path": "/data_val",
+                "elements": 1,
+                "dir_size": 79388080
+            }
+        ]
+    }
+]

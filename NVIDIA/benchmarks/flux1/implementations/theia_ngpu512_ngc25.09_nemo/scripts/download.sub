@@ -1,0 +1,96 @@
+#!/bin/bash
+
+# Copyright (c) 2024-2025, NVIDIA CORPORATION. All rights reserved.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+#SBATCH --exclusive
+#SBATCH --mem=0
+
+: "${CONT:?CONT not set}"
+: "${DATADIR:?DATADIR not set}"
+
+DOWNLOAD=0
+PROCESS=0
+CLEANUP=0
+
+while [[ $# -gt 0 ]]; do
+    case $1 in
+        --download)
+            DOWNLOAD=1
+            shift
+            ;;
+        --preprocess)
+            PROCESS=1
+            shift
+            ;;
+        --cleanup)
+            CLEANUP=1
+            shift
+            ;;
+        *)
+            echo "Unknown flag, possible switches are --download, --preprocess, and --cleanup"
+            exit 1
+            ;;
+    esac
+done
+
+
+
+CMD_DOWNLOAD=$(cat <<EOF
+pip install datasets # install hf_datasets
+
+# download dataset and empty encodings
+cd /dataset
+bash <(curl -s https://raw.githubusercontent.com/mlcommons/r2-downloader/refs/heads/main/mlc-r2-downloader.sh) https://training.mlcommons-storage.org/metadata/flux-1-cc12m-preprocessed.uri
+bash <(curl -s https://raw.githubusercontent.com/mlcommons/r2-downloader/refs/heads/main/mlc-r2-downloader.sh) https://training.mlcommons-storage.org/metadata/flux-1-coco-preprocessed.uri
+bash <(curl -s https://raw.githubusercontent.com/mlcommons/r2-downloader/refs/heads/main/mlc-r2-downloader.sh) https://training.mlcommons-storage.org/metadata/flux-1-empty-encodings.uri
+EOF
+)
+
+CMD_PREPROCESS=$(cat <<EOF
+# convert to webdataset format
+mkdir energon
+python /workspace/flux/scripts/to_webdataset.py --input_path /dataset/cc12m_preprocessed --output_path /dataset/energon/train --num_workers 8
+python /workspace/flux/scripts/to_webdataset.py --input_path /dataset/coco_preprocessed --output_path /dataset/energon/val --num_workers 8
+
+# prepare energon metadata
+cd energon
+python /workspace/flux/scripts/energon_prepare.py ./ --num-workers 8 --template-dir /workspace/flux/scripts/dataset_template/
+
+# copy over empty_encodings
+cp -r ../empty_encodings .
+EOF
+)
+
+CMD_CLEANUP=$(cat <<EOF
+rm -r /dataset/cc12m_preprocessed
+rm -r /dataset/coco_preprocessed
+EOF
+)
+
+CMD=""
+if [[ $DOWNLOAD -eq 1 ]]; then
+    CMD="${CMD} ${CMD_DOWNLOAD}"
+fi
+
+if [[ $PROCESS -eq 1 ]]; then
+    CMD="${CMD} ${CMD_PREPROCESS}"
+fi
+
+if [[ $CLEANUP -eq 1 ]]; then
+    CMD="${CMD} ${CMD_CLEANUP}"
+fi
+
+srun -N1 --container-image="${CONT}" --container-mounts="${DATADIR}:/dataset/" bash -x -c "$CMD"
+

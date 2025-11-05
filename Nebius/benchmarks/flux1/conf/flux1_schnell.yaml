@@ -1,0 +1,72 @@
+defaults:
+  - model: schnell
+  - data: cc12m
+  - plugins/fp8@plugins: ${oc.env:FP8_RECIPE,default}
+
+seed: ${oc.decode:${oc.env:SEED,2025}}
+target_accuracy: ${oc.decode:${oc.env:TARGET_ACCURACY,0.586}}
+
+trainer:
+  _target_: nemo.lightning.Trainer
+  _partial_: true
+  devices: ${oc.decode:${oc.env:DGXNGPU,1}}
+  num_nodes: ${oc.decode:${oc.env:DGXNNODES,1}}
+  accelerator: gpu
+  num_sanity_val_steps: 0
+  check_val_every_n_epoch: ${oc.decode:null}
+  val_check_interval: ${oc.decode:${oc.env:VAL_CHECK_INTERVAL}}
+  enable_checkpointing: False
+  max_steps: ${oc.decode:${oc.env:MAX_STEPS,-1}}
+  log_every_n_steps: ${oc.decode:${oc.env:LOG_EVERY_N_STEPS,10}}
+  enable_progress_bar: False
+
+optim:
+    _target_: nemo.lightning.MegatronOptimizerModule
+    _partial_: true
+    config:
+      lr: ${oc.decode:${oc.env:LEARNING_RATE,1e-4}}
+      adam_beta1: 0.9
+      adam_beta2: 0.95
+      adam_eps: 1e-8
+      use_distributed_optimizer: ${oc.decode:${oc.env:USE_DISTRIBUTED_OPTIMIZER,True}}
+      weight_decay: 0.1
+      clip_grad: 1.0
+
+    lr_scheduler:
+      _target_: nemo.lightning.lr_scheduler.WarmupHoldPolicyScheduler
+      warmup_steps: ${oc.decode:${oc.env:WARMUP_STEPS,0}}
+      hold_steps: ${oc.decode:${oc.env:HOLD_STEPS,10000000000000}} # hold lr constant
+
+strategy:
+    tensor_model_parallel_size: ${oc.decode:${oc.env:TP,1}}
+    pipeline_model_parallel_size: 1
+    context_parallel_size: 1
+    sequence_parallel: False
+    ddp:
+      _target_: megatron.core.distributed.DistributedDataParallelConfig
+      data_parallel_sharding_strategy: ${oc.env:SHARDING_STRATEGY,no_shard}
+      use_distributed_optimizer: ${oc.decode:${oc.env:USE_DISTRIBUTED_OPTIMIZER, True}}
+      check_for_nan_in_grad: False  # grad clipping covers it
+      grad_reduce_in_fp32: ${oc.decode:${oc.env:GRAD_REDUCE_IN_FP32,False}} # TODO: We might be able to remove this
+      overlap_param_gather: ${oc.decode:${oc.env:OVERLAP_PARAM_GATHER,True}}
+      overlap_grad_reduce: ${oc.decode:${oc.env:OVERLAP_GRAD_REDUCE,True}}
+      use_custom_fsdp: ${oc.decode:${oc.env:USE_CUSTOM_FSDP,False}}
+      bucket_size: ${oc.decode:${oc.env:BUCKET_SIZE,256000000}}
+      # Set this to however many nvlink_domains we span (in the worst case)
+      # ceil (DGXNNODES / SEGMENT)
+      num_distributed_optimizer_instances: ${ceil_div:${oc.decode:${oc.env:DGXNNODES}}, ${oc.decode:${oc.env:SEGMENT, 1}}}
+
+    fsdp: ${oc.env:FSDP,null}
+    use_te_rng_tracker: True
+
+plugins:
+  precision: ${oc.decode:${oc.env:PRECISION,bf16-mixed}}
+  grad_reduce_in_fp32: ${oc.decode:${oc.env:GRAD_REDUCE_IN_FP32,False}}
+
+warmup:
+  enabled: ${oc.decode:${oc.env:WARMUP_ENABLED,False}}
+  train_steps: ${oc.decode:${oc.env:WARMUP_TRAIN_STEPS,1}}
+  validation_steps: ${oc.decode:${oc.env:WARMUP_VALIDATION_STEPS,1}}
+  reset_fp8_stats_after_warmup: ${oc.decode:${oc.env:RESET_FP8_STATS_AFTER_WARMUP, True}}
+
+disable_print: ${oc.decode:${oc.env:DISABLE_PRINT,True}}

@@ -1,0 +1,161 @@
+## Running NVIDIA Large Language Model Llama 3.1 8B PyTorch MLPerf Benchmark
+
+This file contains the instructions for running the NVIDIA Large Language Model Llama 3.1 8B PyTorch MLPerf Benchmark on NVIDIA hardware.
+
+## 1. Hardware Requirements
+
+- At least 100GB disk space is required.
+- NVIDIA GPU with at least 80GB memory is strongly recommended.
+- GPUs are not required for dataset preparation.
+
+## 2. Software Requirements
+
+- Slurm with [Pyxis](https://github.com/NVIDIA/pyxis) and [Enroot](https://github.com/NVIDIA/enroot)
+- [Docker](https://www.docker.com/)
+
+## 3. Set up
+
+### 3.1 Build the container
+
+Replace `<docker/registry>` with your container registry and build:
+
+```bash
+docker build -t <docker/registry>/mlperf-nvidia:llama31_8b-pyt .
+```
+
+make sure that container is accessible on your Slurm system.
+
+### 3.2 Prepare dataset
+
+The dataset download/preprocessing scripts are included in the container. To invoke them, you need either a docker or slurm/enroot environment. 
+Please refer to the [instructions](https://github.com/mlcommons/training/tree/master/small_llm_pretraining/nemo#preprocessed-data-download) 
+from the reference to download the dataset and the tokenizer. After following the instructions, you should be able to 
+find the `llama3_1_8b_preprocessed_c4_dataset` and `llama3_1_8b_tokenizer` directories. Run the following commands to
+align the directories with the layout the benchmark expects:
+
+```bash
+bash cleanup_8b.sh
+mv llama3_1_8b_preprocessed_c4_dataset 8b
+mv llama3_1_8b_tokenizer 8b/tokenizer
+```
+
+or simply run the download/preprocessing slurm script:
+
+```bash
+export CONT="<docker/registry>/mlperf-nvidia:llama31_8b-pyt"
+export DATADIR="</path/to/dataset>/"
+
+sbatch -N1 -t 2:00:00 data_scripts/download_8b.sub
+```
+
+At the end, the directory structure should look like:
+
+```bash
+tree 8b/
+8b/
+|-- LICENSE.txt
+|-- NOTICE.txt
+|-- c4-train.en_6_text_document.bin
+|-- c4-train.en_6_text_document.idx
+|-- c4-validation-91205-samples.en_text_document.bin
+|-- c4-validation-91205-samples.en_text_document.idx
+|-- llama-3-1-8b-preprocessed-c4-dataset.md5
+`-- tokenizer
+    |-- LICENSE
+    |-- README.md
+    |-- USE_POLICY.md
+    |-- special_tokens_map.json
+    |-- tokenizer.json
+    `-- tokenizer_config.json
+```
+
+### 3.4 Model and checkpoint preparation
+
+#### 3.4.1 Publication/Attribution
+
+[Megatron](https://docs.nvidia.com/deeplearning/nemo/user-guide/docs/en/stable/nlp/nemo_megatron/intro.html) is a large, powerful transformer developed by the Applied Deep Learning Research team at NVIDIA. This repository uses [NeMo Megatron](https://github.com/NVIDIA/NeMo). NeMo Megatron GPT has been integrated with [NVIDIA Transformer Engine](https://github.com/NVIDIA/TransformerEngine). Transformer Engine enables FP8 training on NVIDIA Hopper GPUs.
+
+#### 3.4.2 List of Layers
+
+The model largely follows the paper titled [The Llama 3 Herd of Models](https://arxiv.org/abs/2407.21783).  
+
+#### 3.4.3 Model checkpoint
+
+The LLama3.1 8B is trained from scratch and is not using a checkpoint.
+
+## 4. Launch training
+
+For training, we use Slurm with the Pyxis extension, and Slurm's MPI support to run our container.
+
+Navigate to the directory where `run.sub` is stored.
+
+The launch command structure:
+```bash
+export DATADIR="<path/to/the/download/dir>"
+export LOGDIR=</path/to/output/dir>  # set the place where the output logs will be saved
+export CONT=<docker/registry>/mlperf-nvidia:llama31_8b-pyt
+source config_GB200_2x4x4xtp1pp1cp1_8b.sh  # select config and source it
+sbatch -N ${DGXNNODES} --time=${WALLTIME} run.sub  # you may be required to set --account and --partition here
+```
+
+Replace `path/to/the/download/dir` prefix with your existing downloaded path in Section 3. For example, if your download
+directory was `/home/user/data/c4`, then you should set:
+
+```bash
+export DATADIR="/home/user/data/c4"
+```
+
+All configuration files follow the format `config_<SYSTEM_NAME>_<NODES>x<GPUS/NODE>x<BATCH/GPU>xtpXppYcpZ.sh`, where X represents tensor parallel, Y represents pipeline parallel, and Z represents context parallel.
+
+# 5. Quality
+
+### Quality metric
+Log Perplexity
+
+### Quality target
+3.3
+
+### Evaluation frequency
+Evaluate after every 12,288 sequences (=100M tokens)
+
+### Evaluation thoroughness
+Evaluation on the validation subset that consists of 1024 sequences (=8.4M tokens).
+
+
+# 6. Additional notes
+
+### Config naming convention
+
+Configuration files follow the format `config_<SYSTEM_NAME>_<NODES>x<GPUS/NODE>x<BATCH/GPU>xtpXppYcpZ.sh`, where X represents tensor parallel (TP), Y represents pipeline parallel (PP), and Z represents context parallel (CP).
+
+Notice here that: 
+
+```
+MP = TP * PP * CP
+DP = WS // MP = (NNODES * GPUS_PER_NODE) / (TP * PP * CP)
+miniBS = GBS // DP
+```
+
+where: 
+```
+MP = model parallelism
+TP = tensor parallelism
+PP = pipeline parallelism
+DP = data parallelism
+WS = world size (number of nodes x number of gpus per node)
+GBS = global batch size
+```
+
+Note: changing `MICRO_BATCH_SIZE` doesn't affect GBS or any of the above parameters.
+Effectively it controls gradient accumulation (`GA = miniBS // microBS`).
+
+Recommendation on adjusting the knobs: 
+1. GBS should be divisible by `DP * VP`, where VP represents Virtual Pipelining, controlled by environment variable `INTERLEAVED_PIPELINE`. 
+2. Model's number of layers, controlled by `OVERWRITTEN_NUM_LAYERS` knob (with default 126), should be divisible by PP * VP. 
+   1. It's also recommended that, if you choose to adjust this knob, then you should export `LOAD_CHECKPOINT=""` to disable checkpoint loading, otherwise you will be loading a checkpoint with more layers to a model with fewer layers, which might cause issues. 
+
+
+### Seeds
+NeMo produces dataset index shuffling only on one process and holds the `SEED` value in the file name.
+Thus, all processes need to have the same value of `SEED` otherwise will not be able to read the data.
+The `SEED` environment variable can be set prior to launching the job, otherwise it is set in `run.sub`.

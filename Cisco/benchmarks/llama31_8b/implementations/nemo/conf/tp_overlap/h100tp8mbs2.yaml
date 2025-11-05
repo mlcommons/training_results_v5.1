@@ -1,0 +1,50 @@
+# UB communicator configurations
+# Model configs: H100/175B/TP8/MBS2/SeqLen2K/FP8
+
+qkv_dgrad:
+  method: bulk
+  num_sm: 8
+  cga_size: 2
+  set_sm_margin: 0
+
+qkv_wgrad:
+  method: bulk
+  num_sm: 16
+  cga_size: 2
+  set_sm_margin: 0
+
+fc1_dgrad:
+  method: bulk
+  num_sm: 4
+  cga_size: 2
+  set_sm_margin: 0
+
+fc1_wgrad:
+  method: bulk
+  num_sm: 16
+  cga_size: 2
+  set_sm_margin: 0
+
+qkv_fprop:
+  method: ring_exchange
+  aggregate: 0
+
+proj_dgrad:
+  method: ring_exchange
+  aggregate: 1
+
+fc1_fprop:
+  method: ring_exchange
+  aggregate: 0
+
+fc2_dgrad:
+  method: ring_exchange
+  aggregate: 0
+
+proj_fprop:
+  method: ring_exchange
+  aggregate: 0
+
+fc2_fprop:
+  method: ring_exchange
+  aggregate: 0

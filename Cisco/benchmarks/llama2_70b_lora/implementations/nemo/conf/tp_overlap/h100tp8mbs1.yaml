@@ -1,0 +1,61 @@
+# Copyright (c) 2024, NVIDIA CORPORATION.  All rights reserved.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+## TP8 MBS1
+
+## Allgather
+qkv_fprop:
+  method: ring_exchange
+  aggregate: 1
+
+fc1_fprop:
+  method: ring_exchange
+  aggregate: 0
+
+proj_dgrad:
+  method: ring_exchange
+  aggregate: 1
+
+fc2_dgrad:
+  method: ring_exchange
+  aggregate: 0
+
+## ReduceScatter
+proj_fprop:
+  method: pipeline
+  num_sm: 32
+  cga_size: 2
+  num_splits: 8
+  set_sm_margin: 1
+  atomic_gemm: 1
+
+fc2_fprop:
+  method: pipeline
+  num_sm: 32
+  cga_size: 2
+  num_splits: 8
+  set_sm_margin: 1
+  atomic_gemm: 1
+
+qkv_dgrad: # NEED TO TUNE, DGRAD-RS OVERLAP NOT ENABLED
+  method: bulk
+  num_sm: 16
+  cga_size: 2
+  set_sm_margin: 0
+
+fc1_dgrad: # NEED TO TUNE, DGRAD-RS OVERLAP NOT ENABLED
+  method: bulk
+  num_sm: 4
+  cga_size: 2
+  set_sm_margin: 0

@@ -1,0 +1,82 @@
+defaults:
+  - _self_
+  - optional tp_overlap@model.ub_tp_comm_overlap_cfg: ${oc.env:GPU_ARCH,b}100tp${oc.env:TP}mbs${oc.env:MBS}
+
+# skip_evals = floor(0.125 * model.global_batch_size + 2)
+skip_evals: ${oc.decode:${oc.env:SKIP_EVAL,${floor:${add:${multiply:0.125,${model.global_batch_size}},2}}}}
+load_ckpt: ${oc.decode:${oc.env:LOAD_CKPT,False}}
+data_root: ${oc.decode:${oc.env:DATA_ROOT,/data}}
+ckpt_root: ${oc.decode:${oc.env:CKPT_ROOT,/ckpt}}
+
+trainer:
+  devices: ${oc.decode:${oc.env:DGXNGPU,8}}
+  num_nodes: ${oc.decode:${oc.env:DGXNNODES,1}}
+  max_steps: ${oc.decode:${oc.env:MAX_STEPS,null}} # consumed_samples = global_step * micro_batch_size * data_parallel_size * accumulate_grad_batches
+  # val_check_interval = floor((skip_evals + 1) * VAL_CHECK_INTERVAL / global_batch_size)
+  val_check_interval: ${floor_div:${multiply:${add:${skip_evals},1},${oc.decode:${oc.env:VAL_CHECK_INTERVAL,384}}},${model.global_batch_size}}
+  limit_val_batches: ${oc.decode:${oc.env:LIMIT_VAL_BATCHES,1.0}}
+model:
+  num_layers: ${oc.decode:${oc.env:OVERWRITTEN_NUM_LAYERS,80}}
+  seed: ${oc.decode:${oc.env:SEED,1}}
+  tensor_model_parallel_size: ${oc.decode:${oc.env:TP,1}}
+  pipeline_model_parallel_size: ${oc.decode:${oc.env:PP,1}}
+  context_parallel_size: ${oc.decode:${oc.env:CP,1}}
+  eval_cp: ${oc.decode:${oc.env:CP_EVAL,null}}
+  global_batch_size: ${floor_div:${multiply:${oc.decode:${oc.env:MINIBS,1}},${floor_div:${multiply:${trainer.devices},${trainer.num_nodes}},${multiply:${model.tensor_model_parallel_size},${model.pipeline_model_parallel_size}}}},${oc.decode:${oc.env:CP,1}}}
+  micro_batch_size: ${oc.decode:${oc.env:MBS,1}}
+  val_micro_batch_size: ${oc.decode:${oc.env:VAL_MBS,null}}
+  val_global_batch_size: ${floor_div:${multiply:${oc.decode:${oc.env:VAL_MBS,1}},${floor_div:${multiply:${trainer.devices},${trainer.num_nodes}},${multiply:${model.tensor_model_parallel_size},${model.pipeline_model_parallel_size}}}},${oc.decode:${oc.env:CP_EVAL,${oc.env:CP,1}}}}
+  max_position_embeddings: ${oc.decode:${oc.env:MAX_SEQLEN,8192}}
+  encoder_seq_length: ${oc.decode:${oc.env:MAX_SEQLEN,8192}}
+  sequence_parallel: ${oc.decode:${oc.env:SP,False}}
+  ub_tp_comm_overlap: ${oc.decode:${oc.env:TP_COMM_OVERLAP,False}}
+
+  ## Transformer Engine
+  fp8: ${oc.decode:${oc.env:FP8,True}}
+  fp8_params: ${oc.decode:${oc.env:FP8,True}}
+  fp8_hybrid: ${oc.decode:${oc.env:FP8_HYBRID,True}} # sets fp8_format = recipe.Format.HYBRID
+  fp8_amax_history_len: ${oc.decode:${oc.env:FP8_AMAX_HISTORY,128}} # Number of steps for which amax history is recorded per tensor
+  fp8_amax_compute_algo: ${oc.env:FP8_AMAX_ALGO,most_recent} # 'most_recent' or 'max'. Algorithm for computing amax from history
+  reduce_amax: ${oc.decode:${oc.env:FP8_REDUCE_AMAX,False}} # Perform reduction to sync amax tensors across GPUs after every iteration
+  fp8_e4m3: ${oc.decode:${oc.env:FP8_E4M3,False}}
+  fp8_interval: ${oc.decode:${oc.env:FP8_INTERVAL,1}}
+  fp8_margin: ${oc.decode:${oc.env:FP8_MARGIN,0}}
+  fp8_dot_product_attention: ${oc.decode:${oc.env:FP8_DPA,0}}
+  cp_comm_type: ${oc.decode:${oc.env:CP_COMM_TYPE,'a2a'}}
+  activation_func_fp8_input_store: ${oc.decode:${oc.env:FP8_ACT,0}}
+
+  external_cuda_graph: ${oc.decode:${oc.env:LAYER_CUDA_GRAPH,False}}
+  enable_cuda_graph: ${oc.decode:${oc.env:MCORE_CUDA_GRAPH,False}}
+  use_te_rng_tracker: ${oc.decode:${oc.env:USE_TE_RNG_TRACKER,True}}
+  enable_cg_fp8_weight_caching: ${oc.decode:${oc.env:CG_WEIGHT_CACHING,True}}
+
+  cpu_offloading: ${oc.decode:${oc.env:CPU_OFFLOADING,False}}
+  cpu_offloading_num_layers: ${oc.decode:${oc.env:CPU_OFFLOADING_NUM_LAYERS,20}}
+  cpu_offloading_activations: True
+  cpu_offloading_weights: False
+
+  memory_profile:
+    enabled: ${oc.decode:${oc.env:MEMORY_PROFILE,False}}
+    start_step: 1
+    end_step: 4
+    rank: 0
+    output_path: "/results/"
+
+  custom:
+    warmup: ${oc.decode:${oc.env:WARMUP,False}}
+    warmup_train_steps: ${oc.decode:${oc.env:WARMUP_TRAIN_STEPS,5}}
+    warmup_validation_steps: ${oc.decode:${oc.env:WARMUP_VALIDATION_STEPS,5}}
+    reset_fp8_stats_after_warmup: ${oc.decode:${oc.env:RESET_FP8_STATS_AFTER_WARMUP,1}}
+
+optim:
+  lr: ${oc.decode:${oc.env:LR,0.0004}}
+  use_distributed_optimizer: ${oc.decode:${oc.env:USE_DISTRIBUTED_OPTIMIZER,True}}
+  overlap_param_gather_with_optimizer_step: ${oc.decode:${oc.env:OVERLAP_PARAM_GATHER_WITH_OPTIMIZER_STEP,False}}
+  sched:
+    warmup_steps: ${oc.decode:${oc.env:WARMUP_STEPS,0}}
+
+ddp:
+  overlap_grad_reduce: ${oc.decode:${oc.env:DDP_OVERLAP_GRAD_REDUCE,False}}
+  overlap_param_gather: ${oc.decode:${oc.env:DDP_OVERLAP_PARAM_GATHER,False}}
+  fp8_param_gather: ${oc.decode:${oc.env:DDP_FP8_PARAM_GATHER,False}}
+  average_in_collective: ${oc.decode:${oc.env:DDP_AVERAGE_IN_COLLECTIVE,False}}

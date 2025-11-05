@@ -1,0 +1,3 @@
+git+https://github.com/mlcommons/logging.git@5.0.0-rc2
+git+https://github.com/NVIDIA/mlperf-common.git@09933674798d1029f7a123332004ca19e82f26ca
+git+https://github.com/NVIDIA/NeMo-Run.git@cd132d7d383283fb94c617b4d6d92b8bf8bc8875

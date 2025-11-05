@@ -1,0 +1,114 @@
+# Copyright (c) 2025, NVIDIA CORPORATION.  All rights reserved.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+ARG FROM_IMAGE_NAME=nvcr.io/nvidia/pytorch:25.09-py3
+FROM ${FROM_IMAGE_NAME}
+
+WORKDIR /workspace/flux
+COPY requirements.txt .
+
+ARG GIT_COMMIT_ID
+ENV GIT_COMMIT_ID=$GIT_COMMIT_ID
+
+RUN git config --global user.name "a" && \
+    git config --global user.email "a"
+
+ENV PIP_CONSTRAINT=""
+
+RUN NVARCH=$(uname -m |grep x86_64 2>/dev/null || echo sbsa) && \
+    curl -fsSL https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2404/${NVARCH}/3bf863cc.pub > /etc/apt/trusted.gpg.d/cuda.asc && \
+    echo "deb https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2404/${NVARCH} /" > /etc/apt/sources.list.d/cuda.list && \
+    apt-get update && apt-get install -y libcudnn9-cuda-13=9.13.1.26-1 && rm -rf /var/lib/apt/lists/*
+ENV CUDNN_VERSION=9.13.1.26
+RUN pip install nvidia-mathdx==25.1.1
+
+# Install build dependencies for rapidyaml
+RUN apt-get update && apt-get install -y \
+    build-essential \
+    cmake \
+    git \
+    ninja-build \
+    g++ \
+    swig \
+    && rm -rf /var/lib/apt/lists/*
+
+ARG NEMO_REVISION=25.09-alpha.rc1
+RUN if [ "${NEMO_REVISION}" != SKIP ]; then \
+    git clone https://github.com/NVIDIA/NeMo.git /workspace/NeMo && \
+    cd /workspace/NeMo && \
+    git checkout ${NEMO_REVISION} && \
+    echo NEMO_COMMIT_HASH=$(git rev-parse HEAD) && \
+    echo $(git rev-parse HEAD) > /NEMO_COMMIT_HASH.env && \
+    pip install -e ".[multimodal]" && \
+    pip install git+https://github.com/NVIDIA-NeMo/Run.git \
+    ; fi
+
+ARG MCORE_REVISION=25.09-alpha.rc1
+RUN if [ "${MCORE_REVISION}" != SKIP ]; then \
+    pip uninstall -y megatron-core && \
+    git clone https://github.com/NVIDIA/Megatron-LM.git /workspace/Megatron-LM && \
+    cd /workspace/Megatron-LM && \
+    git checkout ${MCORE_REVISION} && \
+    echo MCORE_COMMIT_HASH=$(git rev-parse HEAD) && \
+    echo $(git rev-parse HEAD) > /MCORE_COMMIT_HASH.env && \
+    pip install . && \
+    cd megatron/core/datasets && \
+    make \
+    ; fi
+ENV PYTHONPATH "${PYTHONPATH}:/opt/Megatron-LM"
+
+ARG TE_REVISION=release_v2.8
+ENV CUSTOM_TE_REVISION ${TE_REVISION}
+RUN if [ "${TE_REVISION}" != SKIP ]; then \
+    git clone https://github.com/NVIDIA/TransformerEngine.git /workspace/transformerengine && \
+    cd /workspace/transformerengine && \
+    git checkout ${TE_REVISION} && \
+    echo TE_COMMIT_HASH=$(git rev-parse HEAD) && \
+    echo $(git rev-parse HEAD) > /TE_COMMIT_HASH.env && \
+    git submodule init && git submodule update && \
+    git -C 3rdparty/cudnn-frontend checkout 80a8e4af4d89d33a2c59d51fcf9fda1c9d368cd4 && \
+    git -C 3rdparty/googletest checkout f8d7d77c06936315286eb55f8de22cd23c188571 && \
+    git -C 3rdparty/cutlass checkout 57e3cfb47a2d9e0d46eb6335c3dc411498efa198 && \
+    NVTE_CUDA_ARCHS="100" NVTE_BUILD_ACTIVATION_WITH_FAST_MATH=1 NVTE_UB_WITH_MPI=1 NVTE_FRAMEWORK=pytorch NVTE_WITH_USERBUFFERS=1 MPI_HOME=/usr/local/mpi pip install --no-build-isolation . \
+    ; fi
+
+# Install NCCL v2.28.3-1:
+ARG NCCL_REVISION=v2.28.3-1
+RUN export DEBIAN_FRONTEND=noninteractive &&        \
+    apt-get update &&                               \
+    apt-get remove -y libnccl2 &&                   \
+    git clone https://github.com/NVIDIA/nccl.git && \
+    cd nccl &&                                      \
+    echo "NCCL_REVISION=${NCCL_REVISION}" &&      \
+    git checkout "${NCCL_REVISION}" &&             \
+    make -j24 install
+ENV NCCL_VERSION "${NCCL_REVISION}"
+
+
+RUN pip uninstall -y megatron-energon
+
+RUN pip install build wheel setuptools \
+    setuptools_scm cmake-build-extension && \
+    git clone --branch v0.9.0 --recursive https://github.com/biojppm/rapidyaml.git /workspace/rapidyaml && \
+    cd /workspace/rapidyaml && \
+    pip install .
+
+# install LDM
+RUN pip install -r requirements.txt
+
+# to get rid of bitsandbytes logs
+RUN pip uninstall -y bitsandbytes
+
+COPY . .
+

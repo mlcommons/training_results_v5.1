@@ -1,0 +1,5 @@
+git+https://github.com/mlcommons/logging.git@5.1.0-rc3
+git+https://github.com/NVIDIA/mlperf-common.git@b86d175a05849d650a8ff69c1e2c37b9f4e61d51
+git+https://github.com/NVIDIA/NeMo-Run.git@cd132d7d383283fb94c617b4d6d92b8bf8bc8875
+# WAR for MultiStorageClient
+multi-storage-client<0.26.0

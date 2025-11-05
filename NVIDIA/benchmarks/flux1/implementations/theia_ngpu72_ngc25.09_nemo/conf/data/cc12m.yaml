@@ -1,0 +1,8 @@
+_target_: custom_data_module.CustomDiffusionDataModule
+path: ${oc.env:DATA_PATH, /dataset/energon}
+seq_length: 256
+task_encoder:
+  _target_: task_encoder.FluxTaskEncoder
+num_workers: ${oc.decode:${oc.env:NUM_WORKERS,8}}
+micro_batch_size: ${oc.decode:${oc.env:MBS,1}}
+global_batch_size: ${oc.decode:${oc.env:BATCHSIZE,2}}

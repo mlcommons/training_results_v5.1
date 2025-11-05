@@ -1,0 +1,52 @@
+[
+    {
+        "name": "/datasets/open-images-v6",
+        "subdirs": [
+            {
+                "path": "/datasets/open-images-v6/validation/metadata",
+                "elements": 3,
+                "dir_size": 14932
+            },
+            {
+                "path": "/datasets/open-images-v6/validation/labels",
+                "elements": 3,
+                "dir_size": 152100
+            },
+            {
+                "path": "/datasets/open-images-v6/validation/data",
+                "elements": 41620,
+                "dir_size": 12662752
+            },
+            {
+                "path": "/datasets/open-images-v6/validation",
+                "elements": 3,
+                "dir_size": 12829788
+            },
+            {
+                "path": "/datasets/open-images-v6/train/metadata",
+                "elements": 3,
+                "dir_size": 623492
+            },
+            {
+                "path": "/datasets/open-images-v6/train/labels",
+                "elements": 3,
+                "dir_size": 8349760
+            },
+            {
+                "path": "/datasets/open-images-v6/train/data",
+                "elements": 1743042,
+                "dir_size": 541268612
+            },
+            {
+                "path": "/datasets/open-images-v6/train",
+                "elements": 3,
+                "dir_size": 550241868
+            },
+            {
+                "path": "/datasets/open-images-v6",
+                "elements": 4,
+                "dir_size": 563357708
+            }
+        ]
+    }
+]

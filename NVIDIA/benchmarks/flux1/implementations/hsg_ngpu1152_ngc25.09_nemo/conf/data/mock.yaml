@@ -1,0 +1,9 @@
+_target_: custom_mock_data_module.CustomMockDataModule
+image_h: 256
+image_w: 256
+image_precached: True
+text_precached: True
+num_workers: ${oc.decode:${oc.env:NUM_WORKERS,8}}
+micro_batch_size: ${oc.decode:${oc.env:MBS,1}}
+global_batch_size: ${oc.decode:${oc.env:BATCHSIZE,2}}
+num_val_samples: 1024

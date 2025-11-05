@@ -1,0 +1,34 @@
+diff --git a/nemo/collections/multimodal/modules/stable_diffusion/diffusionmodules/util.py b/nemo/collections/multimodal/modules/stable_diffusion/diffusionmodules/util.py
+index 3cf0e45e8..2a77cb6ee 100644
+--- a/nemo/collections/multimodal/modules/stable_diffusion/diffusionmodules/util.py
++++ b/nemo/collections/multimodal/modules/stable_diffusion/diffusionmodules/util.py
+@@ -29,7 +29,6 @@ from inspect import isfunction
+ import numpy as np
+ import torch
+ import torch.nn as nn
+-from apex.contrib.group_norm import GroupNorm
+ from einops import repeat
+ from torch._dynamo import disable
+ from torch.cuda.amp import custom_bwd, custom_fwd
+@@ -247,7 +246,13 @@ def mean_flat(tensor):
+ 
+ 
+ def normalization(in_channels, act="", gn_groups=32):
+-    return GroupNorm(num_groups=gn_groups, num_channels=in_channels, eps=1e-5, affine=True, act=act)
++    try:
++        from apex.contrib.group_norm import GroupNorm as GroupNorm
++        return GroupNorm(num_groups=num_groups, num_channels=in_channels, eps=1e-6, affine=True, act=act)
++    except ImportError:
++        print("Using torch.nn.GroupNorm. Hip/Cuda kernel could not be imported from Apex")
++        import torch.nn.GroupNorm as GroupNorm
++        return GroupNorm(num_groups=num_groups, num_channels=in_channels, eps=1e-6, affine=True)
+ 
+ 
+ # PyTorch 1.7 has SiLU, but we support PyTorch 1.5.
+@@ -343,4 +348,4 @@ def exists(x):
+ def default(val, d):
+     if exists(val):
+         return val
+-    return d() if isfunction(d) else d
++    return d() if isfunction(d) else d
+\ No newline at end of file

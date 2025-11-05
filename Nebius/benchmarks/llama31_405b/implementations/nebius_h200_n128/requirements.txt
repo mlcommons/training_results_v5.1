@@ -1,0 +1,5 @@
+git+https://github.com/mlcommons/logging.git@5.0.0-rc2
+git+https://github.com/NVIDIA/mlperf-common.git@09933674798d1029f7a123332004ca19e82f26ca
+transformers==4.46.1
+blobfile==3.0.0
+prettytable==3.11.0

@@ -1,0 +1,10 @@
+key,type,relative_path,num_files,num_bytes
+TOKENIZER,file,special_tokens_map.json,1,73
+TOKENIZER,file,tokenizer.json,1,9085658
+TOKENIZER,file,tokenizer.model,1,2183982
+TOKENIZER,file,tokenizer_config.json,1,50500
+PREPROC_DATA,file,c4-train.en_6_text_document.bin,1,83976774280
+PREPROC_DATA,file,c4-train.en_6_text_document.idx,1,912172262
+PREPROC_DATA,file,c4-validation-91205-samples.en_text_document.bin,1,166568364
+PREPROC_DATA,file,c4-validation-91205-samples.en_text_document.idx,1,1824142
+PREPROC_DATA,dir,.,4,85057343144

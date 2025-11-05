@@ -1,0 +1,21 @@
+flux_params:
+  _target_: nemo.collections.diffusion.models.flux.model.FluxModelParams
+  flux_config:
+    _target_: custom_flux.CustomFluxConfig
+    guidance_embed: False
+    calculate_per_token_loss: False
+    gradient_accumulation_fusion: False
+    enable_cuda_graph: ${oc.decode:${oc.env:USE_CUDA_GRAPH,True}}
+    cuda_graph_scope: ${oc.decode:${oc.env:CUDA_GRAPH_SCOPE,full_iteration}}  # full, full_iteration
+    # share_cudagraph_io_buffers: True  # For partial CUDA graph (aka. full)
+    use_te_rng_tracker: True
+    cuda_graph_warmup_steps: 2
+    apply_rope_fusion: True
+    rotary_interleaved: True
+  vae_config: null
+  t5_params: null
+  clip_params: null
+  device: cuda
+empty_encodings_path: /dataset/energon/empty_encodings
+classifier_free_guidance_prob: 0.1
+generate_random_empty_encodings: False # Used when no data is mounted

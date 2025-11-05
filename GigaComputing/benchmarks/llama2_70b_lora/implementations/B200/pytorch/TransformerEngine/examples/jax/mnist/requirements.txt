@@ -1,0 +1,4 @@
+datasets<4.0.0
+flax>=0.7.1
+optax
+Pillow

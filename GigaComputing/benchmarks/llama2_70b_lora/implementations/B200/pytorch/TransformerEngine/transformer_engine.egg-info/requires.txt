@@ -1,0 +1,13 @@
+importlib-metadata>=1.0
+packaging
+onnxscript
+onnx
+pydantic
+torch>=2.1
+einops
+
+[test]
+transformers
+pytest>=8.2.1
+numpy
+torchvision

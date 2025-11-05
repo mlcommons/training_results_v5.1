@@ -1,0 +1,350 @@
+INFO -  Checking System Description Files
+INFO -   System description checker passed for D75T-7U
+INFO -   System description checker passed for D74H-7U
+INFO - ------------------------------
+INFO -  Running compliance checks in dir Quanta_Cloud_Technology/results/D75T-7U/llama2_70b_lora
+INFO -  System D75T-7U
+INFO -  Benchmark llama2_70b_lora
+INFO - ------------------------------
+INFO - ------------------------------
+INFO - Run 1/10
+INFO - Running compliance on file: Quanta_Cloud_Technology/results/D75T-7U/llama2_70b_lora/result_0.txt
+INFO -  Compliance checks: training_5.1.0/common.yaml
+INFO -  Compliance checks: training_5.1.0/closed_common.yaml
+INFO -  Compliance checks: training_5.1.0/closed_llama2_70b_lora.yaml
+INFO - ------------------------------
+INFO - Run 2/10
+INFO - Running compliance on file: Quanta_Cloud_Technology/results/D75T-7U/llama2_70b_lora/result_1.txt
+INFO -  Compliance checks: training_5.1.0/common.yaml
+INFO -  Compliance checks: training_5.1.0/closed_common.yaml
+INFO -  Compliance checks: training_5.1.0/closed_llama2_70b_lora.yaml
+INFO - ------------------------------
+INFO - Run 3/10
+INFO - Running compliance on file: Quanta_Cloud_Technology/results/D75T-7U/llama2_70b_lora/result_2.txt
+INFO -  Compliance checks: training_5.1.0/common.yaml
+INFO -  Compliance checks: training_5.1.0/closed_common.yaml
+INFO -  Compliance checks: training_5.1.0/closed_llama2_70b_lora.yaml
+INFO - ------------------------------
+INFO - Run 4/10
+INFO - Running compliance on file: Quanta_Cloud_Technology/results/D75T-7U/llama2_70b_lora/result_3.txt
+INFO -  Compliance checks: training_5.1.0/common.yaml
+INFO -  Compliance checks: training_5.1.0/closed_common.yaml
+INFO -  Compliance checks: training_5.1.0/closed_llama2_70b_lora.yaml
+INFO - ------------------------------
+INFO - Run 5/10
+INFO - Running compliance on file: Quanta_Cloud_Technology/results/D75T-7U/llama2_70b_lora/result_4.txt
+INFO -  Compliance checks: training_5.1.0/common.yaml
+INFO -  Compliance checks: training_5.1.0/closed_common.yaml
+INFO -  Compliance checks: training_5.1.0/closed_llama2_70b_lora.yaml
+INFO - ------------------------------
+INFO - Run 6/10
+INFO - Running compliance on file: Quanta_Cloud_Technology/results/D75T-7U/llama2_70b_lora/result_5.txt
+INFO -  Compliance checks: training_5.1.0/common.yaml
+INFO -  Compliance checks: training_5.1.0/closed_common.yaml
+INFO -  Compliance checks: training_5.1.0/closed_llama2_70b_lora.yaml
+INFO - ------------------------------
+INFO - Run 7/10
+INFO - Running compliance on file: Quanta_Cloud_Technology/results/D75T-7U/llama2_70b_lora/result_6.txt
+INFO -  Compliance checks: training_5.1.0/common.yaml
+INFO -  Compliance checks: training_5.1.0/closed_common.yaml
+INFO -  Compliance checks: training_5.1.0/closed_llama2_70b_lora.yaml
+INFO - ------------------------------
+INFO - Run 8/10
+INFO - Running compliance on file: Quanta_Cloud_Technology/results/D75T-7U/llama2_70b_lora/result_7.txt
+INFO -  Compliance checks: training_5.1.0/common.yaml
+INFO -  Compliance checks: training_5.1.0/closed_common.yaml
+INFO -  Compliance checks: training_5.1.0/closed_llama2_70b_lora.yaml
+INFO - ------------------------------
+INFO - Run 9/10
+INFO - Running compliance on file: Quanta_Cloud_Technology/results/D75T-7U/llama2_70b_lora/result_8.txt
+INFO -  Compliance checks: training_5.1.0/common.yaml
+INFO -  Compliance checks: training_5.1.0/closed_common.yaml
+INFO -  Compliance checks: training_5.1.0/closed_llama2_70b_lora.yaml
+INFO - ------------------------------
+INFO - Run 10/10
+INFO - Running compliance on file: Quanta_Cloud_Technology/results/D75T-7U/llama2_70b_lora/result_9.txt
+INFO -  Compliance checks: training_5.1.0/common.yaml
+INFO -  Compliance checks: training_5.1.0/closed_common.yaml
+INFO -  Compliance checks: training_5.1.0/closed_llama2_70b_lora.yaml
+INFO - ------------------------------
+INFO -  Running Seed Checker
+INFO - ------------------------------
+INFO -  Running RCP Checker, pass: pruned_rcps
+INFO - ------------------------------
+INFO -  RCP Record: {'Benchmark': 'llama2_70b_lora', 'BS': 8, 'Hyperparams': {'opt_base_learning_rate': 0.0004, 'opt_max_grad_norm': 0.3, 'opt_learning_rate_warmup_epochs': 0, 'opt_learning_rate_decay_boundary_epochs': [], 'gradient_accumulation_steps': 1, 'lora_r': 16, 'lora_alpha': 32, 'max_steps': 1024}, 'Epochs to converge': [2688, 2688, 2688, 3072, 3072, 3072, 3072, 3072, 3072, 3072, 3072, 3072, 3456, 3456, 3456, 3456, 3456, 3456, 3456, 3840], 'RCP Mean': np.float64(3178.6666666666665), 'RCP Stdev': np.float64(299.91358755481554), 'Max Speedup': np.float64(1.0736439248523562), 'Min Epochs': np.float64(2960.6339616775513)}
+INFO -  Submission mean epochs: 3072.0000
+INFO -  Submission mean epochs faster than RCP mean but within max speedup range. Score should be normalized by factor of 3178.6666666666665 / 3072.0 = 1.034722222222222
+INFO -  Results scaling set to normalization factor of 1.0347
+INFO - RCP Test Passed: RCP found
+INFO - ------------------------------
+INFO - ------------------------------
+INFO -  Running compliance checks in dir Quanta_Cloud_Technology/results/D74H-7U/rgat
+INFO -  System D74H-7U
+INFO -  Benchmark rgat
+INFO - ------------------------------
+INFO - ------------------------------
+INFO - Run 1/10
+INFO - Running compliance on file: Quanta_Cloud_Technology/results/D74H-7U/rgat/result_0.txt
+INFO -  Compliance checks: training_5.1.0/common.yaml
+INFO -  Compliance checks: training_5.1.0/closed_common.yaml
+INFO -  Compliance checks: training_5.1.0/closed_rgat.yaml
+INFO - ------------------------------
+INFO - Run 2/10
+INFO - Running compliance on file: Quanta_Cloud_Technology/results/D74H-7U/rgat/result_1.txt
+INFO -  Compliance checks: training_5.1.0/common.yaml
+INFO -  Compliance checks: training_5.1.0/closed_common.yaml
+INFO -  Compliance checks: training_5.1.0/closed_rgat.yaml
+INFO - ------------------------------
+INFO - Run 3/10
+INFO - Running compliance on file: Quanta_Cloud_Technology/results/D74H-7U/rgat/result_2.txt
+INFO -  Compliance checks: training_5.1.0/common.yaml
+INFO -  Compliance checks: training_5.1.0/closed_common.yaml
+INFO -  Compliance checks: training_5.1.0/closed_rgat.yaml
+INFO - ------------------------------
+INFO - Run 4/10
+INFO - Running compliance on file: Quanta_Cloud_Technology/results/D74H-7U/rgat/result_3.txt
+INFO -  Compliance checks: training_5.1.0/common.yaml
+INFO -  Compliance checks: training_5.1.0/closed_common.yaml
+INFO -  Compliance checks: training_5.1.0/closed_rgat.yaml
+INFO - ------------------------------
+INFO - Run 5/10
+INFO - Running compliance on file: Quanta_Cloud_Technology/results/D74H-7U/rgat/result_4.txt
+INFO -  Compliance checks: training_5.1.0/common.yaml
+INFO -  Compliance checks: training_5.1.0/closed_common.yaml
+INFO -  Compliance checks: training_5.1.0/closed_rgat.yaml
+INFO - ------------------------------
+INFO - Run 6/10
+INFO - Running compliance on file: Quanta_Cloud_Technology/results/D74H-7U/rgat/result_5.txt
+INFO -  Compliance checks: training_5.1.0/common.yaml
+INFO -  Compliance checks: training_5.1.0/closed_common.yaml
+INFO -  Compliance checks: training_5.1.0/closed_rgat.yaml
+INFO - ------------------------------
+INFO - Run 7/10
+INFO - Running compliance on file: Quanta_Cloud_Technology/results/D74H-7U/rgat/result_6.txt
+INFO -  Compliance checks: training_5.1.0/common.yaml
+INFO -  Compliance checks: training_5.1.0/closed_common.yaml
+INFO -  Compliance checks: training_5.1.0/closed_rgat.yaml
+INFO - ------------------------------
+INFO - Run 8/10
+INFO - Running compliance on file: Quanta_Cloud_Technology/results/D74H-7U/rgat/result_7.txt
+INFO -  Compliance checks: training_5.1.0/common.yaml
+INFO -  Compliance checks: training_5.1.0/closed_common.yaml
+INFO -  Compliance checks: training_5.1.0/closed_rgat.yaml
+INFO - ------------------------------
+INFO - Run 9/10
+INFO - Running compliance on file: Quanta_Cloud_Technology/results/D74H-7U/rgat/result_8.txt
+INFO -  Compliance checks: training_5.1.0/common.yaml
+INFO -  Compliance checks: training_5.1.0/closed_common.yaml
+INFO -  Compliance checks: training_5.1.0/closed_rgat.yaml
+INFO - ------------------------------
+INFO - Run 10/10
+INFO - Running compliance on file: Quanta_Cloud_Technology/results/D74H-7U/rgat/result_9.txt
+INFO -  Compliance checks: training_5.1.0/common.yaml
+INFO -  Compliance checks: training_5.1.0/closed_common.yaml
+INFO -  Compliance checks: training_5.1.0/closed_rgat.yaml
+INFO - ------------------------------
+INFO -  Running Seed Checker
+INFO - ------------------------------
+INFO -  Running RCP Checker, pass: pruned_rcps
+INFO - ------------------------------
+INFO -  RCP Record: {'Benchmark': 'rgat', 'BS': 16384, 'Hyperparams': {}, 'Epochs to converge': [], 'RCP Mean': np.float64(0.8531746031746031), 'RCP Stdev': np.float64(0.033911649915626334), 'Max Speedup': np.float64(1.0291780520744997), 'Min Epochs': np.float64(0.8289863949730283)}
+INFO -  Submission mean epochs: 0.8687
+INFO - RCP Test Passed: RCP Interpolation
+INFO - ------------------------------
+INFO - ------------------------------
+INFO -  Running compliance checks in dir Quanta_Cloud_Technology/results/D74H-7U/llama2_70b_lora
+INFO -  System D74H-7U
+INFO -  Benchmark llama2_70b_lora
+INFO - ------------------------------
+INFO - ------------------------------
+INFO - Run 1/10
+INFO - Running compliance on file: Quanta_Cloud_Technology/results/D74H-7U/llama2_70b_lora/result_0.txt
+INFO -  Compliance checks: training_5.1.0/common.yaml
+INFO -  Compliance checks: training_5.1.0/closed_common.yaml
+INFO -  Compliance checks: training_5.1.0/closed_llama2_70b_lora.yaml
+INFO - ------------------------------
+INFO - Run 2/10
+INFO - Running compliance on file: Quanta_Cloud_Technology/results/D74H-7U/llama2_70b_lora/result_1.txt
+INFO -  Compliance checks: training_5.1.0/common.yaml
+INFO -  Compliance checks: training_5.1.0/closed_common.yaml
+INFO -  Compliance checks: training_5.1.0/closed_llama2_70b_lora.yaml
+INFO - ------------------------------
+INFO - Run 3/10
+INFO - Running compliance on file: Quanta_Cloud_Technology/results/D74H-7U/llama2_70b_lora/result_2.txt
+INFO -  Compliance checks: training_5.1.0/common.yaml
+INFO -  Compliance checks: training_5.1.0/closed_common.yaml
+INFO -  Compliance checks: training_5.1.0/closed_llama2_70b_lora.yaml
+INFO - ------------------------------
+INFO - Run 4/10
+INFO - Running compliance on file: Quanta_Cloud_Technology/results/D74H-7U/llama2_70b_lora/result_3.txt
+INFO -  Compliance checks: training_5.1.0/common.yaml
+INFO -  Compliance checks: training_5.1.0/closed_common.yaml
+INFO -  Compliance checks: training_5.1.0/closed_llama2_70b_lora.yaml
+INFO - ------------------------------
+INFO - Run 5/10
+INFO - Running compliance on file: Quanta_Cloud_Technology/results/D74H-7U/llama2_70b_lora/result_4.txt
+INFO -  Compliance checks: training_5.1.0/common.yaml
+INFO -  Compliance checks: training_5.1.0/closed_common.yaml
+INFO -  Compliance checks: training_5.1.0/closed_llama2_70b_lora.yaml
+INFO - ------------------------------
+INFO - Run 6/10
+INFO - Running compliance on file: Quanta_Cloud_Technology/results/D74H-7U/llama2_70b_lora/result_5.txt
+INFO -  Compliance checks: training_5.1.0/common.yaml
+INFO -  Compliance checks: training_5.1.0/closed_common.yaml
+INFO -  Compliance checks: training_5.1.0/closed_llama2_70b_lora.yaml
+INFO - ------------------------------
+INFO - Run 7/10
+INFO - Running compliance on file: Quanta_Cloud_Technology/results/D74H-7U/llama2_70b_lora/result_6.txt
+INFO -  Compliance checks: training_5.1.0/common.yaml
+INFO -  Compliance checks: training_5.1.0/closed_common.yaml
+INFO -  Compliance checks: training_5.1.0/closed_llama2_70b_lora.yaml
+INFO - ------------------------------
+INFO - Run 8/10
+INFO - Running compliance on file: Quanta_Cloud_Technology/results/D74H-7U/llama2_70b_lora/result_7.txt
+INFO -  Compliance checks: training_5.1.0/common.yaml
+INFO -  Compliance checks: training_5.1.0/closed_common.yaml
+INFO -  Compliance checks: training_5.1.0/closed_llama2_70b_lora.yaml
+INFO - ------------------------------
+INFO - Run 9/10
+INFO - Running compliance on file: Quanta_Cloud_Technology/results/D74H-7U/llama2_70b_lora/result_8.txt
+INFO -  Compliance checks: training_5.1.0/common.yaml
+INFO -  Compliance checks: training_5.1.0/closed_common.yaml
+INFO -  Compliance checks: training_5.1.0/closed_llama2_70b_lora.yaml
+INFO - ------------------------------
+INFO - Run 10/10
+INFO - Running compliance on file: Quanta_Cloud_Technology/results/D74H-7U/llama2_70b_lora/result_9.txt
+INFO -  Compliance checks: training_5.1.0/common.yaml
+INFO -  Compliance checks: training_5.1.0/closed_common.yaml
+INFO -  Compliance checks: training_5.1.0/closed_llama2_70b_lora.yaml
+INFO - ------------------------------
+INFO -  Running Seed Checker
+INFO - ------------------------------
+INFO -  Running RCP Checker, pass: pruned_rcps
+INFO - ------------------------------
+INFO -  RCP Record: {'Benchmark': 'llama2_70b_lora', 'BS': 8, 'Hyperparams': {'opt_base_learning_rate': 0.0004, 'opt_max_grad_norm': 0.3, 'opt_learning_rate_warmup_epochs': 0, 'opt_learning_rate_decay_boundary_epochs': [], 'gradient_accumulation_steps': 1, 'lora_r': 16, 'lora_alpha': 32, 'max_steps': 1024}, 'Epochs to converge': [2688, 2688, 2688, 3072, 3072, 3072, 3072, 3072, 3072, 3072, 3072, 3072, 3456, 3456, 3456, 3456, 3456, 3456, 3456, 3840], 'RCP Mean': np.float64(3178.6666666666665), 'RCP Stdev': np.float64(299.91358755481554), 'Max Speedup': np.float64(1.0736439248523562), 'Min Epochs': np.float64(2960.6339616775513)}
+INFO -  Submission mean epochs: 3168.0000
+INFO -  Submission mean epochs faster than RCP mean but within max speedup range. Score should be normalized by factor of 3178.6666666666665 / 3168.0 = 1.0033670033670032
+INFO -  Results scaling set to normalization factor of 1.0034
+INFO - RCP Test Passed: RCP found
+INFO - ------------------------------
+INFO - ------------------------------
+INFO -  Running compliance checks in dir Quanta_Cloud_Technology/results/D74H-7U/retinanet
+INFO -  System D74H-7U
+INFO -  Benchmark retinanet
+INFO - ------------------------------
+INFO - ------------------------------
+INFO - Run 1/5
+INFO - Running compliance on file: Quanta_Cloud_Technology/results/D74H-7U/retinanet/result_0.txt
+INFO -  Compliance checks: training_5.1.0/common.yaml
+INFO -  Compliance checks: training_5.1.0/closed_common.yaml
+INFO -  Compliance checks: training_5.1.0/closed_retinanet.yaml
+INFO - ------------------------------
+INFO - Run 2/5
+INFO - Running compliance on file: Quanta_Cloud_Technology/results/D74H-7U/retinanet/result_1.txt
+INFO -  Compliance checks: training_5.1.0/common.yaml
+INFO -  Compliance checks: training_5.1.0/closed_common.yaml
+INFO -  Compliance checks: training_5.1.0/closed_retinanet.yaml
+INFO - ------------------------------
+INFO - Run 3/5
+INFO - Running compliance on file: Quanta_Cloud_Technology/results/D74H-7U/retinanet/result_2.txt
+INFO -  Compliance checks: training_5.1.0/common.yaml
+INFO -  Compliance checks: training_5.1.0/closed_common.yaml
+INFO -  Compliance checks: training_5.1.0/closed_retinanet.yaml
+INFO - ------------------------------
+INFO - Run 4/5
+INFO - Running compliance on file: Quanta_Cloud_Technology/results/D74H-7U/retinanet/result_3.txt
+INFO -  Compliance checks: training_5.1.0/common.yaml
+INFO -  Compliance checks: training_5.1.0/closed_common.yaml
+INFO -  Compliance checks: training_5.1.0/closed_retinanet.yaml
+INFO - ------------------------------
+INFO - Run 5/5
+INFO - Running compliance on file: Quanta_Cloud_Technology/results/D74H-7U/retinanet/result_4.txt
+INFO -  Compliance checks: training_5.1.0/common.yaml
+INFO -  Compliance checks: training_5.1.0/closed_common.yaml
+INFO -  Compliance checks: training_5.1.0/closed_retinanet.yaml
+INFO - ------------------------------
+INFO -  Running Seed Checker
+INFO - ------------------------------
+INFO -  Running RCP Checker, pass: pruned_rcps
+INFO - ------------------------------
+INFO -  RCP Record: {'Benchmark': 'retinanet', 'BS': 256, 'Hyperparams': {'opt_base_learning_rate': 0.0001, 'opt_learning_rate_warmup_factor': 0.001, 'opt_learning_rate_warmup_epochs': 1, 'opt_weight_decay': 0}, 'Epochs to converge': [4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4], 'RCP Mean': np.float64(4.0), 'RCP Stdev': np.float64(0.0), 'Max Speedup': np.float64(1.0), 'Min Epochs': np.float64(4.0)}
+INFO -  Submission mean epochs: 4.0000
+INFO - RCP Test Passed: RCP found
+INFO - ------------------------------
+INFO - ------------------------------
+INFO -  Running compliance checks in dir Quanta_Cloud_Technology/results/D74H-7U/dlrm_dcnv2
+INFO -  System D74H-7U
+INFO -  Benchmark dlrm_dcnv2
+INFO - ------------------------------
+INFO - ------------------------------
+INFO - Run 1/10
+INFO - Running compliance on file: Quanta_Cloud_Technology/results/D74H-7U/dlrm_dcnv2/result_0.txt
+INFO -  Compliance checks: training_5.1.0/common.yaml
+INFO -  Compliance checks: training_5.1.0/closed_common.yaml
+INFO -  Compliance checks: training_5.1.0/closed_dlrm_dcnv2.yaml
+INFO - ------------------------------
+INFO - Run 2/10
+INFO - Running compliance on file: Quanta_Cloud_Technology/results/D74H-7U/dlrm_dcnv2/result_1.txt
+INFO -  Compliance checks: training_5.1.0/common.yaml
+INFO -  Compliance checks: training_5.1.0/closed_common.yaml
+INFO -  Compliance checks: training_5.1.0/closed_dlrm_dcnv2.yaml
+INFO - ------------------------------
+INFO - Run 3/10
+INFO - Running compliance on file: Quanta_Cloud_Technology/results/D74H-7U/dlrm_dcnv2/result_2.txt
+INFO -  Compliance checks: training_5.1.0/common.yaml
+INFO -  Compliance checks: training_5.1.0/closed_common.yaml
+INFO -  Compliance checks: training_5.1.0/closed_dlrm_dcnv2.yaml
+INFO - ------------------------------
+INFO - Run 4/10
+INFO - Running compliance on file: Quanta_Cloud_Technology/results/D74H-7U/dlrm_dcnv2/result_3.txt
+INFO -  Compliance checks: training_5.1.0/common.yaml
+INFO -  Compliance checks: training_5.1.0/closed_common.yaml
+INFO -  Compliance checks: training_5.1.0/closed_dlrm_dcnv2.yaml
+INFO - ------------------------------
+INFO - Run 5/10
+INFO - Running compliance on file: Quanta_Cloud_Technology/results/D74H-7U/dlrm_dcnv2/result_4.txt
+INFO -  Compliance checks: training_5.1.0/common.yaml
+INFO -  Compliance checks: training_5.1.0/closed_common.yaml
+INFO -  Compliance checks: training_5.1.0/closed_dlrm_dcnv2.yaml
+INFO - ------------------------------
+INFO - Run 6/10
+INFO - Running compliance on file: Quanta_Cloud_Technology/results/D74H-7U/dlrm_dcnv2/result_5.txt
+INFO -  Compliance checks: training_5.1.0/common.yaml
+INFO -  Compliance checks: training_5.1.0/closed_common.yaml
+INFO -  Compliance checks: training_5.1.0/closed_dlrm_dcnv2.yaml
+INFO - ------------------------------
+INFO - Run 7/10
+INFO - Running compliance on file: Quanta_Cloud_Technology/results/D74H-7U/dlrm_dcnv2/result_6.txt
+INFO -  Compliance checks: training_5.1.0/common.yaml
+INFO -  Compliance checks: training_5.1.0/closed_common.yaml
+INFO -  Compliance checks: training_5.1.0/closed_dlrm_dcnv2.yaml
+INFO - ------------------------------
+INFO - Run 8/10
+INFO - Running compliance on file: Quanta_Cloud_Technology/results/D74H-7U/dlrm_dcnv2/result_7.txt
+INFO -  Compliance checks: training_5.1.0/common.yaml
+INFO -  Compliance checks: training_5.1.0/closed_common.yaml
+INFO -  Compliance checks: training_5.1.0/closed_dlrm_dcnv2.yaml
+INFO - ------------------------------
+INFO - Run 9/10
+INFO - Running compliance on file: Quanta_Cloud_Technology/results/D74H-7U/dlrm_dcnv2/result_8.txt
+INFO -  Compliance checks: training_5.1.0/common.yaml
+INFO -  Compliance checks: training_5.1.0/closed_common.yaml
+INFO -  Compliance checks: training_5.1.0/closed_dlrm_dcnv2.yaml
+INFO - ------------------------------
+INFO - Run 10/10
+INFO - Running compliance on file: Quanta_Cloud_Technology/results/D74H-7U/dlrm_dcnv2/result_9.txt
+INFO -  Compliance checks: training_5.1.0/common.yaml
+INFO -  Compliance checks: training_5.1.0/closed_common.yaml
+INFO -  Compliance checks: training_5.1.0/closed_dlrm_dcnv2.yaml
+INFO - ------------------------------
+INFO -  Running Seed Checker
+INFO - ------------------------------
+INFO -  Running RCP Checker, pass: pruned_rcps
+INFO - ------------------------------
+INFO -  RCP Record: {'Benchmark': 'dlrm_dcnv2', 'BS': 55296, 'Hyperparams': {'opt_name': 'adagrad', 'opt_base_learning_rate': 0.004, 'opt_adagrad_learning_rate_decay': 0.0, 'opt_adagrad_initial_accumulator_value': 0.0, 'opt_adagrad_epsilon': 1e-08, 'opt_weight_decay': 0.0, 'opt_learning_rate_warmup_steps': 0, 'opt_learning_rate_decay_start_step': 0, 'opt_learning_rate_decay_steps': 0}, 'Epochs to converge': [0.7, 0.7, 0.7, 0.7, 0.7, 0.7, 0.7, 0.7, 0.7, 0.7, 0.75, 0.75, 0.75, 0.75, 0.75, 0.75, 0.75, 0.75, 0.75, 0.75, 0.75, 0.75, 0.75, 0.75, 0.75, 0.75, 0.75, 0.75, 0.75, 0.75, 0.75, 0.75, 0.75, 0.75, 0.75, 0.8, 0.8, 0.8, 0.8, 0.8, 0.8, 0.8, 0.8, 0.8, 0.8, 0.8, 0.9, 0.9, 0.9, 0.9], 'RCP Mean': np.float64(0.7614583333333332), 'RCP Stdev': np.float64(0.0517783738639985), 'Max Speedup': np.float64(1.0454980537298195), 'Min Epochs': np.float64(0.7283211390177406)}
+INFO -  Submission mean epochs: 0.7625
+INFO - RCP Test Passed: RCP found
+INFO - ------------------------------
+INFO - ------------------------------
+INFO - PACKAGE CHECKER FOUND NO ERRORS, SUCCESS !
+INFO - ------------------------------

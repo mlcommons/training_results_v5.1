@@ -1,0 +1,1307 @@
++ echo 'Beginning trial 9 of 10'
+Beginning trial 9 of 10
++ echo ':::DLPAL /home/users/e63600/training_data/llama2_70b_lora/mlperf-nvidia+llama2_70b_lora-pyt.sqsh 13394 8 sith[1-8] '\''unknown'\'' XD670_H200_8x8x1xtp4pp1cp1'
+:::DLPAL /home/users/e63600/training_data/llama2_70b_lora/mlperf-nvidia+llama2_70b_lora-pyt.sqsh 13394 8 sith[1-8] 'unknown' XD670_H200_8x8x1xtp4pp1cp1
+++ srun --ntasks=1 --container-name=llama2_70b_lora_13394 mlperf-sysjson.sh
++ echo ':::SYSJSON {"submitter":"Krai","division":"closed","status":"Available on-premise","system_name":"HPE Cray XD670","number_of_nodes":"8","host_processors_per_node":"2","host_processor_model_name":"INTEL(R) XEON(R) PLATINUM 8562Y+","host_processor_core_count":"32","host_processor_vcpu_count":"","host_processor_frequency":"","host_processor_caches":"","host_processor_interconnect":"","host_memory_capacity":"2.0 TB","host_storage_type":"","host_storage_capacity":"","host_networking":"","host_networking_topology":"","host_memory_configuration":"","accelerators_per_node":"8","accelerator_model_name":"NVIDIA H200","accelerator_host_interconnect":"","accelerator_frequency":"","accelerator_on-chip_memories":"","accelerator_memory_configuration":"","accelerator_memory_capacity":"143771 MiB","accelerator_interconnect":"","accelerator_interconnect_topology":"","cooling":"","hw_notes":"","framework":"PyTorch NVIDIA Release 24.09","framework_name":"","other_software_stack":{"cuda_version":"12.6.1.006","cuda_driver_version":"560.35.03","nccl_version":"2.22.3","cublas_version":"12.6.3.1002","cudnn_version":"9.4.0.58","trt_version":"10.4.0.26","dali_version":"1.41.0","mofed_version":"5.4-rdmacore39.0","openmpi_version":"4.1.7","kernel_version":"Linux 5.14.0-427.13.1.el9_4.x86_64","nvidia_kernel_driver":"570.124.06"},"operating_system":"Ubuntu 22.04.4 LTS","sw_notes":""}'
+:::SYSJSON {"submitter":"Krai","division":"closed","status":"Available on-premise","system_name":"HPE Cray XD670","number_of_nodes":"8","host_processors_per_node":"2","host_processor_model_name":"INTEL(R) XEON(R) PLATINUM 8562Y+","host_processor_core_count":"32","host_processor_vcpu_count":"","host_processor_frequency":"","host_processor_caches":"","host_processor_interconnect":"","host_memory_capacity":"2.0 TB","host_storage_type":"","host_storage_capacity":"","host_networking":"","host_networking_topology":"","host_memory_configuration":"","accelerators_per_node":"8","accelerator_model_name":"NVIDIA H200","accelerator_host_interconnect":"","accelerator_frequency":"","accelerator_on-chip_memories":"","accelerator_memory_configuration":"","accelerator_memory_capacity":"143771 MiB","accelerator_interconnect":"","accelerator_interconnect_topology":"","cooling":"","hw_notes":"","framework":"PyTorch NVIDIA Release 24.09","framework_name":"","other_software_stack":{"cuda_version":"12.6.1.006","cuda_driver_version":"560.35.03","nccl_version":"2.22.3","cublas_version":"12.6.3.1002","cudnn_version":"9.4.0.58","trt_version":"10.4.0.26","dali_version":"1.41.0","mofed_version":"5.4-rdmacore39.0","openmpi_version":"4.1.7","kernel_version":"Linux 5.14.0-427.13.1.el9_4.x86_64","nvidia_kernel_driver":"570.124.06"},"operating_system":"Ubuntu 22.04.4 LTS","sw_notes":""}
++ srun --ntasks=1 --container-name=llama2_70b_lora_13394 bash -c 'echo ":::GITCOMMITID ${GIT_COMMIT_ID} ${LAUNCHER_GIT_COMMIT_ID}"'
+:::GITCOMMITID  
++ export SEED=27454
++ SEED=27454
++ set +e
+++ date +%s
++ echo 'RUNANDTIME_START 1759281152'
+RUNANDTIME_START 1759281152
++ srun -l --mpi=pmi2 -N8 --cpu-bind=none --ntasks=64 --ntasks-per-node=8 --time=50 --container-name=llama2_70b_lora_13394 --container-mounts=/home/users/e63600/training_data/llama2_70b_lora/gov_report:/data:ro,/home/users/e63600/training_data/llama2_70b_lora/model:/ckpt:ro,/home/users/e63600/training_data/llama2_70b_lora/logs:/results:rw,/home/users/e63600/training_results_v5.0/HPE/benchmarks/llama2_70b_lora/implementations/nemo:/workspace/ft-llm,/home/users/e63600/training_results_v5.0/HPE/benchmarks/llama2_70b_lora/implementations/nemo/nlp_model.py:/workspace/ft-llm/NeMo/nemo/collections/nlp/models/nlp_model.py --container-env=MASTER_PORT,MASTER_ADDR slurm2pytorch ./run_and_time.sh
+ 0: STARTING TIMING RUN AT 2025-09-30 08:12:34 PM
+ 0: Matplotlib created a temporary cache directory at /tmp/matplotlib-e0_dw01h because the default path (/home/users/e63600/.config/matplotlib) is not a writable directory; it is highly recommended to set the MPLCONFIGDIR environment variable to a writable directory, in particular to speed up the import of Matplotlib and to better support multiprocessing.
+20: Matplotlib created a temporary cache directory at /tmp/matplotlib-y6zweykh because the default path (/home/users/e63600/.config/matplotlib) is not a writable directory; it is highly recommended to set the MPLCONFIGDIR environment variable to a writable directory, in particular to speed up the import of Matplotlib and to better support multiprocessing.
+ 5: Matplotlib created a temporary cache directory at /tmp/matplotlib-d6utg3s5 because the default path (/home/users/e63600/.config/matplotlib) is not a writable directory; it is highly recommended to set the MPLCONFIGDIR environment variable to a writable directory, in particular to speed up the import of Matplotlib and to better support multiprocessing.
+ 4: Matplotlib created a temporary cache directory at /tmp/matplotlib-stht2y9k because the default path (/home/users/e63600/.config/matplotlib) is not a writable directory; it is highly recommended to set the MPLCONFIGDIR environment variable to a writable directory, in particular to speed up the import of Matplotlib and to better support multiprocessing.
+17: Matplotlib created a temporary cache directory at /tmp/matplotlib-zf3fo3z5 because the default path (/home/users/e63600/.config/matplotlib) is not a writable directory; it is highly recommended to set the MPLCONFIGDIR environment variable to a writable directory, in particular to speed up the import of Matplotlib and to better support multiprocessing.
+18: Matplotlib created a temporary cache directory at /tmp/matplotlib-y0emif8o because the default path (/home/users/e63600/.config/matplotlib) is not a writable directory; it is highly recommended to set the MPLCONFIGDIR environment variable to a writable directory, in particular to speed up the import of Matplotlib and to better support multiprocessing.
+16: Matplotlib created a temporary cache directory at /tmp/matplotlib-hgaqzigl because the default path (/home/users/e63600/.config/matplotlib) is not a writable directory; it is highly recommended to set the MPLCONFIGDIR environment variable to a writable directory, in particular to speed up the import of Matplotlib and to better support multiprocessing.
+58: Matplotlib created a temporary cache directory at /tmp/matplotlib-mno2rk_w because the default path (/home/users/e63600/.config/matplotlib) is not a writable directory; it is highly recommended to set the MPLCONFIGDIR environment variable to a writable directory, in particular to speed up the import of Matplotlib and to better support multiprocessing.
+19: Matplotlib created a temporary cache directory at /tmp/matplotlib-seopd5vb because the default path (/home/users/e63600/.config/matplotlib) is not a writable directory; it is highly recommended to set the MPLCONFIGDIR environment variable to a writable directory, in particular to speed up the import of Matplotlib and to better support multiprocessing.
+57: Matplotlib created a temporary cache directory at /tmp/matplotlib-k0sr6aom because the default path (/home/users/e63600/.config/matplotlib) is not a writable directory; it is highly recommended to set the MPLCONFIGDIR environment variable to a writable directory, in particular to speed up the import of Matplotlib and to better support multiprocessing.
+ 1: Matplotlib created a temporary cache directory at /tmp/matplotlib-qjrnocqu because the default path (/home/users/e63600/.config/matplotlib) is not a writable directory; it is highly recommended to set the MPLCONFIGDIR environment variable to a writable directory, in particular to speed up the import of Matplotlib and to better support multiprocessing.
+10: Matplotlib created a temporary cache directory at /tmp/matplotlib-neuh5p1h because the default path (/home/users/e63600/.config/matplotlib) is not a writable directory; it is highly recommended to set the MPLCONFIGDIR environment variable to a writable directory, in particular to speed up the import of Matplotlib and to better support multiprocessing.
+48: Matplotlib created a temporary cache directory at /tmp/matplotlib-5yl3izsw because the default path (/home/users/e63600/.config/matplotlib) is not a writable directory; it is highly recommended to set the MPLCONFIGDIR environment variable to a writable directory, in particular to speed up the import of Matplotlib and to better support multiprocessing.
+ 8: Matplotlib created a temporary cache directory at /tmp/matplotlib-2ebaq3dd because the default path (/home/users/e63600/.config/matplotlib) is not a writable directory; it is highly recommended to set the MPLCONFIGDIR environment variable to a writable directory, in particular to speed up the import of Matplotlib and to better support multiprocessing.
+13: Matplotlib created a temporary cache directory at /tmp/matplotlib-on8n5kuo because the default path (/home/users/e63600/.config/matplotlib) is not a writable directory; it is highly recommended to set the MPLCONFIGDIR environment variable to a writable directory, in particular to speed up the import of Matplotlib and to better support multiprocessing.
+14: Matplotlib created a temporary cache directory at /tmp/matplotlib-s7eh30mn because the default path (/home/users/e63600/.config/matplotlib) is not a writable directory; it is highly recommended to set the MPLCONFIGDIR environment variable to a writable directory, in particular to speed up the import of Matplotlib and to better support multiprocessing.
+15: Matplotlib created a temporary cache directory at /tmp/matplotlib-iy1u441n because the default path (/home/users/e63600/.config/matplotlib) is not a writable directory; it is highly recommended to set the MPLCONFIGDIR environment variable to a writable directory, in particular to speed up the import of Matplotlib and to better support multiprocessing.
+22: Matplotlib created a temporary cache directory at /tmp/matplotlib-zebiuj71 because the default path (/home/users/e63600/.config/matplotlib) is not a writable directory; it is highly recommended to set the MPLCONFIGDIR environment variable to a writable directory, in particular to speed up the import of Matplotlib and to better support multiprocessing.
+12: Matplotlib created a temporary cache directory at /tmp/matplotlib-4xlwwf9q because the default path (/home/users/e63600/.config/matplotlib) is not a writable directory; it is highly recommended to set the MPLCONFIGDIR environment variable to a writable directory, in particular to speed up the import of Matplotlib and to better support multiprocessing.
+54: Matplotlib created a temporary cache directory at /tmp/matplotlib-238kidma because the default path (/home/users/e63600/.config/matplotlib) is not a writable directory; it is highly recommended to set the MPLCONFIGDIR environment variable to a writable directory, in particular to speed up the import of Matplotlib and to better support multiprocessing.
+55: Matplotlib created a temporary cache directory at /tmp/matplotlib-zg2p8ouz because the default path (/home/users/e63600/.config/matplotlib) is not a writable directory; it is highly recommended to set the MPLCONFIGDIR environment variable to a writable directory, in particular to speed up the import of Matplotlib and to better support multiprocessing.
+47: Matplotlib created a temporary cache directory at /tmp/matplotlib-vdud03f3 because the default path (/home/users/e63600/.config/matplotlib) is not a writable directory; it is highly recommended to set the MPLCONFIGDIR environment variable to a writable directory, in particular to speed up the import of Matplotlib and to better support multiprocessing.
+45: Matplotlib created a temporary cache directory at /tmp/matplotlib-socxbcez because the default path (/home/users/e63600/.config/matplotlib) is not a writable directory; it is highly recommended to set the MPLCONFIGDIR environment variable to a writable directory, in particular to speed up the import of Matplotlib and to better support multiprocessing.
+44: Matplotlib created a temporary cache directory at /tmp/matplotlib-x8ul80jc because the default path (/home/users/e63600/.config/matplotlib) is not a writable directory; it is highly recommended to set the MPLCONFIGDIR environment variable to a writable directory, in particular to speed up the import of Matplotlib and to better support multiprocessing.
+46: Matplotlib created a temporary cache directory at /tmp/matplotlib-aqob6u02 because the default path (/home/users/e63600/.config/matplotlib) is not a writable directory; it is highly recommended to set the MPLCONFIGDIR environment variable to a writable directory, in particular to speed up the import of Matplotlib and to better support multiprocessing.
+52: Matplotlib created a temporary cache directory at /tmp/matplotlib-gjr600ie because the default path (/home/users/e63600/.config/matplotlib) is not a writable directory; it is highly recommended to set the MPLCONFIGDIR environment variable to a writable directory, in particular to speed up the import of Matplotlib and to better support multiprocessing.
+23: Matplotlib created a temporary cache directory at /tmp/matplotlib-5lo0veq9 because the default path (/home/users/e63600/.config/matplotlib) is not a writable directory; it is highly recommended to set the MPLCONFIGDIR environment variable to a writable directory, in particular to speed up the import of Matplotlib and to better support multiprocessing.
+60: Matplotlib created a temporary cache directory at /tmp/matplotlib-77zx9pr9 because the default path (/home/users/e63600/.config/matplotlib) is not a writable directory; it is highly recommended to set the MPLCONFIGDIR environment variable to a writable directory, in particular to speed up the import of Matplotlib and to better support multiprocessing.
+50: Matplotlib created a temporary cache directory at /tmp/matplotlib-zl2_t36e because the default path (/home/users/e63600/.config/matplotlib) is not a writable directory; it is highly recommended to set the MPLCONFIGDIR environment variable to a writable directory, in particular to speed up the import of Matplotlib and to better support multiprocessing.
+62: Matplotlib created a temporary cache directory at /tmp/matplotlib-s2qekksu because the default path (/home/users/e63600/.config/matplotlib) is not a writable directory; it is highly recommended to set the MPLCONFIGDIR environment variable to a writable directory, in particular to speed up the import of Matplotlib and to better support multiprocessing.
+63: Matplotlib created a temporary cache directory at /tmp/matplotlib-jist19a1 because the default path (/home/users/e63600/.config/matplotlib) is not a writable directory; it is highly recommended to set the MPLCONFIGDIR environment variable to a writable directory, in particular to speed up the import of Matplotlib and to better support multiprocessing.
+61: Matplotlib created a temporary cache directory at /tmp/matplotlib-x6rr_2k3 because the default path (/home/users/e63600/.config/matplotlib) is not a writable directory; it is highly recommended to set the MPLCONFIGDIR environment variable to a writable directory, in particular to speed up the import of Matplotlib and to better support multiprocessing.
+ 9: Matplotlib created a temporary cache directory at /tmp/matplotlib-4tsyzair because the default path (/home/users/e63600/.config/matplotlib) is not a writable directory; it is highly recommended to set the MPLCONFIGDIR environment variable to a writable directory, in particular to speed up the import of Matplotlib and to better support multiprocessing.
+ 6: Matplotlib created a temporary cache directory at /tmp/matplotlib-blyqepm8 because the default path (/home/users/e63600/.config/matplotlib) is not a writable directory; it is highly recommended to set the MPLCONFIGDIR environment variable to a writable directory, in particular to speed up the import of Matplotlib and to better support multiprocessing.
+53: Matplotlib created a temporary cache directory at /tmp/matplotlib-eemxiw5w because the default path (/home/users/e63600/.config/matplotlib) is not a writable directory; it is highly recommended to set the MPLCONFIGDIR environment variable to a writable directory, in particular to speed up the import of Matplotlib and to better support multiprocessing.
+ 3: Matplotlib created a temporary cache directory at /tmp/matplotlib-cyml7l3k because the default path (/home/users/e63600/.config/matplotlib) is not a writable directory; it is highly recommended to set the MPLCONFIGDIR environment variable to a writable directory, in particular to speed up the import of Matplotlib and to better support multiprocessing.
+51: Matplotlib created a temporary cache directory at /tmp/matplotlib-pdpk_7xx because the default path (/home/users/e63600/.config/matplotlib) is not a writable directory; it is highly recommended to set the MPLCONFIGDIR environment variable to a writable directory, in particular to speed up the import of Matplotlib and to better support multiprocessing.
+26: Matplotlib created a temporary cache directory at /tmp/matplotlib-2x3noany because the default path (/home/users/e63600/.config/matplotlib) is not a writable directory; it is highly recommended to set the MPLCONFIGDIR environment variable to a writable directory, in particular to speed up the import of Matplotlib and to better support multiprocessing.
+ 7: Matplotlib created a temporary cache directory at /tmp/matplotlib-_ba92mds because the default path (/home/users/e63600/.config/matplotlib) is not a writable directory; it is highly recommended to set the MPLCONFIGDIR environment variable to a writable directory, in particular to speed up the import of Matplotlib and to better support multiprocessing.
+30: Matplotlib created a temporary cache directory at /tmp/matplotlib-mpy2pcmc because the default path (/home/users/e63600/.config/matplotlib) is not a writable directory; it is highly recommended to set the MPLCONFIGDIR environment variable to a writable directory, in particular to speed up the import of Matplotlib and to better support multiprocessing.
+24: Matplotlib created a temporary cache directory at /tmp/matplotlib-06l8lfpt because the default path (/home/users/e63600/.config/matplotlib) is not a writable directory; it is highly recommended to set the MPLCONFIGDIR environment variable to a writable directory, in particular to speed up the import of Matplotlib and to better support multiprocessing.
+11: Matplotlib created a temporary cache directory at /tmp/matplotlib-d1dag61q because the default path (/home/users/e63600/.config/matplotlib) is not a writable directory; it is highly recommended to set the MPLCONFIGDIR environment variable to a writable directory, in particular to speed up the import of Matplotlib and to better support multiprocessing.
+33: Matplotlib created a temporary cache directory at /tmp/matplotlib-idi5q0w0 because the default path (/home/users/e63600/.config/matplotlib) is not a writable directory; it is highly recommended to set the MPLCONFIGDIR environment variable to a writable directory, in particular to speed up the import of Matplotlib and to better support multiprocessing.
+35: Matplotlib created a temporary cache directory at /tmp/matplotlib-0mwuy02z because the default path (/home/users/e63600/.config/matplotlib) is not a writable directory; it is highly recommended to set the MPLCONFIGDIR environment variable to a writable directory, in particular to speed up the import of Matplotlib and to better support multiprocessing.
+39: Matplotlib created a temporary cache directory at /tmp/matplotlib-3zqd7cdg because the default path (/home/users/e63600/.config/matplotlib) is not a writable directory; it is highly recommended to set the MPLCONFIGDIR environment variable to a writable directory, in particular to speed up the import of Matplotlib and to better support multiprocessing.
+38: Matplotlib created a temporary cache directory at /tmp/matplotlib-4sexoxvd because the default path (/home/users/e63600/.config/matplotlib) is not a writable directory; it is highly recommended to set the MPLCONFIGDIR environment variable to a writable directory, in particular to speed up the import of Matplotlib and to better support multiprocessing.
+ 2: Matplotlib created a temporary cache directory at /tmp/matplotlib-lugnh_ut because the default path (/home/users/e63600/.config/matplotlib) is not a writable directory; it is highly recommended to set the MPLCONFIGDIR environment variable to a writable directory, in particular to speed up the import of Matplotlib and to better support multiprocessing.
+29: Matplotlib created a temporary cache directory at /tmp/matplotlib-4k_alij3 because the default path (/home/users/e63600/.config/matplotlib) is not a writable directory; it is highly recommended to set the MPLCONFIGDIR environment variable to a writable directory, in particular to speed up the import of Matplotlib and to better support multiprocessing.
+42: Matplotlib created a temporary cache directory at /tmp/matplotlib-3l9la1vb because the default path (/home/users/e63600/.config/matplotlib) is not a writable directory; it is highly recommended to set the MPLCONFIGDIR environment variable to a writable directory, in particular to speed up the import of Matplotlib and to better support multiprocessing.
+21: Matplotlib created a temporary cache directory at /tmp/matplotlib-gw9tzr4n because the default path (/home/users/e63600/.config/matplotlib) is not a writable directory; it is highly recommended to set the MPLCONFIGDIR environment variable to a writable directory, in particular to speed up the import of Matplotlib and to better support multiprocessing.
+43: Matplotlib created a temporary cache directory at /tmp/matplotlib-nil7q01t because the default path (/home/users/e63600/.config/matplotlib) is not a writable directory; it is highly recommended to set the MPLCONFIGDIR environment variable to a writable directory, in particular to speed up the import of Matplotlib and to better support multiprocessing.
+49: Matplotlib created a temporary cache directory at /tmp/matplotlib-t7dv79ox because the default path (/home/users/e63600/.config/matplotlib) is not a writable directory; it is highly recommended to set the MPLCONFIGDIR environment variable to a writable directory, in particular to speed up the import of Matplotlib and to better support multiprocessing.
+41: Matplotlib created a temporary cache directory at /tmp/matplotlib-j1p9d2wt because the default path (/home/users/e63600/.config/matplotlib) is not a writable directory; it is highly recommended to set the MPLCONFIGDIR environment variable to a writable directory, in particular to speed up the import of Matplotlib and to better support multiprocessing.
+40: Matplotlib created a temporary cache directory at /tmp/matplotlib-d28jyoyz because the default path (/home/users/e63600/.config/matplotlib) is not a writable directory; it is highly recommended to set the MPLCONFIGDIR environment variable to a writable directory, in particular to speed up the import of Matplotlib and to better support multiprocessing.
+59: Matplotlib created a temporary cache directory at /tmp/matplotlib-7nloploa because the default path (/home/users/e63600/.config/matplotlib) is not a writable directory; it is highly recommended to set the MPLCONFIGDIR environment variable to a writable directory, in particular to speed up the import of Matplotlib and to better support multiprocessing.
+31: Matplotlib created a temporary cache directory at /tmp/matplotlib-zlv6vz3n because the default path (/home/users/e63600/.config/matplotlib) is not a writable directory; it is highly recommended to set the MPLCONFIGDIR environment variable to a writable directory, in particular to speed up the import of Matplotlib and to better support multiprocessing.
+36: Matplotlib created a temporary cache directory at /tmp/matplotlib-yxk5bkpn because the default path (/home/users/e63600/.config/matplotlib) is not a writable directory; it is highly recommended to set the MPLCONFIGDIR environment variable to a writable directory, in particular to speed up the import of Matplotlib and to better support multiprocessing.
+37: Matplotlib created a temporary cache directory at /tmp/matplotlib-zyhj7z56 because the default path (/home/users/e63600/.config/matplotlib) is not a writable directory; it is highly recommended to set the MPLCONFIGDIR environment variable to a writable directory, in particular to speed up the import of Matplotlib and to better support multiprocessing.
+56: Matplotlib created a temporary cache directory at /tmp/matplotlib-49weuj6h because the default path (/home/users/e63600/.config/matplotlib) is not a writable directory; it is highly recommended to set the MPLCONFIGDIR environment variable to a writable directory, in particular to speed up the import of Matplotlib and to better support multiprocessing.
+32: Matplotlib created a temporary cache directory at /tmp/matplotlib-3z5g7q3r because the default path (/home/users/e63600/.config/matplotlib) is not a writable directory; it is highly recommended to set the MPLCONFIGDIR environment variable to a writable directory, in particular to speed up the import of Matplotlib and to better support multiprocessing.
+25: Matplotlib created a temporary cache directory at /tmp/matplotlib-rcdymjg0 because the default path (/home/users/e63600/.config/matplotlib) is not a writable directory; it is highly recommended to set the MPLCONFIGDIR environment variable to a writable directory, in particular to speed up the import of Matplotlib and to better support multiprocessing.
+27: Matplotlib created a temporary cache directory at /tmp/matplotlib-e7q1x5zr because the default path (/home/users/e63600/.config/matplotlib) is not a writable directory; it is highly recommended to set the MPLCONFIGDIR environment variable to a writable directory, in particular to speed up the import of Matplotlib and to better support multiprocessing.
+34: Matplotlib created a temporary cache directory at /tmp/matplotlib-wjs45or7 because the default path (/home/users/e63600/.config/matplotlib) is not a writable directory; it is highly recommended to set the MPLCONFIGDIR environment variable to a writable directory, in particular to speed up the import of Matplotlib and to better support multiprocessing.
+28: Matplotlib created a temporary cache directory at /tmp/matplotlib-xgq00pd0 because the default path (/home/users/e63600/.config/matplotlib) is not a writable directory; it is highly recommended to set the MPLCONFIGDIR environment variable to a writable directory, in particular to speed up the import of Matplotlib and to better support multiprocessing.
+20: You are offline and the cache for model files in Transformers v4.22.0 has been updated while your local cache seems to be the one of a previous version. It is very likely that all your calls to any `from_pretrained()` method will fail. Remove the offline mode and enable internet connection to have your cache be updated automatically, then you can go back to offline mode.
+20: 0it [00:00, ?it/s]0it [00:00, ?it/s]
+57: You are offline and the cache for model files in Transformers v4.22.0 has been updated while your local cache seems to be the one of a previous version. It is very likely that all your calls to any `from_pretrained()` method will fail. Remove the offline mode and enable internet connection to have your cache be updated automatically, then you can go back to offline mode.
+57: 0it [00:00, ?it/s]0it [00:00, ?it/s]
+10: You are offline and the cache for model files in Transformers v4.22.0 has been updated while your local cache seems to be the one of a previous version. It is very likely that all your calls to any `from_pretrained()` method will fail. Remove the offline mode and enable internet connection to have your cache be updated automatically, then you can go back to offline mode.
+10: 0it [00:00, ?it/s]0it [00:00, ?it/s]
+54: You are offline and the cache for model files in Transformers v4.22.0 has been updated while your local cache seems to be the one of a previous version. It is very likely that all your calls to any `from_pretrained()` method will fail. Remove the offline mode and enable internet connection to have your cache be updated automatically, then you can go back to offline mode.
+54: 0it [00:00, ?it/s]0it [00:00, ?it/s]
+47: You are offline and the cache for model files in Transformers v4.22.0 has been updated while your local cache seems to be the one of a previous version. It is very likely that all your calls to any `from_pretrained()` method will fail. Remove the offline mode and enable internet connection to have your cache be updated automatically, then you can go back to offline mode.
+45: You are offline and the cache for model files in Transformers v4.22.0 has been updated while your local cache seems to be the one of a previous version. It is very likely that all your calls to any `from_pretrained()` method will fail. Remove the offline mode and enable internet connection to have your cache be updated automatically, then you can go back to offline mode.
+47: 0it [00:00, ?it/s]0it [00:00, ?it/s]
+45: 0it [00:00, ?it/s]0it [00:00, ?it/s]
+ 0: [NeMo W 2025-09-30 20:12:36 nemo_logging:349] /usr/local/lib/python3.10/dist-packages/transformers/utils/hub.py:128: FutureWarning: Using `TRANSFORMERS_CACHE` is deprecated and will be removed in v5 of Transformers. Use `HF_HOME` instead.
+ 0:       warnings.warn(
+ 0:     
+ 0: You are offline and the cache for model files in Transformers v4.22.0 has been updated while your local cache seems to be the one of a previous version. It is very likely that all your calls to any `from_pretrained()` method will fail. Remove the offline mode and enable internet connection to have your cache be updated automatically, then you can go back to offline mode.
+ 0: 0it [00:00, ?it/s]0it [00:00, ?it/s]
+33: You are offline and the cache for model files in Transformers v4.22.0 has been updated while your local cache seems to be the one of a previous version. It is very likely that all your calls to any `from_pretrained()` method will fail. Remove the offline mode and enable internet connection to have your cache be updated automatically, then you can go back to offline mode.
+33: 0it [00:00, ?it/s]0it [00:00, ?it/s]
+24: You are offline and the cache for model files in Transformers v4.22.0 has been updated while your local cache seems to be the one of a previous version. It is very likely that all your calls to any `from_pretrained()` method will fail. Remove the offline mode and enable internet connection to have your cache be updated automatically, then you can go back to offline mode.
+24: 0it [00:00, ?it/s]0it [00:00, ?it/s]
+13: `zarr` distributed checkpoint backend is deprecated. Please switch to PyTorch Distributed format (`torch_dist`).
+ 9: `zarr` distributed checkpoint backend is deprecated. Please switch to PyTorch Distributed format (`torch_dist`).
+48: `zarr` distributed checkpoint backend is deprecated. Please switch to PyTorch Distributed format (`torch_dist`).
+53: `zarr` distributed checkpoint backend is deprecated. Please switch to PyTorch Distributed format (`torch_dist`).
+45: `zarr` distributed checkpoint backend is deprecated. Please switch to PyTorch Distributed format (`torch_dist`).
+46: `zarr` distributed checkpoint backend is deprecated. Please switch to PyTorch Distributed format (`torch_dist`).
+47: `zarr` distributed checkpoint backend is deprecated. Please switch to PyTorch Distributed format (`torch_dist`).
+41: `zarr` distributed checkpoint backend is deprecated. Please switch to PyTorch Distributed format (`torch_dist`).
+43: `zarr` distributed checkpoint backend is deprecated. Please switch to PyTorch Distributed format (`torch_dist`).
+54: `zarr` distributed checkpoint backend is deprecated. Please switch to PyTorch Distributed format (`torch_dist`).
+36: `zarr` distributed checkpoint backend is deprecated. Please switch to PyTorch Distributed format (`torch_dist`).
+20: `zarr` distributed checkpoint backend is deprecated. Please switch to PyTorch Distributed format (`torch_dist`).
+14: `zarr` distributed checkpoint backend is deprecated. Please switch to PyTorch Distributed format (`torch_dist`).
+51: `zarr` distributed checkpoint backend is deprecated. Please switch to PyTorch Distributed format (`torch_dist`).
+11: `zarr` distributed checkpoint backend is deprecated. Please switch to PyTorch Distributed format (`torch_dist`).
+15: `zarr` distributed checkpoint backend is deprecated. Please switch to PyTorch Distributed format (`torch_dist`).
+12: `zarr` distributed checkpoint backend is deprecated. Please switch to PyTorch Distributed format (`torch_dist`).
+24: `zarr` distributed checkpoint backend is deprecated. Please switch to PyTorch Distributed format (`torch_dist`).
+17: `zarr` distributed checkpoint backend is deprecated. Please switch to PyTorch Distributed format (`torch_dist`).
+57: `zarr` distributed checkpoint backend is deprecated. Please switch to PyTorch Distributed format (`torch_dist`).
+60: `zarr` distributed checkpoint backend is deprecated. Please switch to PyTorch Distributed format (`torch_dist`).
+40: `zarr` distributed checkpoint backend is deprecated. Please switch to PyTorch Distributed format (`torch_dist`).
+50: `zarr` distributed checkpoint backend is deprecated. Please switch to PyTorch Distributed format (`torch_dist`).
+49: `zarr` distributed checkpoint backend is deprecated. Please switch to PyTorch Distributed format (`torch_dist`).
+52: `zarr` distributed checkpoint backend is deprecated. Please switch to PyTorch Distributed format (`torch_dist`).
+ 0: `zarr` distributed checkpoint backend is deprecated. Please switch to PyTorch Distributed format (`torch_dist`).
+ 1: `zarr` distributed checkpoint backend is deprecated. Please switch to PyTorch Distributed format (`torch_dist`).
+ 5: `zarr` distributed checkpoint backend is deprecated. Please switch to PyTorch Distributed format (`torch_dist`).
+ 7: `zarr` distributed checkpoint backend is deprecated. Please switch to PyTorch Distributed format (`torch_dist`).
+ 4: `zarr` distributed checkpoint backend is deprecated. Please switch to PyTorch Distributed format (`torch_dist`).
+55: `zarr` distributed checkpoint backend is deprecated. Please switch to PyTorch Distributed format (`torch_dist`).
+30: `zarr` distributed checkpoint backend is deprecated. Please switch to PyTorch Distributed format (`torch_dist`).
+29: `zarr` distributed checkpoint backend is deprecated. Please switch to PyTorch Distributed format (`torch_dist`).
+59: `zarr` distributed checkpoint backend is deprecated. Please switch to PyTorch Distributed format (`torch_dist`).
+56: `zarr` distributed checkpoint backend is deprecated. Please switch to PyTorch Distributed format (`torch_dist`).
+58: `zarr` distributed checkpoint backend is deprecated. Please switch to PyTorch Distributed format (`torch_dist`).
+61: `zarr` distributed checkpoint backend is deprecated. Please switch to PyTorch Distributed format (`torch_dist`).
+63: `zarr` distributed checkpoint backend is deprecated. Please switch to PyTorch Distributed format (`torch_dist`).
+62: `zarr` distributed checkpoint backend is deprecated. Please switch to PyTorch Distributed format (`torch_dist`).
+21: `zarr` distributed checkpoint backend is deprecated. Please switch to PyTorch Distributed format (`torch_dist`).
+16: `zarr` distributed checkpoint backend is deprecated. Please switch to PyTorch Distributed format (`torch_dist`).
+18: `zarr` distributed checkpoint backend is deprecated. Please switch to PyTorch Distributed format (`torch_dist`).
+23: `zarr` distributed checkpoint backend is deprecated. Please switch to PyTorch Distributed format (`torch_dist`).
+ 6: `zarr` distributed checkpoint backend is deprecated. Please switch to PyTorch Distributed format (`torch_dist`).
+19: `zarr` distributed checkpoint backend is deprecated. Please switch to PyTorch Distributed format (`torch_dist`).
+ 8: `zarr` distributed checkpoint backend is deprecated. Please switch to PyTorch Distributed format (`torch_dist`).
+37: `zarr` distributed checkpoint backend is deprecated. Please switch to PyTorch Distributed format (`torch_dist`).
+33: `zarr` distributed checkpoint backend is deprecated. Please switch to PyTorch Distributed format (`torch_dist`).
+39: `zarr` distributed checkpoint backend is deprecated. Please switch to PyTorch Distributed format (`torch_dist`).
+44: `zarr` distributed checkpoint backend is deprecated. Please switch to PyTorch Distributed format (`torch_dist`).
+42: `zarr` distributed checkpoint backend is deprecated. Please switch to PyTorch Distributed format (`torch_dist`).
+22: `zarr` distributed checkpoint backend is deprecated. Please switch to PyTorch Distributed format (`torch_dist`).
+32: `zarr` distributed checkpoint backend is deprecated. Please switch to PyTorch Distributed format (`torch_dist`).
+35: `zarr` distributed checkpoint backend is deprecated. Please switch to PyTorch Distributed format (`torch_dist`).
+34: `zarr` distributed checkpoint backend is deprecated. Please switch to PyTorch Distributed format (`torch_dist`).
+38: `zarr` distributed checkpoint backend is deprecated. Please switch to PyTorch Distributed format (`torch_dist`).
+27: `zarr` distributed checkpoint backend is deprecated. Please switch to PyTorch Distributed format (`torch_dist`).
+25: `zarr` distributed checkpoint backend is deprecated. Please switch to PyTorch Distributed format (`torch_dist`).
+28: `zarr` distributed checkpoint backend is deprecated. Please switch to PyTorch Distributed format (`torch_dist`).
+ 2: `zarr` distributed checkpoint backend is deprecated. Please switch to PyTorch Distributed format (`torch_dist`).
+ 3: `zarr` distributed checkpoint backend is deprecated. Please switch to PyTorch Distributed format (`torch_dist`).
+10: `zarr` distributed checkpoint backend is deprecated. Please switch to PyTorch Distributed format (`torch_dist`).
+26: `zarr` distributed checkpoint backend is deprecated. Please switch to PyTorch Distributed format (`torch_dist`).
+31: `zarr` distributed checkpoint backend is deprecated. Please switch to PyTorch Distributed format (`torch_dist`).
+ 0: 
+ 0: 
+ 0: ************** Experiment configuration ***********
+ 0: 
+ 0: model:
+ 0:   ub_tp_comm_overlap_cfg:
+ 0:     qkv_fprop:
+ 0:       method: ring_exchange
+ 0:       aggregate: 0
+ 0:     fc1_fprop:
+ 0:       method: ring_exchange
+ 0:       aggregate: 0
+ 0:     proj_dgrad:
+ 0:       method: ring_exchange
+ 0:       aggregate: 0
+ 0:     fc2_dgrad:
+ 0:       method: ring_exchange
+ 0:       aggregate: 0
+ 0:     proj_fprop:
+ 0:       method: pipeline
+ 0:       num_sm: 32
+ 0:       cga_size: 2
+ 0:       num_splits: 4
+ 0:       set_sm_margin: 1
+ 0:       atomic_gemm: 1
+ 0:       fp8_buf: 1
+ 0:     fc2_fprop:
+ 0:       method: pipeline
+ 0:       num_sm: 16
+ 0:       cga_size: 2
+ 0:       num_splits: 4
+ 0:       set_sm_margin: 1
+ 0:       atomic_gemm: 1
+ 0:       fp8_buf: 0
+ 0:     qkv_dgrad:
+ 0:       method: bulk
+ 0:       num_sm: 4
+ 0:       cga_size: 2
+ 0:       set_sm_margin: 0
+ 0:     fc1_dgrad:
+ 0:       method: ring_exchange
+ 0:       num_sm: 1
+ 0:       cga_size: 2
+ 0:       set_sm_margin: 1
+ 0:       atomic_gemm: 0
+ 0:       fp8_buf: 0
+ 0:   mcore_gpt: true
+ 0:   seed: 27454
+ 0:   tensor_model_parallel_size: 4
+ 0:   pipeline_model_parallel_size: 1
+ 0:   context_parallel_size: 1
+ 0:   cpu_offloading: false
+ 0:   dist_ckpt_load_strictness: log_all
+ 0:   global_batch_size: 16
+ 0:   micro_batch_size: 1
+ 0:   max_position_embeddings: 8192
+ 0:   encoder_seq_length: 8192
+ 0:   restore_from_path: /ckpt
+ 0:   resume_from_checkpoint: null
+ 0:   save_nemo_on_validation_end: false
+ 0:   sync_batch_comm: false
+ 0:   megatron_amp_O2: true
+ 0:   sequence_parallel: 1
+ 0:   activations_checkpoint_granularity: null
+ 0:   activations_checkpoint_method: null
+ 0:   activations_checkpoint_num_layers: null
+ 0:   activations_checkpoint_layers_per_pipeline: null
+ 0:   answer_only_loss: true
+ 0:   gradient_as_bucket_view: false
+ 0:   hidden_dropout: 0.0
+ 0:   attention_dropout: 0.0
+ 0:   ffn_dropout: 0.0
+ 0:   bias_activation_fusion: true
+ 0:   bias_dropout_add_fusion: false
+ 0:   transformer_engine: true
+ 0:   fp8: true
+ 0:   fp8_params: true
+ 0:   fp8_hybrid: true
+ 0:   fp8_amax_history_len: 32
+ 0:   fp8_amax_compute_algo: max
+ 0:   reduce_amax: true
+ 0:   fp8_e4m3: false
+ 0:   fp8_interval: 1
+ 0:   fp8_margin: 0
+ 0:   fp8_dot_product_attention: 1
+ 0:   activation_func_fp8_input_store: 0
+ 0:   apply_rope_fusion: true
+ 0:   disable_parameter_transpose_cache: true
+ 0:   ub_tp_comm_overlap: 1
+ 0:   tp_comm_overlap_ag: true
+ 0:   tp_comm_overlap_rs: true
+ 0:   tp_comm_overlap_rs_dgrad: true
+ 0:   tp_comm_overlap_disable_qkv: true
+ 0:   batch_p2p_comm: 'False'
+ 0:   virtual_pipeline_model_parallel_size: 1
+ 0:   sharp: true
+ 0:   nccl_communicator_config_path: null
+ 0:   peft:
+ 0:     peft_scheme: lora
+ 0:     restore_from_path: null
+ 0:     lora_tuning:
+ 0:       adapter_dim: 16
+ 0:       alpha: 32
+ 0:       adapter_dropout: 0.1
+ 0:       dropout_position: pre
+ 0:       target_modules:
+ 0:       - attention
+ 0:       column_init_method: kaiming
+ 0:       row_init_method: zero
+ 0:       layer_selection: null
+ 0:       weight_tying: false
+ 0:       position_embedding_strategy: null
+ 0:       a2a_experimental: 1
+ 0:   data:
+ 0:     multiprocessing_context: spawn
+ 0:     pin_memory: true
+ 0:     sample_weight: constant
+ 0:     validation_drop_last: false
+ 0:     train_ds:
+ 0:       file_names:
+ 0:       - /data/train.npy
+ 0:       packed_sequence: true
+ 0:       packed_sequence_return_cu_seqlen: false
+ 0:       index_mapping_dir: /results/data_index/train
+ 0:       global_batch_size: 16
+ 0:       micro_batch_size: 1
+ 0:       shuffle: true
+ 0:       num_workers: 1
+ 0:       memmap_workers: 2
+ 0:       pin_memory: true
+ 0:       max_seq_length: 8192
+ 0:       min_seq_length: 1
+ 0:       drop_last: true
+ 0:       concat_sampling_probabilities:
+ 0:       - 1.0
+ 0:       label_key: output
+ 0:       add_eos: true
+ 0:       add_sep: false
+ 0:       add_bos: false
+ 0:       truncation_field: input
+ 0:       prompt_template: '{input} {output}'
+ 0:       truncation_method: right
+ 0:       seed: 27454
+ 0:     validation_ds:
+ 0:       file_names:
+ 0:       - /data/validation.npy
+ 0:       packed_sequence: true
+ 0:       packed_sequence_return_cu_seqlen: false
+ 0:       index_mapping_dir: /results/data_index/val
+ 0:       names: null
+ 0:       global_batch_size: 16
+ 0:       micro_batch_size: 1
+ 0:       shuffle: false
+ 0:       num_workers: 1
+ 0:       memmap_workers: 2
+ 0:       pin_memory: true
+ 0:       max_seq_length: 8192
+ 0:       min_seq_length: 1
+ 0:       drop_last: false
+ 0:       label_key: output
+ 0:       add_eos: true
+ 0:       add_sep: false
+ 0:       add_bos: false
+ 0:       write_predictions_to_file: false
+ 0:       output_file_path_prefix: null
+ 0:       truncation_field: input
+ 0:       prompt_template: '{input} {output}'
+ 0:       tokens_to_generate: 32
+ 0:       truncation_method: right
+ 0:       metric:
+ 0:         name: loss
+ 0:         average: null
+ 0:         num_classes: null
+ 0:   optim:
+ 0:     name: mcore_distributed_optim
+ 0:     overlap_grad_sync: true
+ 0:     overlap_param_sync: true
+ 0:     delay_grad_reduce: true
+ 0:     delay_param_gather: true
+ 0:     average_in_collective: false
+ 0:     lr: 0.0005
+ 0:     min_lr: 0
+ 0:     weight_decay: 0.0001
+ 0:     betas:
+ 0:     - 0.9
+ 0:     - 0.999
+ 0:     eps: 1.0e-08
+ 0:     amsgrad: false
+ 0:     sched:
+ 0:       name: CosineAnnealing
+ 0:       warmup_ratio: 0.0
+ 0:       min_lr: 0.0
+ 0:       constant_steps: 0
+ 0:       monitor: val_loss
+ 0:       reduce_on_plateau: false
+ 0:   enable_cuda_graph: false
+ 0:   enable_cg_fp8_weight_caching: 0
+ 0:   custom:
+ 0:     warmup: true
+ 0:     warmup_train_steps: 5
+ 0:     warmup_validation_steps: 5
+ 0:     reset_fp8_stats_after_warmup: 1
+ 0: name: megatron_gpt_peft_lora_tuning
+ 0: trainer:
+ 0:   devices: 8
+ 0:   num_nodes: 8
+ 0:   accelerator: gpu
+ 0:   precision: bf16-mixed
+ 0:   max_steps: 896
+ 0:   val_check_interval: 96
+ 0:   check_val_every_n_epoch: null
+ 0:   log_every_n_steps: 0
+ 0:   gradient_clip_val: 0.3
+ 0:   gradient_clip_algorithm: norm
+ 0:   num_sanity_val_steps: 0
+ 0:   max_epochs: 1000
+ 0:   limit_val_batches: 1.0
+ 0:   limit_train_batches: 1.0
+ 0:   limit_test_batches: 0
+ 0:   logger: false
+ 0:   enable_checkpointing: false
+ 0:   use_distributed_sampler: false
+ 0:   enable_progress_bar: false
+ 0: exp_manager:
+ 0:   log_tflops_per_sec_per_gpu: false
+ 0:   explicit_log_dir: null
+ 0:   exp_dir: /results
+ 0:   create_wandb_logger: false
+ 0:   resume_if_exists: false
+ 0:   resume_ignore_no_checkpoint: true
+ 0:   create_checkpoint_callback: false
+ 0:   log_global_rank_0_only: true
+ 0:   create_early_stopping_callback: false
+ 0:   create_tensorboard_logger: false
+ 0: 
+ 0: GPU available: True (cuda), used: True
+ 0: TPU available: False, using: 0 TPU cores
+ 0: HPU available: False, using: 0 HPUs
+ 0: `Trainer(limit_train_batches=1.0)` was configured so 100% of the batches per epoch will be used..
+ 0: `Trainer(limit_val_batches=1.0)` was configured so 100% of the batches will be used..
+ 0: setting number of microbatches to constant 1
+51: Initializing distributed: GLOBAL_RANK: 51, MEMBER: 52/64
+48: Initializing distributed: GLOBAL_RANK: 48, MEMBER: 49/64
+46: Initializing distributed: GLOBAL_RANK: 46, MEMBER: 47/64
+54: Initializing distributed: GLOBAL_RANK: 54, MEMBER: 55/64
+13: Initializing distributed: GLOBAL_RANK: 13, MEMBER: 14/64
+45: Initializing distributed: GLOBAL_RANK: 45, MEMBER: 46/64
+41: Initializing distributed: GLOBAL_RANK: 41, MEMBER: 42/64
+43: Initializing distributed: GLOBAL_RANK: 43, MEMBER: 44/64
+50: Initializing distributed: GLOBAL_RANK: 50, MEMBER: 51/64
+49: Initializing distributed: GLOBAL_RANK: 49, MEMBER: 50/64
+14: Initializing distributed: GLOBAL_RANK: 14, MEMBER: 15/64
+55: Initializing distributed: GLOBAL_RANK: 55, MEMBER: 56/64
+10: Initializing distributed: GLOBAL_RANK: 10, MEMBER: 11/64
+53: Initializing distributed: GLOBAL_RANK: 53, MEMBER: 54/64
+11: Initializing distributed: GLOBAL_RANK: 11, MEMBER: 12/64
+ 9: Initializing distributed: GLOBAL_RANK: 9, MEMBER: 10/64
+40: Initializing distributed: GLOBAL_RANK: 40, MEMBER: 41/64
+44: Initializing distributed: GLOBAL_RANK: 44, MEMBER: 45/64
+47: Initializing distributed: GLOBAL_RANK: 47, MEMBER: 48/64
+42: Initializing distributed: GLOBAL_RANK: 42, MEMBER: 43/64
+12: Initializing distributed: GLOBAL_RANK: 12, MEMBER: 13/64
+52: Initializing distributed: GLOBAL_RANK: 52, MEMBER: 53/64
+ 8: Initializing distributed: GLOBAL_RANK: 8, MEMBER: 9/64
+15: Initializing distributed: GLOBAL_RANK: 15, MEMBER: 16/64
+20: Initializing distributed: GLOBAL_RANK: 20, MEMBER: 21/64
+17: Initializing distributed: GLOBAL_RANK: 17, MEMBER: 18/64
+38: Initializing distributed: GLOBAL_RANK: 38, MEMBER: 39/64
+19: Initializing distributed: GLOBAL_RANK: 19, MEMBER: 20/64
+16: Initializing distributed: GLOBAL_RANK: 16, MEMBER: 17/64
+18: Initializing distributed: GLOBAL_RANK: 18, MEMBER: 19/64
+21: Initializing distributed: GLOBAL_RANK: 21, MEMBER: 22/64
+29: Initializing distributed: GLOBAL_RANK: 29, MEMBER: 30/64
+22: Initializing distributed: GLOBAL_RANK: 22, MEMBER: 23/64
+36: Initializing distributed: GLOBAL_RANK: 36, MEMBER: 37/64
+25: Initializing distributed: GLOBAL_RANK: 25, MEMBER: 26/64
+23: Initializing distributed: GLOBAL_RANK: 23, MEMBER: 24/64
+24: Initializing distributed: GLOBAL_RANK: 24, MEMBER: 25/64
+34: Initializing distributed: GLOBAL_RANK: 34, MEMBER: 35/64
+35: Initializing distributed: GLOBAL_RANK: 35, MEMBER: 36/64
+33: Initializing distributed: GLOBAL_RANK: 33, MEMBER: 34/64
+ 4: Initializing distributed: GLOBAL_RANK: 4, MEMBER: 5/64
+32: Initializing distributed: GLOBAL_RANK: 32, MEMBER: 33/64
+60: Initializing distributed: GLOBAL_RANK: 60, MEMBER: 61/64
+37: Initializing distributed: GLOBAL_RANK: 37, MEMBER: 38/64
+39: Initializing distributed: GLOBAL_RANK: 39, MEMBER: 40/64
+ 6: Initializing distributed: GLOBAL_RANK: 6, MEMBER: 7/64
+27: Initializing distributed: GLOBAL_RANK: 27, MEMBER: 28/64
+31: Initializing distributed: GLOBAL_RANK: 31, MEMBER: 32/64
+28: Initializing distributed: GLOBAL_RANK: 28, MEMBER: 29/64
+26: Initializing distributed: GLOBAL_RANK: 26, MEMBER: 27/64
+ 1: Initializing distributed: GLOBAL_RANK: 1, MEMBER: 2/64
+30: Initializing distributed: GLOBAL_RANK: 30, MEMBER: 31/64
+ 0: Initializing distributed: GLOBAL_RANK: 0, MEMBER: 1/64
+63: Initializing distributed: GLOBAL_RANK: 63, MEMBER: 64/64
+56: Initializing distributed: GLOBAL_RANK: 56, MEMBER: 57/64
+57: Initializing distributed: GLOBAL_RANK: 57, MEMBER: 58/64
+ 5: Initializing distributed: GLOBAL_RANK: 5, MEMBER: 6/64
+ 2: Initializing distributed: GLOBAL_RANK: 2, MEMBER: 3/64
+ 3: Initializing distributed: GLOBAL_RANK: 3, MEMBER: 4/64
+ 7: Initializing distributed: GLOBAL_RANK: 7, MEMBER: 8/64
+58: Initializing distributed: GLOBAL_RANK: 58, MEMBER: 59/64
+59: Initializing distributed: GLOBAL_RANK: 59, MEMBER: 60/64
+61: Initializing distributed: GLOBAL_RANK: 61, MEMBER: 62/64
+62: Initializing distributed: GLOBAL_RANK: 62, MEMBER: 63/64
+ 0: ----------------------------------------------------------------------------------------------------
+ 0: distributed_backend=nccl
+ 0: All distributed processes registered. Starting with 64 processes
+ 0: ----------------------------------------------------------------------------------------------------
+ 0: 
+ 0: The number of process groups to use SHARP with depends on the type of the network switch. Nvidia QM1 switch supports SAHRP up to 8 process groups and QM2 supports up to 256 process groups. We apply SHARP to the communications of the data-parallel domain. If the number of data-parallel process groups is larger than the max process groups that the network switch supports, the communication will fall back to non-SHARP operators. To enable SHARP, `#SBATCH_NETWORK=sharp` should be set in the sbatch script.
+ 0: Loading distributed checkpoint with TensorStoreLoadShardedStrategy
+ 0: Loading distributed checkpoint directly on the GPU
+16: make: Entering directory '/workspace/ft-llm/NeMo/nemo/collections/nlp/data/language_modeling/megatron'
+48: make: Entering directory '/workspace/ft-llm/NeMo/nemo/collections/nlp/data/language_modeling/megatron'
+40: make: Entering directory '/workspace/ft-llm/NeMo/nemo/collections/nlp/data/language_modeling/megatron'
+ 8: make: Entering directory '/workspace/ft-llm/NeMo/nemo/collections/nlp/data/language_modeling/megatron'
+56: make: Entering directory '/workspace/ft-llm/NeMo/nemo/collections/nlp/data/language_modeling/megatron'
+32: make: Entering directory '/workspace/ft-llm/NeMo/nemo/collections/nlp/data/language_modeling/megatron'
+24: make: Entering directory '/workspace/ft-llm/NeMo/nemo/collections/nlp/data/language_modeling/megatron'
+ 0: make: Entering directory '/workspace/ft-llm/NeMo/nemo/collections/nlp/data/language_modeling/megatron'
+16: make: Nothing to be done for 'default'.
+16: make: Leaving directory '/workspace/ft-llm/NeMo/nemo/collections/nlp/data/language_modeling/megatron'
+48: make: Nothing to be done for 'default'.
+48: make: Leaving directory '/workspace/ft-llm/NeMo/nemo/collections/nlp/data/language_modeling/megatron'
+ 8: make: Nothing to be done for 'default'.
+ 8: make: Leaving directory '/workspace/ft-llm/NeMo/nemo/collections/nlp/data/language_modeling/megatron'
+40: make: Nothing to be done for 'default'.
+40: make: Leaving directory '/workspace/ft-llm/NeMo/nemo/collections/nlp/data/language_modeling/megatron'
+56: make: Nothing to be done for 'default'.
+56: make: Leaving directory '/workspace/ft-llm/NeMo/nemo/collections/nlp/data/language_modeling/megatron'
+32: make: Nothing to be done for 'default'.
+32: make: Leaving directory '/workspace/ft-llm/NeMo/nemo/collections/nlp/data/language_modeling/megatron'
+ 0: make: Nothing to be done for 'default'.
+ 0: make: Leaving directory '/workspace/ft-llm/NeMo/nemo/collections/nlp/data/language_modeling/megatron'
+24: make: Nothing to be done for 'default'.
+24: make: Leaving directory '/workspace/ft-llm/NeMo/nemo/collections/nlp/data/language_modeling/megatron'
+ 0: > building indices for blendable datasets ...
+ 0:  > sample ratios:
+ 0:    dataset 0, input: 1, achieved: 1
+ 0: LOCAL_RANK: 0 - CUDA_VISIBLE_DEVICES: [0,1,2,3,4,5,6,7]
+ 2: LOCAL_RANK: 2 - CUDA_VISIBLE_DEVICES: [0,1,2,3,4,5,6,7]
+ 1: LOCAL_RANK: 1 - CUDA_VISIBLE_DEVICES: [0,1,2,3,4,5,6,7]
+32: LOCAL_RANK: 0 - CUDA_VISIBLE_DEVICES: [0,1,2,3,4,5,6,7]
+56: LOCAL_RANK: 0 - CUDA_VISIBLE_DEVICES: [0,1,2,3,4,5,6,7]
+33: LOCAL_RANK: 1 - CUDA_VISIBLE_DEVICES: [0,1,2,3,4,5,6,7]
+ 3: LOCAL_RANK: 3 - CUDA_VISIBLE_DEVICES: [0,1,2,3,4,5,6,7]
+34: LOCAL_RANK: 2 - CUDA_VISIBLE_DEVICES: [0,1,2,3,4,5,6,7]
+35: LOCAL_RANK: 3 - CUDA_VISIBLE_DEVICES: [0,1,2,3,4,5,6,7]
+57: LOCAL_RANK: 1 - CUDA_VISIBLE_DEVICES: [0,1,2,3,4,5,6,7]
+16: LOCAL_RANK: 0 - CUDA_VISIBLE_DEVICES: [0,1,2,3,4,5,6,7]
+ 8: LOCAL_RANK: 0 - CUDA_VISIBLE_DEVICES: [0,1,2,3,4,5,6,7]
+58: LOCAL_RANK: 2 - CUDA_VISIBLE_DEVICES: [0,1,2,3,4,5,6,7]
+48: LOCAL_RANK: 0 - CUDA_VISIBLE_DEVICES: [0,1,2,3,4,5,6,7]
+40: LOCAL_RANK: 0 - CUDA_VISIBLE_DEVICES: [0,1,2,3,4,5,6,7]
+36: LOCAL_RANK: 4 - CUDA_VISIBLE_DEVICES: [0,1,2,3,4,5,6,7]
+24: LOCAL_RANK: 0 - CUDA_VISIBLE_DEVICES: [0,1,2,3,4,5,6,7]
+17: LOCAL_RANK: 1 - CUDA_VISIBLE_DEVICES: [0,1,2,3,4,5,6,7]
+ 9: LOCAL_RANK: 1 - CUDA_VISIBLE_DEVICES: [0,1,2,3,4,5,6,7]
+59: LOCAL_RANK: 3 - CUDA_VISIBLE_DEVICES: [0,1,2,3,4,5,6,7]
+49: LOCAL_RANK: 1 - CUDA_VISIBLE_DEVICES: [0,1,2,3,4,5,6,7]
+41: LOCAL_RANK: 1 - CUDA_VISIBLE_DEVICES: [0,1,2,3,4,5,6,7]
+37: LOCAL_RANK: 5 - CUDA_VISIBLE_DEVICES: [0,1,2,3,4,5,6,7]
+ 4: LOCAL_RANK: 4 - CUDA_VISIBLE_DEVICES: [0,1,2,3,4,5,6,7]
+18: LOCAL_RANK: 2 - CUDA_VISIBLE_DEVICES: [0,1,2,3,4,5,6,7]
+11: LOCAL_RANK: 3 - CUDA_VISIBLE_DEVICES: [0,1,2,3,4,5,6,7]
+60: LOCAL_RANK: 4 - CUDA_VISIBLE_DEVICES: [0,1,2,3,4,5,6,7]
+50: LOCAL_RANK: 2 - CUDA_VISIBLE_DEVICES: [0,1,2,3,4,5,6,7]
+42: LOCAL_RANK: 2 - CUDA_VISIBLE_DEVICES: [0,1,2,3,4,5,6,7]
+38: LOCAL_RANK: 6 - CUDA_VISIBLE_DEVICES: [0,1,2,3,4,5,6,7]
+ 5: LOCAL_RANK: 5 - CUDA_VISIBLE_DEVICES: [0,1,2,3,4,5,6,7]
+19: LOCAL_RANK: 3 - CUDA_VISIBLE_DEVICES: [0,1,2,3,4,5,6,7]
+10: LOCAL_RANK: 2 - CUDA_VISIBLE_DEVICES: [0,1,2,3,4,5,6,7]
+61: LOCAL_RANK: 5 - CUDA_VISIBLE_DEVICES: [0,1,2,3,4,5,6,7]
+51: LOCAL_RANK: 3 - CUDA_VISIBLE_DEVICES: [0,1,2,3,4,5,6,7]
+43: LOCAL_RANK: 3 - CUDA_VISIBLE_DEVICES: [0,1,2,3,4,5,6,7]
+ 7: LOCAL_RANK: 7 - CUDA_VISIBLE_DEVICES: [0,1,2,3,4,5,6,7]
+20: LOCAL_RANK: 4 - CUDA_VISIBLE_DEVICES: [0,1,2,3,4,5,6,7]
+39: LOCAL_RANK: 7 - CUDA_VISIBLE_DEVICES: [0,1,2,3,4,5,6,7]
+ 6: LOCAL_RANK: 6 - CUDA_VISIBLE_DEVICES: [0,1,2,3,4,5,6,7]
+44: LOCAL_RANK: 4 - CUDA_VISIBLE_DEVICES: [0,1,2,3,4,5,6,7]
+12: LOCAL_RANK: 4 - CUDA_VISIBLE_DEVICES: [0,1,2,3,4,5,6,7]
+25: LOCAL_RANK: 1 - CUDA_VISIBLE_DEVICES: [0,1,2,3,4,5,6,7]
+52: LOCAL_RANK: 4 - CUDA_VISIBLE_DEVICES: [0,1,2,3,4,5,6,7]
+26: LOCAL_RANK: 2 - CUDA_VISIBLE_DEVICES: [0,1,2,3,4,5,6,7]
+53: LOCAL_RANK: 5 - CUDA_VISIBLE_DEVICES: [0,1,2,3,4,5,6,7]
+45: LOCAL_RANK: 5 - CUDA_VISIBLE_DEVICES: [0,1,2,3,4,5,6,7]
+27: LOCAL_RANK: 3 - CUDA_VISIBLE_DEVICES: [0,1,2,3,4,5,6,7]
+21: LOCAL_RANK: 5 - CUDA_VISIBLE_DEVICES: [0,1,2,3,4,5,6,7]
+62: LOCAL_RANK: 6 - CUDA_VISIBLE_DEVICES: [0,1,2,3,4,5,6,7]
+46: LOCAL_RANK: 6 - CUDA_VISIBLE_DEVICES: [0,1,2,3,4,5,6,7]
+28: LOCAL_RANK: 4 - CUDA_VISIBLE_DEVICES: [0,1,2,3,4,5,6,7]
+54: LOCAL_RANK: 6 - CUDA_VISIBLE_DEVICES: [0,1,2,3,4,5,6,7]
+29: LOCAL_RANK: 5 - CUDA_VISIBLE_DEVICES: [0,1,2,3,4,5,6,7]
+55: LOCAL_RANK: 7 - CUDA_VISIBLE_DEVICES: [0,1,2,3,4,5,6,7]
+47: LOCAL_RANK: 7 - CUDA_VISIBLE_DEVICES: [0,1,2,3,4,5,6,7]
+30: LOCAL_RANK: 6 - CUDA_VISIBLE_DEVICES: [0,1,2,3,4,5,6,7]
+13: LOCAL_RANK: 5 - CUDA_VISIBLE_DEVICES: [0,1,2,3,4,5,6,7]
+22: LOCAL_RANK: 6 - CUDA_VISIBLE_DEVICES: [0,1,2,3,4,5,6,7]
+14: LOCAL_RANK: 6 - CUDA_VISIBLE_DEVICES: [0,1,2,3,4,5,6,7]
+63: LOCAL_RANK: 7 - CUDA_VISIBLE_DEVICES: [0,1,2,3,4,5,6,7]
+31: LOCAL_RANK: 7 - CUDA_VISIBLE_DEVICES: [0,1,2,3,4,5,6,7]
+23: LOCAL_RANK: 7 - CUDA_VISIBLE_DEVICES: [0,1,2,3,4,5,6,7]
+15: LOCAL_RANK: 7 - CUDA_VISIBLE_DEVICES: [0,1,2,3,4,5,6,7]
+ 0: Setting up DistributedDataParallel with config DistributedDataParallelConfig(grad_reduce_in_fp32=True, overlap_grad_reduce=True, use_distributed_optimizer=True, check_for_nan_in_grad=False, bucket_size=40000000, average_in_collective=False)
+ 0: Number of buckets for gradient all-reduce / reduce-scatter: 1
+ 0: Params for bucket 1 (11141120 elements):
+ 0: 	module.decoder.layers.10.self_attention.adapter_layer.lora_kqv_adapter.linear_out.weight
+ 0: 	module.decoder.layers.60.self_attention.adapter_layer.lora_dense_attention_adapter.linear_in.weight
+ 0: 	module.decoder.layers.45.self_attention.adapter_layer.lora_dense_attention_adapter.linear_out.weight
+ 0: 	module.decoder.layers.17.self_attention.adapter_layer.lora_dense_attention_adapter.linear_in.weight
+ 0: 	module.decoder.layers.13.self_attention.adapter_layer.lora_dense_attention_adapter.linear_in.weight
+ 0: 	module.decoder.layers.76.self_attention.adapter_layer.lora_kqv_adapter.linear_out.weight
+ 0: 	module.decoder.layers.13.self_attention.adapter_layer.lora_dense_attention_adapter.linear_out.weight
+ 0: 	module.decoder.layers.12.self_attention.adapter_layer.lora_kqv_adapter.linear_in.weight
+ 0: 	module.decoder.layers.10.self_attention.adapter_layer.lora_dense_attention_adapter.linear_out.weight
+ 0: 	module.decoder.layers.5.self_attention.adapter_layer.lora_dense_attention_adapter.linear_in.weight
+ 0: 	module.decoder.layers.46.self_attention.adapter_layer.lora_kqv_adapter.linear_out.weight
+ 0: 	module.decoder.layers.19.self_attention.adapter_layer.lora_kqv_adapter.linear_out.weight
+ 0: 	module.decoder.layers.18.self_attention.adapter_layer.lora_kqv_adapter.linear_in.weight
+ 0: 	module.decoder.layers.4.self_attention.adapter_layer.lora_dense_attention_adapter.linear_out.weight
+ 0: 	module.decoder.layers.65.self_attention.adapter_layer.lora_dense_attention_adapter.linear_in.weight
+ 0: 	module.decoder.layers.58.self_attention.adapter_layer.lora_kqv_adapter.linear_out.weight
+ 0: 	module.decoder.layers.50.self_attention.adapter_layer.lora_kqv_adapter.linear_out.weight
+ 0: 	module.decoder.layers.22.self_attention.adapter_layer.lora_dense_attention_adapter.linear_out.weight
+ 0: 	module.decoder.layers.27.self_attention.adapter_layer.lora_kqv_adapter.linear_out.weight
+ 0: 	module.decoder.layers.66.self_attention.adapter_layer.lora_dense_attention_adapter.linear_in.weight
+ 0: 	module.decoder.layers.50.self_attention.adapter_layer.lora_kqv_adapter.linear_in.weight
+ 0: 	module.decoder.layers.25.self_attention.adapter_layer.lora_dense_attention_adapter.linear_out.weight
+ 0: 	module.decoder.layers.20.self_attention.adapter_layer.lora_dense_attention_adapter.linear_in.weight
+ 0: 	module.decoder.layers.11.self_attention.adapter_layer.lora_kqv_adapter.linear_in.weight
+ 0: 	module.decoder.layers.1.self_attention.adapter_layer.lora_kqv_adapter.linear_in.weight
+ 0: 	module.decoder.layers.66.self_attention.adapter_layer.lora_dense_attention_adapter.linear_out.weight
+ 0: 	module.decoder.layers.44.self_attention.adapter_layer.lora_kqv_adapter.linear_out.weight
+ 0: 	module.decoder.layers.37.self_attention.adapter_layer.lora_dense_attention_adapter.linear_out.weight
+ 0: 	module.decoder.layers.65.self_attention.adapter_layer.lora_kqv_adapter.linear_in.weight
+ 0: 	module.decoder.layers.61.self_attention.adapter_layer.lora_dense_attention_adapter.linear_in.weight
+ 0: 	module.decoder.layers.24.self_attention.adapter_layer.lora_kqv_adapter.linear_in.weight
+ 0: 	module.decoder.layers.23.self_attention.adapter_layer.lora_kqv_adapter.linear_out.weight
+ 0: 	module.decoder.layers.66.self_attention.adapter_layer.lora_kqv_adapter.linear_in.weight
+ 0: 	module.decoder.layers.79.self_attention.adapter_layer.lora_kqv_adapter.linear_out.weight
+ 0: 	module.decoder.layers.77.self_attention.adapter_layer.lora_dense_attention_adapter.linear_in.weight
+ 0: 	module.decoder.layers.76.self_attention.adapter_layer.lora_kqv_adapter.linear_in.weight
+ 0: 	module.decoder.layers.69.self_attention.adapter_layer.lora_dense_attention_adapter.linear_out.weight
+ 0: 	module.decoder.layers.69.self_attention.adapter_layer.lora_kqv_adapter.linear_in.weight
+ 0: 	module.decoder.layers.39.self_attention.adapter_layer.lora_kqv_adapter.linear_out.weight
+ 0: 	module.decoder.layers.30.self_attention.adapter_layer.lora_kqv_adapter.linear_in.weight
+ 0: 	module.decoder.layers.50.self_attention.adapter_layer.lora_dense_attention_adapter.linear_in.weight
+ 0: 	module.decoder.layers.25.self_attention.adapter_layer.lora_kqv_adapter.linear_in.weight
+ 0: 	module.decoder.layers.60.self_attention.adapter_layer.lora_kqv_adapter.linear_out.weight
+ 0: 	module.decoder.layers.39.self_attention.adapter_layer.lora_kqv_adapter.linear_in.weight
+ 0: 	module.decoder.layers.36.self_attention.adapter_layer.lora_dense_attention_adapter.linear_out.weight
+ 0: 	module.decoder.layers.23.self_attention.adapter_layer.lora_kqv_adapter.linear_in.weight
+ 0: 	module.decoder.layers.17.self_attention.adapter_layer.lora_kqv_adapter.linear_out.weight
+ 0: 	module.decoder.layers.33.self_attention.adapter_layer.lora_kqv_adapter.linear_out.weight
+ 0: 	module.decoder.layers.1.self_attention.adapter_layer.lora_kqv_adapter.linear_out.weight
+ 0: 	module.decoder.layers.10.self_attention.adapter_layer.lora_kqv_adapter.linear_in.weight
+ 0: 	module.decoder.layers.64.self_attention.adapter_layer.lora_kqv_adapter.linear_in.weight
+ 0: 	module.decoder.layers.52.self_attention.adapter_layer.lora_kqv_adapter.linear_in.weight
+ 0: 	module.decoder.layers.44.self_attention.adapter_layer.lora_dense_attention_adapter.linear_in.weight
+ 0: 	module.decoder.layers.43.self_attention.adapter_layer.lora_kqv_adapter.linear_in.weight
+ 0: 	module.decoder.layers.8.self_attention.adapter_layer.lora_kqv_adapter.linear_out.weight
+ 0: 	module.decoder.layers.71.self_attention.adapter_layer.lora_dense_attention_adapter.linear_out.weight
+ 0: 	module.decoder.layers.66.self_attention.adapter_layer.lora_kqv_adapter.linear_out.weight
+ 0: 	module.decoder.layers.51.self_attention.adapter_layer.lora_dense_attention_adapter.linear_out.weight
+ 0: 	module.decoder.layers.38.self_attention.adapter_layer.lora_dense_attention_adapter.linear_in.weight
+ 0: 	module.decoder.layers.2.self_attention.adapter_layer.lora_kqv_adapter.linear_out.weight
+ 0: 	module.decoder.layers.68.self_attention.adapter_layer.lora_dense_attention_adapter.linear_out.weight
+ 0: 	module.decoder.layers.56.self_attention.adapter_layer.lora_kqv_adapter.linear_out.weight
+ 0: 	module.decoder.layers.67.self_attention.adapter_layer.lora_kqv_adapter.linear_out.weight
+ 0: 	module.decoder.layers.51.self_attention.adapter_layer.lora_kqv_adapter.linear_in.weight
+ 0: 	module.decoder.layers.34.self_attention.adapter_layer.lora_dense_attention_adapter.linear_in.weight
+ 0: 	module.decoder.layers.28.self_attention.adapter_layer.lora_kqv_adapter.linear_in.weight
+ 0: 	module.decoder.layers.67.self_attention.adapter_layer.lora_dense_attention_adapter.linear_in.weight
+ 0: 	module.decoder.layers.59.self_attention.adapter_layer.lora_dense_attention_adapter.linear_in.weight
+ 0: 	module.decoder.layers.58.self_attention.adapter_layer.lora_kqv_adapter.linear_in.weight
+ 0: 	module.decoder.layers.54.self_attention.adapter_layer.lora_dense_attention_adapter.linear_out.weight
+ 0: 	module.decoder.layers.53.self_attention.adapter_layer.lora_dense_attention_adapter.linear_out.weight
+ 0: 	module.decoder.layers.45.self_attention.adapter_layer.lora_kqv_adapter.linear_out.weight
+ 0: 	module.decoder.layers.74.self_attention.adapter_layer.lora_kqv_adapter.linear_out.weight
+ 0: 	module.decoder.layers.67.self_attention.adapter_layer.lora_dense_attention_adapter.linear_out.weight
+ 0: 	module.decoder.layers.62.self_attention.adapter_layer.lora_kqv_adapter.linear_out.weight
+ 0: 	module.decoder.layers.55.self_attention.adapter_layer.lora_dense_attention_adapter.linear_in.weight
+ 0: 	module.decoder.layers.54.self_attention.adapter_layer.lora_kqv_adapter.linear_in.weight
+ 0: 	module.decoder.layers.8.self_attention.adapter_layer.lora_dense_attention_adapter.linear_out.weight
+ 0: 	module.decoder.layers.61.self_attention.adapter_layer.lora_dense_attention_adapter.linear_out.weight
+ 0: 	module.decoder.layers.24.self_attention.adapter_layer.lora_dense_attention_adapter.linear_out.weight
+ 0: 	module.decoder.layers.51.self_attention.adapter_layer.lora_dense_attention_adapter.linear_in.weight
+ 0: 	module.decoder.layers.29.self_attention.adapter_layer.lora_dense_attention_adapter.linear_in.weight
+ 0: 	module.decoder.layers.48.self_attention.adapter_layer.lora_dense_attention_adapter.linear_out.weight
+ 0: 	module.decoder.layers.38.self_attention.adapter_layer.lora_dense_attention_adapter.linear_out.weight
+ 0: 	module.decoder.layers.58.self_attention.adapter_layer.lora_dense_attention_adapter.linear_in.weight
+ 0: 	module.decoder.layers.48.self_attention.adapter_layer.lora_kqv_adapter.linear_out.weight
+ 0: 	module.decoder.layers.46.self_attention.adapter_layer.lora_kqv_adapter.linear_in.weight
+ 0: 	module.decoder.layers.26.self_attention.adapter_layer.lora_kqv_adapter.linear_out.weight
+ 0: 	module.decoder.layers.1.self_attention.adapter_layer.lora_dense_attention_adapter.linear_in.weight
+ 0: 	module.decoder.layers.32.self_attention.adapter_layer.lora_dense_attention_adapter.linear_in.weight
+ 0: 	module.decoder.layers.26.self_attention.adapter_layer.lora_dense_attention_adapter.linear_out.weight
+ 0: 	module.decoder.layers.36.self_attention.adapter_layer.lora_kqv_adapter.linear_in.weight
+ 0: 	module.decoder.layers.12.self_attention.adapter_layer.lora_kqv_adapter.linear_out.weight
+ 0: 	module.decoder.layers.74.self_attention.adapter_layer.lora_kqv_adapter.linear_in.weight
+ 0: 	module.decoder.layers.11.self_attention.adapter_layer.lora_kqv_adapter.linear_out.weight
+ 0: 	module.decoder.layers.19.self_attention.adapter_layer.lora_kqv_adapter.linear_in.weight
+ 0: 	module.decoder.layers.10.self_attention.adapter_layer.lora_dense_attention_adapter.linear_in.weight
+ 0: 	module.decoder.layers.2.self_attention.adapter_layer.lora_kqv_adapter.linear_in.weight
+ 0: 	module.decoder.layers.29.self_attention.adapter_layer.lora_dense_attention_adapter.linear_out.weight
+ 0: 	module.decoder.layers.21.self_attention.adapter_layer.lora_kqv_adapter.linear_out.weight
+ 0: 	module.decoder.layers.68.self_attention.adapter_layer.lora_kqv_adapter.linear_out.weight
+ 0: 	module.decoder.layers.46.self_attention.adapter_layer.lora_dense_attention_adapter.linear_out.weight
+ 0: 	module.decoder.layers.6.self_attention.adapter_layer.lora_kqv_adapter.linear_out.weight
+ 0: 	module.decoder.layers.70.self_attention.adapter_layer.lora_dense_attention_adapter.linear_in.weight
+ 0: 	module.decoder.layers.51.self_attention.adapter_layer.lora_kqv_adapter.linear_out.weight
+ 0: 	module.decoder.layers.42.self_attention.adapter_layer.lora_dense_attention_adapter.linear_out.weight
+ 0: 	module.decoder.layers.37.self_attention.adapter_layer.lora_kqv_adapter.linear_out.weight
+ 0: 	module.decoder.layers.31.self_attention.adapter_layer.lora_kqv_adapter.linear_out.weight
+ 0: 	module.decoder.layers.6.self_attention.adapter_layer.lora_dense_attention_adapter.linear_in.weight
+ 0: 	module.decoder.layers.56.self_attention.adapter_layer.lora_dense_attention_adapter.linear_out.weight
+ 0: 	module.decoder.layers.20.self_attention.adapter_layer.lora_kqv_adapter.linear_in.weight
+ 0: 	module.decoder.layers.63.self_attention.adapter_layer.lora_dense_attention_adapter.linear_in.weight
+ 0: 	module.decoder.layers.44.self_attention.adapter_layer.lora_dense_attention_adapter.linear_out.weight
+ 0: 	module.decoder.layers.41.self_attention.adapter_layer.lora_kqv_adapter.linear_in.weight
+ 0: 	module.decoder.layers.75.self_attention.adapter_layer.lora_dense_attention_adapter.linear_out.weight
+ 0: 	module.decoder.layers.62.self_attention.adapter_layer.lora_kqv_adapter.linear_in.weight
+ 0: 	module.decoder.layers.72.self_attention.adapter_layer.lora_dense_attention_adapter.linear_in.weight
+ 0: 	module.decoder.layers.57.self_attention.adapter_layer.lora_kqv_adapter.linear_out.weight
+ 0: 	module.decoder.layers.78.self_attention.adapter_layer.lora_dense_attention_adapter.linear_in.weight
+ 0: 	module.decoder.layers.72.self_attention.adapter_layer.lora_dense_attention_adapter.linear_out.weight
+ 0: 	module.decoder.layers.31.self_attention.adapter_layer.lora_dense_attention_adapter.linear_in.weight
+ 0: 	module.decoder.layers.59.self_attention.adapter_layer.lora_kqv_adapter.linear_in.weight
+ 0: 	module.decoder.layers.42.self_attention.adapter_layer.lora_dense_attention_adapter.linear_in.weight
+ 0: 	module.decoder.layers.3.self_attention.adapter_layer.lora_kqv_adapter.linear_out.weight
+ 0: 	module.decoder.layers.61.self_attention.adapter_layer.lora_kqv_adapter.linear_in.weight
+ 0: 	module.decoder.layers.49.self_attention.adapter_layer.lora_dense_attention_adapter.linear_in.weight
+ 0: 	module.decoder.layers.63.self_attention.adapter_layer.lora_kqv_adapter.linear_out.weight
+ 0: 	module.decoder.layers.64.self_attention.adapter_layer.lora_dense_attention_adapter.linear_out.weight
+ 0: 	module.decoder.layers.78.self_attention.adapter_layer.lora_dense_attention_adapter.linear_out.weight
+ 0: 	module.decoder.layers.75.self_attention.adapter_layer.lora_dense_attention_adapter.linear_in.weight
+ 0: 	module.decoder.layers.40.self_attention.adapter_layer.lora_kqv_adapter.linear_in.weight
+ 0: 	module.decoder.layers.29.self_attention.adapter_layer.lora_kqv_adapter.linear_in.weight
+ 0: 	module.decoder.layers.28.self_attention.adapter_layer.lora_dense_attention_adapter.linear_out.weight
+ 0: 	module.decoder.layers.2.self_attention.adapter_layer.lora_dense_attention_adapter.linear_out.weight
+ 0: 	module.decoder.layers.8.self_attention.adapter_layer.lora_kqv_adapter.linear_in.weight
+ 0: 	module.decoder.layers.5.self_attention.adapter_layer.lora_kqv_adapter.linear_in.weight
+ 0: 	module.decoder.layers.73.self_attention.adapter_layer.lora_dense_attention_adapter.linear_out.weight
+ 0: 	module.decoder.layers.73.self_attention.adapter_layer.lora_dense_attention_adapter.linear_in.weight
+ 0: 	module.decoder.layers.57.self_attention.adapter_layer.lora_kqv_adapter.linear_in.weight
+ 0: 	module.decoder.layers.53.self_attention.adapter_layer.lora_kqv_adapter.linear_in.weight
+ 0: 	module.decoder.layers.49.self_attention.adapter_layer.lora_kqv_adapter.linear_out.weight
+ 0: 	module.decoder.layers.47.self_attention.adapter_layer.lora_kqv_adapter.linear_out.weight
+ 0: 	module.decoder.layers.18.self_attention.adapter_layer.lora_kqv_adapter.linear_out.weight
+ 0: 	module.decoder.layers.9.self_attention.adapter_layer.lora_dense_attention_adapter.linear_in.weight
+ 0: 	module.decoder.layers.29.self_attention.adapter_layer.lora_kqv_adapter.linear_out.weight
+ 0: 	module.decoder.layers.40.self_attention.adapter_layer.lora_dense_attention_adapter.linear_in.weight
+ 0: 	module.decoder.layers.31.self_attention.adapter_layer.lora_kqv_adapter.linear_in.weight
+ 0: 	module.decoder.layers.14.self_attention.adapter_layer.lora_kqv_adapter.linear_in.weight
+ 0: 	module.decoder.layers.13.self_attention.adapter_layer.lora_kqv_adapter.linear_in.weight
+ 0: 	module.decoder.layers.33.self_attention.adapter_layer.lora_kqv_adapter.linear_in.weight
+ 0: 	module.decoder.layers.26.self_attention.adapter_layer.lora_dense_attention_adapter.linear_in.weight
+ 0: 	module.decoder.layers.79.self_attention.adapter_layer.lora_kqv_adapter.linear_in.weight
+ 0: 	module.decoder.layers.36.self_attention.adapter_layer.lora_kqv_adapter.linear_out.weight
+ 0: 	module.decoder.layers.74.self_attention.adapter_layer.lora_dense_attention_adapter.linear_in.weight
+ 0: 	module.decoder.layers.59.self_attention.adapter_layer.lora_kqv_adapter.linear_out.weight
+ 0: 	module.decoder.layers.14.self_attention.adapter_layer.lora_dense_attention_adapter.linear_out.weight
+ 0: 	module.decoder.layers.35.self_attention.adapter_layer.lora_dense_attention_adapter.linear_in.weight
+ 0: 	module.decoder.layers.30.self_attention.adapter_layer.lora_dense_attention_adapter.linear_in.weight
+ 0: 	module.decoder.layers.49.self_attention.adapter_layer.lora_dense_attention_adapter.linear_out.weight
+ 0: 	module.decoder.layers.18.self_attention.adapter_layer.lora_dense_attention_adapter.linear_in.weight
+ 0: 	module.decoder.layers.43.self_attention.adapter_layer.lora_dense_attention_adapter.linear_out.weight
+ 0: 	module.decoder.layers.25.self_attention.adapter_layer.lora_kqv_adapter.linear_out.weight
+ 0: 	module.decoder.layers.22.self_attention.adapter_layer.lora_kqv_adapter.linear_out.weight
+ 0: 	module.decoder.layers.7.self_attention.adapter_layer.lora_dense_attention_adapter.linear_out.weight
+ 0: 	module.decoder.layers.60.self_attention.adapter_layer.lora_kqv_adapter.linear_in.weight
+ 0: 	module.decoder.layers.47.self_attention.adapter_layer.lora_kqv_adapter.linear_in.weight
+ 0: 	module.decoder.layers.30.self_attention.adapter_layer.lora_dense_attention_adapter.linear_out.weight
+ 0: 	module.decoder.layers.63.self_attention.adapter_layer.lora_kqv_adapter.linear_in.weight
+ 0: 	module.decoder.layers.73.self_attention.adapter_layer.lora_kqv_adapter.linear_in.weight
+ 0: 	module.decoder.layers.27.self_attention.adapter_layer.lora_kqv_adapter.linear_in.weight
+ 0: 	module.decoder.layers.14.self_attention.adapter_layer.lora_dense_attention_adapter.linear_in.weight
+ 0: 	module.decoder.layers.71.self_attention.adapter_layer.lora_dense_attention_adapter.linear_in.weight
+ 0: 	module.decoder.layers.2.self_attention.adapter_layer.lora_dense_attention_adapter.linear_in.weight
+ 0: 	module.decoder.layers.76.self_attention.adapter_layer.lora_dense_attention_adapter.linear_out.weight
+ 0: 	module.decoder.layers.21.self_attention.adapter_layer.lora_dense_attention_adapter.linear_out.weight
+ 0: 	module.decoder.layers.21.self_attention.adapter_layer.lora_kqv_adapter.linear_in.weight
+ 0: 	module.decoder.layers.42.self_attention.adapter_layer.lora_kqv_adapter.linear_out.weight
+ 0: 	module.decoder.layers.56.self_attention.adapter_layer.lora_dense_attention_adapter.linear_in.weight
+ 0: 	module.decoder.layers.55.self_attention.adapter_layer.lora_kqv_adapter.linear_in.weight
+ 0: 	module.decoder.layers.41.self_attention.adapter_layer.lora_dense_attention_adapter.linear_out.weight
+ 0: 	module.decoder.layers.34.self_attention.adapter_layer.lora_kqv_adapter.linear_out.weight
+ 0: 	module.decoder.layers.5.self_attention.adapter_layer.lora_kqv_adapter.linear_out.weight
+ 0: 	module.decoder.layers.21.self_attention.adapter_layer.lora_dense_attention_adapter.linear_in.weight
+ 0: 	module.decoder.layers.70.self_attention.adapter_layer.lora_kqv_adapter.linear_out.weight
+ 0: 	module.decoder.layers.23.self_attention.adapter_layer.lora_dense_attention_adapter.linear_out.weight
+ 0: 	module.decoder.layers.76.self_attention.adapter_layer.lora_dense_attention_adapter.linear_in.weight
+ 0: 	module.decoder.layers.57.self_attention.adapter_layer.lora_dense_attention_adapter.linear_out.weight
+ 0: 	module.decoder.layers.48.self_attention.adapter_layer.lora_dense_attention_adapter.linear_in.weight
+ 0: 	module.decoder.layers.22.self_attention.adapter_layer.lora_dense_attention_adapter.linear_in.weight
+ 0: 	module.decoder.layers.69.self_attention.adapter_layer.lora_kqv_adapter.linear_out.weight
+ 0: 	module.decoder.layers.32.self_attention.adapter_layer.lora_dense_attention_adapter.linear_out.weight
+ 0: 	module.decoder.layers.0.self_attention.adapter_layer.lora_kqv_adapter.linear_in.weight
+ 0: 	module.decoder.layers.73.self_attention.adapter_layer.lora_kqv_adapter.linear_out.weight
+ 0: 	module.decoder.layers.56.self_attention.adapter_layer.lora_kqv_adapter.linear_in.weight
+ 0: 	module.decoder.layers.25.self_attention.adapter_layer.lora_dense_attention_adapter.linear_in.weight
+ 0: 	module.decoder.layers.17.self_attention.adapter_layer.lora_kqv_adapter.linear_in.weight
+ 0: 	module.decoder.layers.7.self_attention.adapter_layer.lora_kqv_adapter.linear_out.weight
+ 0: 	module.decoder.layers.40.self_attention.adapter_layer.lora_kqv_adapter.linear_out.weight
+ 0: 	module.decoder.layers.60.self_attention.adapter_layer.lora_dense_attention_adapter.linear_out.weight
+ 0: 	module.decoder.layers.75.self_attention.adapter_layer.lora_kqv_adapter.linear_in.weight
+ 0: 	module.decoder.layers.72.self_attention.adapter_layer.lora_kqv_adapter.linear_out.weight
+ 0: 	module.decoder.layers.41.self_attention.adapter_layer.lora_dense_attention_adapter.linear_in.weight
+ 0: 	module.decoder.layers.67.self_attention.adapter_layer.lora_kqv_adapter.linear_in.weight
+ 0: 	module.decoder.layers.54.self_attention.adapter_layer.lora_dense_attention_adapter.linear_in.weight
+ 0: 	module.decoder.layers.42.self_attention.adapter_layer.lora_kqv_adapter.linear_in.weight
+ 0: 	module.decoder.layers.62.self_attention.adapter_layer.lora_dense_attention_adapter.linear_in.weight
+ 0: 	module.decoder.layers.35.self_attention.adapter_layer.lora_kqv_adapter.linear_out.weight
+ 0: 	module.decoder.layers.34.self_attention.adapter_layer.lora_kqv_adapter.linear_in.weight
+ 0: 	module.decoder.layers.18.self_attention.adapter_layer.lora_dense_attention_adapter.linear_out.weight
+ 0: 	module.decoder.layers.26.self_attention.adapter_layer.lora_kqv_adapter.linear_in.weight
+ 0: 	module.decoder.layers.9.self_attention.adapter_layer.lora_kqv_adapter.linear_out.weight
+ 0: 	module.decoder.layers.74.self_attention.adapter_layer.lora_dense_attention_adapter.linear_out.weight
+ 0: 	module.decoder.layers.69.self_attention.adapter_layer.lora_dense_attention_adapter.linear_in.weight
+ 0: 	module.decoder.layers.49.self_attention.adapter_layer.lora_kqv_adapter.linear_in.weight
+ 0: 	module.decoder.layers.37.self_attention.adapter_layer.lora_kqv_adapter.linear_in.weight
+ 0: 	module.decoder.layers.20.self_attention.adapter_layer.lora_dense_attention_adapter.linear_out.weight
+ 0: 	module.decoder.layers.13.self_attention.adapter_layer.lora_kqv_adapter.linear_out.weight
+ 0: 	module.decoder.layers.62.self_attention.adapter_layer.lora_dense_attention_adapter.linear_out.weight
+ 0: 	module.decoder.layers.72.self_attention.adapter_layer.lora_kqv_adapter.linear_in.weight
+ 0: 	module.decoder.layers.57.self_attention.adapter_layer.lora_dense_attention_adapter.linear_in.weight
+ 0: 	module.decoder.layers.70.self_attention.adapter_layer.lora_kqv_adapter.linear_in.weight
+ 0: 	module.decoder.layers.34.self_attention.adapter_layer.lora_dense_attention_adapter.linear_out.weight
+ 0: 	module.decoder.layers.0.self_attention.adapter_layer.lora_dense_attention_adapter.linear_in.weight
+ 0: 	module.decoder.layers.48.self_attention.adapter_layer.lora_kqv_adapter.linear_in.weight
+ 0: 	module.decoder.layers.30.self_attention.adapter_layer.lora_kqv_adapter.linear_out.weight
+ 0: 	module.decoder.layers.15.self_attention.adapter_layer.lora_dense_attention_adapter.linear_out.weight
+ 0: 	module.decoder.layers.15.self_attention.adapter_layer.lora_dense_attention_adapter.linear_in.weight
+ 0: 	module.decoder.layers.79.self_attention.adapter_layer.lora_dense_attention_adapter.linear_out.weight
+ 0: 	module.decoder.layers.59.self_attention.adapter_layer.lora_dense_attention_adapter.linear_out.weight
+ 0: 	module.decoder.layers.53.self_attention.adapter_layer.lora_dense_attention_adapter.linear_in.weight
+ 0: 	module.decoder.layers.39.self_attention.adapter_layer.lora_dense_attention_adapter.linear_in.weight
+ 0: 	module.decoder.layers.32.self_attention.adapter_layer.lora_kqv_adapter.linear_out.weight
+ 0: 	module.decoder.layers.78.self_attention.adapter_layer.lora_kqv_adapter.linear_in.weight
+ 0: 	module.decoder.layers.47.self_attention.adapter_layer.lora_dense_attention_adapter.linear_out.weight
+ 0: 	module.decoder.layers.27.self_attention.adapter_layer.lora_dense_attention_adapter.linear_in.weight
+ 0: 	module.decoder.layers.6.self_attention.adapter_layer.lora_kqv_adapter.linear_in.weight
+ 0: 	module.decoder.layers.0.self_attention.adapter_layer.lora_kqv_adapter.linear_out.weight
+ 0: 	module.decoder.layers.27.self_attention.adapter_layer.lora_dense_attention_adapter.linear_out.weight
+ 0: 	module.decoder.layers.12.self_attention.adapter_layer.lora_dense_attention_adapter.linear_out.weight
+ 0: 	module.decoder.layers.9.self_attention.adapter_layer.lora_kqv_adapter.linear_in.weight
+ 0: 	module.decoder.layers.55.self_attention.adapter_layer.lora_dense_attention_adapter.linear_out.weight
+ 0: 	module.decoder.layers.54.self_attention.adapter_layer.lora_kqv_adapter.linear_out.weight
+ 0: 	module.decoder.layers.28.self_attention.adapter_layer.lora_dense_attention_adapter.linear_in.weight
+ 0: 	module.decoder.layers.39.self_attention.adapter_layer.lora_dense_attention_adapter.linear_out.weight
+ 0: 	module.decoder.layers.53.self_attention.adapter_layer.lora_kqv_adapter.linear_out.weight
+ 0: 	module.decoder.layers.52.self_attention.adapter_layer.lora_dense_attention_adapter.linear_in.weight
+ 0: 	module.decoder.layers.33.self_attention.adapter_layer.lora_dense_attention_adapter.linear_in.weight
+ 0: 	module.decoder.layers.36.self_attention.adapter_layer.lora_dense_attention_adapter.linear_in.weight
+ 0: 	module.decoder.layers.4.self_attention.adapter_layer.lora_kqv_adapter.linear_in.weight
+ 0: 	module.decoder.layers.77.self_attention.adapter_layer.lora_kqv_adapter.linear_out.weight
+ 0: 	module.decoder.layers.52.self_attention.adapter_layer.lora_dense_attention_adapter.linear_out.weight
+ 0: 	module.decoder.layers.16.self_attention.adapter_layer.lora_dense_attention_adapter.linear_in.weight
+ 0: 	module.decoder.layers.3.self_attention.adapter_layer.lora_dense_attention_adapter.linear_out.weight
+ 0: 	module.decoder.layers.3.self_attention.adapter_layer.lora_dense_attention_adapter.linear_in.weight
+ 0: 	module.decoder.layers.75.self_attention.adapter_layer.lora_kqv_adapter.linear_out.weight
+ 0: 	module.decoder.layers.68.self_attention.adapter_layer.lora_kqv_adapter.linear_in.weight
+ 0: 	module.decoder.layers.65.self_attention.adapter_layer.lora_kqv_adapter.linear_out.weight
+ 0: 	module.decoder.layers.9.self_attention.adapter_layer.lora_dense_attention_adapter.linear_out.weight
+ 0: 	module.decoder.layers.46.self_attention.adapter_layer.lora_dense_attention_adapter.linear_in.weight
+ 0: 	module.decoder.layers.23.self_attention.adapter_layer.lora_dense_attention_adapter.linear_in.weight
+ 0: 	module.decoder.layers.3.self_attention.adapter_layer.lora_kqv_adapter.linear_in.weight
+ 0: 	module.decoder.layers.7.self_attention.adapter_layer.lora_dense_attention_adapter.linear_in.weight
+ 0: 	module.decoder.layers.65.self_attention.adapter_layer.lora_dense_attention_adapter.linear_out.weight
+ 0: 	module.decoder.layers.43.self_attention.adapter_layer.lora_dense_attention_adapter.linear_in.weight
+ 0: 	module.decoder.layers.16.self_attention.adapter_layer.lora_kqv_adapter.linear_in.weight
+ 0: 	module.decoder.layers.8.self_attention.adapter_layer.lora_dense_attention_adapter.linear_in.weight
+ 0: 	module.decoder.layers.19.self_attention.adapter_layer.lora_dense_attention_adapter.linear_in.weight
+ 0: 	module.decoder.layers.77.self_attention.adapter_layer.lora_dense_attention_adapter.linear_out.weight
+ 0: 	module.decoder.layers.71.self_attention.adapter_layer.lora_kqv_adapter.linear_in.weight
+ 0: 	module.decoder.layers.64.self_attention.adapter_layer.lora_kqv_adapter.linear_out.weight
+ 0: 	module.decoder.layers.31.self_attention.adapter_layer.lora_dense_attention_adapter.linear_out.weight
+ 0: 	module.decoder.layers.58.self_attention.adapter_layer.lora_dense_attention_adapter.linear_out.weight
+ 0: 	module.decoder.layers.20.self_attention.adapter_layer.lora_kqv_adapter.linear_out.weight
+ 0: 	module.decoder.layers.14.self_attention.adapter_layer.lora_kqv_adapter.linear_out.weight
+ 0: 	module.decoder.layers.68.self_attention.adapter_layer.lora_dense_attention_adapter.linear_in.weight
+ 0: 	module.decoder.layers.38.self_attention.adapter_layer.lora_kqv_adapter.linear_in.weight
+ 0: 	module.decoder.layers.15.self_attention.adapter_layer.lora_kqv_adapter.linear_in.weight
+ 0: 	module.decoder.layers.0.self_attention.adapter_layer.lora_dense_attention_adapter.linear_out.weight
+ 0: 	module.decoder.layers.44.self_attention.adapter_layer.lora_kqv_adapter.linear_in.weight
+ 0: 	module.decoder.layers.32.self_attention.adapter_layer.lora_kqv_adapter.linear_in.weight
+ 0: 	module.decoder.layers.6.self_attention.adapter_layer.lora_dense_attention_adapter.linear_out.weight
+ 0: 	module.decoder.layers.4.self_attention.adapter_layer.lora_dense_attention_adapter.linear_in.weight
+ 0: 	module.decoder.layers.79.self_attention.adapter_layer.lora_dense_attention_adapter.linear_in.weight
+ 0: 	module.decoder.layers.61.self_attention.adapter_layer.lora_kqv_adapter.linear_out.weight
+ 0: 	module.decoder.layers.22.self_attention.adapter_layer.lora_kqv_adapter.linear_in.weight
+ 0: 	module.decoder.layers.77.self_attention.adapter_layer.lora_kqv_adapter.linear_in.weight
+ 0: 	module.decoder.layers.64.self_attention.adapter_layer.lora_dense_attention_adapter.linear_in.weight
+ 0: 	module.decoder.layers.33.self_attention.adapter_layer.lora_dense_attention_adapter.linear_out.weight
+ 0: 	module.decoder.layers.17.self_attention.adapter_layer.lora_dense_attention_adapter.linear_out.weight
+ 0: 	module.decoder.layers.12.self_attention.adapter_layer.lora_dense_attention_adapter.linear_in.weight
+ 0: 	module.decoder.layers.15.self_attention.adapter_layer.lora_kqv_adapter.linear_out.weight
+ 0: 	module.decoder.layers.16.self_attention.adapter_layer.lora_kqv_adapter.linear_out.weight
+ 0: 	module.decoder.layers.4.self_attention.adapter_layer.lora_kqv_adapter.linear_out.weight
+ 0: 	module.decoder.layers.71.self_attention.adapter_layer.lora_kqv_adapter.linear_out.weight
+ 0: 	module.decoder.layers.70.self_attention.adapter_layer.lora_dense_attention_adapter.linear_out.weight
+ 0: 	module.decoder.layers.38.self_attention.adapter_layer.lora_kqv_adapter.linear_out.weight
+ 0: 	module.decoder.layers.37.self_attention.adapter_layer.lora_dense_attention_adapter.linear_in.weight
+ 0: 	module.decoder.layers.35.self_attention.adapter_layer.lora_kqv_adapter.linear_in.weight
+ 0: 	module.decoder.layers.50.self_attention.adapter_layer.lora_dense_attention_adapter.linear_out.weight
+ 0: 	module.decoder.layers.28.self_attention.adapter_layer.lora_kqv_adapter.linear_out.weight
+ 0: 	module.decoder.layers.24.self_attention.adapter_layer.lora_kqv_adapter.linear_out.weight
+ 0: 	module.decoder.layers.11.self_attention.adapter_layer.lora_dense_attention_adapter.linear_out.weight
+ 0: 	module.decoder.layers.47.self_attention.adapter_layer.lora_dense_attention_adapter.linear_in.weight
+ 0: 	module.decoder.layers.1.self_attention.adapter_layer.lora_dense_attention_adapter.linear_out.weight
+ 0: 	module.decoder.layers.24.self_attention.adapter_layer.lora_dense_attention_adapter.linear_in.weight
+ 0: 	module.decoder.layers.19.self_attention.adapter_layer.lora_dense_attention_adapter.linear_out.weight
+ 0: 	module.decoder.layers.16.self_attention.adapter_layer.lora_dense_attention_adapter.linear_out.weight
+ 0: 	module.decoder.layers.11.self_attention.adapter_layer.lora_dense_attention_adapter.linear_in.weight
+ 0: 	module.decoder.layers.63.self_attention.adapter_layer.lora_dense_attention_adapter.linear_out.weight
+ 0: 	module.decoder.layers.78.self_attention.adapter_layer.lora_kqv_adapter.linear_out.weight
+ 0: 	module.decoder.layers.40.self_attention.adapter_layer.lora_dense_attention_adapter.linear_out.weight
+ 0: 	module.decoder.layers.5.self_attention.adapter_layer.lora_dense_attention_adapter.linear_out.weight
+ 0: 	module.decoder.layers.55.self_attention.adapter_layer.lora_kqv_adapter.linear_out.weight
+ 0: 	module.decoder.layers.45.self_attention.adapter_layer.lora_dense_attention_adapter.linear_in.weight
+ 0: 	module.decoder.layers.43.self_attention.adapter_layer.lora_kqv_adapter.linear_out.weight
+ 0: 	module.decoder.layers.41.self_attention.adapter_layer.lora_kqv_adapter.linear_out.weight
+ 0: 	module.decoder.layers.7.self_attention.adapter_layer.lora_kqv_adapter.linear_in.weight
+ 0: 	module.decoder.layers.52.self_attention.adapter_layer.lora_kqv_adapter.linear_out.weight
+ 0: 	module.decoder.layers.45.self_attention.adapter_layer.lora_kqv_adapter.linear_in.weight
+ 0: 	module.decoder.layers.35.self_attention.adapter_layer.lora_dense_attention_adapter.linear_out.weight
+ 0: Setting up optimizer with config OptimizerConfig(optimizer='adam', lr=0.0005, min_lr=None, decoupled_lr=None, decoupled_min_lr=None, weight_decay=0.0001, fp16=False, bf16=True, params_dtype=torch.bfloat16, loss_scale=None, initial_loss_scale=4294967296, min_loss_scale=1.0, loss_scale_window=1000, hysteresis=2, adam_beta1=0.9, adam_beta2=0.999, adam_eps=1e-08, sgd_momentum=0.9, use_distributed_optimizer=True, overlap_grad_reduce=True, overlap_param_gather=True, overlap_param_gather_with_optimizer_step=False, align_param_gather=False, clip_grad=0.3, log_num_zeros_in_grad=False, barrier_with_L1_time=False, timers=None, config_logger_dir='')
+ 0: 
+ 0:   | Name         | Type | Params | Mode
+ 0: ---------------------------------------------
+ 0:   | other params | n/a  | 17.3 B | n/a 
+ 0: ---------------------------------------------
+ 0: 11.1 M    Trainable params
+ 0: 17.2 B    Non-trainable params
+ 0: 17.3 B    Total params
+ 0: 69,029.364Total estimated model params size (MB)
+ 0: 0         Modules in train mode
+ 0: 0         Modules in eval mode
+ 0: :::MLLOG {"namespace": "", "time_ms": 1759281273579, "event_type": "POINT_IN_TIME", "key": "cache_clear", "value": true, "metadata": {"file": "/workspace/ft-llm/custom_callbacks.py", "lineno": 332}}
+ 0: :::MLLOG {"namespace": "", "time_ms": 1759281273581, "event_type": "INTERVAL_START", "key": "init_start", "value": null, "metadata": {"file": "/workspace/ft-llm/custom_callbacks.py", "lineno": 333}}
+ 0: :::MLLOG {"namespace": "", "time_ms": 1759281273581, "event_type": "POINT_IN_TIME", "key": "submission_benchmark", "value": "llama2_70b_lora", "metadata": {"file": "/workspace/ft-llm/custom_callbacks.py", "lineno": 334}}
+ 0: :::MLLOG {"namespace": "", "time_ms": 1759281273581, "event_type": "POINT_IN_TIME", "key": "submission_org", "value": "SUBMISSION_ORG_PLACEHOLDER", "metadata": {"file": "/workspace/ft-llm/custom_callbacks.py", "lineno": 334}}
+ 0: :::MLLOG {"namespace": "", "time_ms": 1759281273581, "event_type": "POINT_IN_TIME", "key": "submission_division", "value": "closed", "metadata": {"file": "/workspace/ft-llm/custom_callbacks.py", "lineno": 334}}
+ 0: :::MLLOG {"namespace": "", "time_ms": 1759281273581, "event_type": "POINT_IN_TIME", "key": "submission_status", "value": "onprem", "metadata": {"file": "/workspace/ft-llm/custom_callbacks.py", "lineno": 334}}
+ 0: :::MLLOG {"namespace": "", "time_ms": 1759281273581, "event_type": "POINT_IN_TIME", "key": "submission_platform", "value": "8xSUBMISSION_PLATFORM_PLACEHOLDER", "metadata": {"file": "/workspace/ft-llm/custom_callbacks.py", "lineno": 334}}
+ 0: :::MLLOG {"namespace": "", "time_ms": 1759281273581, "event_type": "POINT_IN_TIME", "key": "seed", "value": 27454, "metadata": {"file": "/workspace/ft-llm/custom_callbacks.py", "lineno": 335}}
+ 0: :::MLLOG {"namespace": "", "time_ms": 1759281273581, "event_type": "POINT_IN_TIME", "key": "global_batch_size", "value": 16, "metadata": {"file": "/workspace/ft-llm/custom_callbacks.py", "lineno": 341}}
+ 0: :::MLLOG {"namespace": "", "time_ms": 1759281273990, "event_type": "POINT_IN_TIME", "key": "train_samples", "value": 3901, "metadata": {"file": "/workspace/ft-llm/custom_callbacks.py", "lineno": 346}}
+ 0: :::MLLOG {"namespace": "", "time_ms": 1759281274010, "event_type": "POINT_IN_TIME", "key": "eval_samples", "value": 173, "metadata": {"file": "/workspace/ft-llm/custom_callbacks.py", "lineno": 350}}
+ 0: :::MLLOG {"namespace": "", "time_ms": 1759281274010, "event_type": "POINT_IN_TIME", "key": "opt_learning_rate_warmup_factor", "value": 0.0, "metadata": {"file": "/workspace/ft-llm/custom_callbacks.py", "lineno": 354}}
+ 0: :::MLLOG {"namespace": "", "time_ms": 1759281274011, "event_type": "POINT_IN_TIME", "key": "opt_adamw_weight_decay", "value": 0.0001, "metadata": {"file": "/workspace/ft-llm/custom_callbacks.py", "lineno": 358}}
+ 0: :::MLLOG {"namespace": "", "time_ms": 1759281274011, "event_type": "POINT_IN_TIME", "key": "opt_gradient_clip_norm", "value": 0.3, "metadata": {"file": "/workspace/ft-llm/custom_callbacks.py", "lineno": 362}}
+ 0: :::MLLOG {"namespace": "", "time_ms": 1759281274011, "event_type": "POINT_IN_TIME", "key": "gradient_accumulation_steps", "value": 1, "metadata": {"file": "/workspace/ft-llm/custom_callbacks.py", "lineno": 367}}
+ 0: :::MLLOG {"namespace": "", "time_ms": 1759281274011, "event_type": "POINT_IN_TIME", "key": "opt_learning_rate_training_steps", "value": 896, "metadata": {"file": "/workspace/ft-llm/custom_callbacks.py", "lineno": 368}}
+ 0: :::MLLOG {"namespace": "", "time_ms": 1759281274011, "event_type": "POINT_IN_TIME", "key": "opt_base_learning_rate", "value": 0.0005, "metadata": {"file": "/workspace/ft-llm/custom_callbacks.py", "lineno": 369}}
+ 0: :::MLLOG {"namespace": "", "time_ms": 1759281274011, "event_type": "POINT_IN_TIME", "key": "lora_rank", "value": 16, "metadata": {"file": "/workspace/ft-llm/custom_callbacks.py", "lineno": 370}}
+ 0: :::MLLOG {"namespace": "", "time_ms": 1759281274011, "event_type": "POINT_IN_TIME", "key": "lora_alpha", "value": 32, "metadata": {"file": "/workspace/ft-llm/custom_callbacks.py", "lineno": 371}}
+ 0: SLURM auto-requeueing enabled. Setting signal handlers.
+ 1: SLURM auto-requeueing enabled. Setting signal handlers.
+16: SLURM auto-requeueing enabled. Setting signal handlers.
+56: SLURM auto-requeueing enabled. Setting signal handlers.
+48: SLURM auto-requeueing enabled. Setting signal handlers.
+40: SLURM auto-requeueing enabled. Setting signal handlers.
+32: SLURM auto-requeueing enabled. Setting signal handlers.
+24: SLURM auto-requeueing enabled. Setting signal handlers.
+ 2: SLURM auto-requeueing enabled. Setting signal handlers.
+17: SLURM auto-requeueing enabled. Setting signal handlers.
+57: SLURM auto-requeueing enabled. Setting signal handlers.
+49: SLURM auto-requeueing enabled. Setting signal handlers.
+41: SLURM auto-requeueing enabled. Setting signal handlers.
+33: SLURM auto-requeueing enabled. Setting signal handlers.
+25: SLURM auto-requeueing enabled. Setting signal handlers.
+ 3: SLURM auto-requeueing enabled. Setting signal handlers.
+58: SLURM auto-requeueing enabled. Setting signal handlers.
+50: SLURM auto-requeueing enabled. Setting signal handlers.
+42: SLURM auto-requeueing enabled. Setting signal handlers.
+34: SLURM auto-requeueing enabled. Setting signal handlers.
+26: SLURM auto-requeueing enabled. Setting signal handlers.
+35: SLURM auto-requeueing enabled. Setting signal handlers.
+59: SLURM auto-requeueing enabled. Setting signal handlers.
+51: SLURM auto-requeueing enabled. Setting signal handlers.
+36: SLURM auto-requeueing enabled. Setting signal handlers.
+18: SLURM auto-requeueing enabled. Setting signal handlers.
+ 8: SLURM auto-requeueing enabled. Setting signal handlers.
+52: SLURM auto-requeueing enabled. Setting signal handlers.
+43: SLURM auto-requeueing enabled. Setting signal handlers.
+19: SLURM auto-requeueing enabled. Setting signal handlers.
+ 9: SLURM auto-requeueing enabled. Setting signal handlers.
+27: SLURM auto-requeueing enabled. Setting signal handlers.
+28: SLURM auto-requeueing enabled. Setting signal handlers.
+10: SLURM auto-requeueing enabled. Setting signal handlers.
+ 4: SLURM auto-requeueing enabled. Setting signal handlers.
+11: SLURM auto-requeueing enabled. Setting signal handlers.
+60: SLURM auto-requeueing enabled. Setting signal handlers.
+ 5: SLURM auto-requeueing enabled. Setting signal handlers.
+20: SLURM auto-requeueing enabled. Setting signal handlers.
+12: SLURM auto-requeueing enabled. Setting signal handlers.
+61: SLURM auto-requeueing enabled. Setting signal handlers.
+44: SLURM auto-requeueing enabled. Setting signal handlers.
+37: SLURM auto-requeueing enabled. Setting signal handlers.
+21: SLURM auto-requeueing enabled. Setting signal handlers.
+53: SLURM auto-requeueing enabled. Setting signal handlers.
+45: SLURM auto-requeueing enabled. Setting signal handlers.
+38: SLURM auto-requeueing enabled. Setting signal handlers.
+54: SLURM auto-requeueing enabled. Setting signal handlers.
+55: SLURM auto-requeueing enabled. Setting signal handlers.
+62: SLURM auto-requeueing enabled. Setting signal handlers.
+ 6: SLURM auto-requeueing enabled. Setting signal handlers.
+29: SLURM auto-requeueing enabled. Setting signal handlers.
+ 7: SLURM auto-requeueing enabled. Setting signal handlers.
+63: SLURM auto-requeueing enabled. Setting signal handlers.
+30: SLURM auto-requeueing enabled. Setting signal handlers.
+13: SLURM auto-requeueing enabled. Setting signal handlers.
+39: SLURM auto-requeueing enabled. Setting signal handlers.
+14: SLURM auto-requeueing enabled. Setting signal handlers.
+22: SLURM auto-requeueing enabled. Setting signal handlers.
+46: SLURM auto-requeueing enabled. Setting signal handlers.
+23: SLURM auto-requeueing enabled. Setting signal handlers.
+47: SLURM auto-requeueing enabled. Setting signal handlers.
+15: SLURM auto-requeueing enabled. Setting signal handlers.
+31: SLURM auto-requeueing enabled. Setting signal handlers.
+ 0: [NeMo W 2025-09-30 20:14:36 nemo_logging:349] /usr/local/lib/python3.10/dist-packages/transformers/utils/hub.py:128: FutureWarning: Using `TRANSFORMERS_CACHE` is deprecated and will be removed in v5 of Transformers. Use `HF_HOME` instead.
+ 0:       warnings.warn(
+ 0:     
+49: `zarr` distributed checkpoint backend is deprecated. Please switch to PyTorch Distributed format (`torch_dist`).
+50: `zarr` distributed checkpoint backend is deprecated. Please switch to PyTorch Distributed format (`torch_dist`).
+51: `zarr` distributed checkpoint backend is deprecated. Please switch to PyTorch Distributed format (`torch_dist`).
+48: `zarr` distributed checkpoint backend is deprecated. Please switch to PyTorch Distributed format (`torch_dist`).
+52: `zarr` distributed checkpoint backend is deprecated. Please switch to PyTorch Distributed format (`torch_dist`).
+53: `zarr` distributed checkpoint backend is deprecated. Please switch to PyTorch Distributed format (`torch_dist`).
+54: `zarr` distributed checkpoint backend is deprecated. Please switch to PyTorch Distributed format (`torch_dist`).
+55: `zarr` distributed checkpoint backend is deprecated. Please switch to PyTorch Distributed format (`torch_dist`).
+16: `zarr` distributed checkpoint backend is deprecated. Please switch to PyTorch Distributed format (`torch_dist`).
+17: `zarr` distributed checkpoint backend is deprecated. Please switch to PyTorch Distributed format (`torch_dist`).
+18: `zarr` distributed checkpoint backend is deprecated. Please switch to PyTorch Distributed format (`torch_dist`).
+19: `zarr` distributed checkpoint backend is deprecated. Please switch to PyTorch Distributed format (`torch_dist`).
+22: `zarr` distributed checkpoint backend is deprecated. Please switch to PyTorch Distributed format (`torch_dist`).
+23: `zarr` distributed checkpoint backend is deprecated. Please switch to PyTorch Distributed format (`torch_dist`).
+20: `zarr` distributed checkpoint backend is deprecated. Please switch to PyTorch Distributed format (`torch_dist`).
+21: `zarr` distributed checkpoint backend is deprecated. Please switch to PyTorch Distributed format (`torch_dist`).
+ 2: `zarr` distributed checkpoint backend is deprecated. Please switch to PyTorch Distributed format (`torch_dist`).
+ 3: `zarr` distributed checkpoint backend is deprecated. Please switch to PyTorch Distributed format (`torch_dist`).
+33: `zarr` distributed checkpoint backend is deprecated. Please switch to PyTorch Distributed format (`torch_dist`).
+34: `zarr` distributed checkpoint backend is deprecated. Please switch to PyTorch Distributed format (`torch_dist`).
+36: `zarr` distributed checkpoint backend is deprecated. Please switch to PyTorch Distributed format (`torch_dist`).
+37: `zarr` distributed checkpoint backend is deprecated. Please switch to PyTorch Distributed format (`torch_dist`).
+35: `zarr` distributed checkpoint backend is deprecated. Please switch to PyTorch Distributed format (`torch_dist`).
+39: `zarr` distributed checkpoint backend is deprecated. Please switch to PyTorch Distributed format (`torch_dist`).
+32: `zarr` distributed checkpoint backend is deprecated. Please switch to PyTorch Distributed format (`torch_dist`).
+24: `zarr` distributed checkpoint backend is deprecated. Please switch to PyTorch Distributed format (`torch_dist`).
+25: `zarr` distributed checkpoint backend is deprecated. Please switch to PyTorch Distributed format (`torch_dist`).
+26: `zarr` distributed checkpoint backend is deprecated. Please switch to PyTorch Distributed format (`torch_dist`).
+27: `zarr` distributed checkpoint backend is deprecated. Please switch to PyTorch Distributed format (`torch_dist`).
+28: `zarr` distributed checkpoint backend is deprecated. Please switch to PyTorch Distributed format (`torch_dist`).
+29: `zarr` distributed checkpoint backend is deprecated. Please switch to PyTorch Distributed format (`torch_dist`).
+30: `zarr` distributed checkpoint backend is deprecated. Please switch to PyTorch Distributed format (`torch_dist`).
+31: `zarr` distributed checkpoint backend is deprecated. Please switch to PyTorch Distributed format (`torch_dist`).
+38: `zarr` distributed checkpoint backend is deprecated. Please switch to PyTorch Distributed format (`torch_dist`).
+ 8: `zarr` distributed checkpoint backend is deprecated. Please switch to PyTorch Distributed format (`torch_dist`).
+ 9: `zarr` distributed checkpoint backend is deprecated. Please switch to PyTorch Distributed format (`torch_dist`).
+10: `zarr` distributed checkpoint backend is deprecated. Please switch to PyTorch Distributed format (`torch_dist`).
+12: `zarr` distributed checkpoint backend is deprecated. Please switch to PyTorch Distributed format (`torch_dist`).
+14: `zarr` distributed checkpoint backend is deprecated. Please switch to PyTorch Distributed format (`torch_dist`).
+15: `zarr` distributed checkpoint backend is deprecated. Please switch to PyTorch Distributed format (`torch_dist`).
+11: `zarr` distributed checkpoint backend is deprecated. Please switch to PyTorch Distributed format (`torch_dist`).
+13: `zarr` distributed checkpoint backend is deprecated. Please switch to PyTorch Distributed format (`torch_dist`).
+ 0: `zarr` distributed checkpoint backend is deprecated. Please switch to PyTorch Distributed format (`torch_dist`).
+ 6: `zarr` distributed checkpoint backend is deprecated. Please switch to PyTorch Distributed format (`torch_dist`).
+57: `zarr` distributed checkpoint backend is deprecated. Please switch to PyTorch Distributed format (`torch_dist`).
+58: `zarr` distributed checkpoint backend is deprecated. Please switch to PyTorch Distributed format (`torch_dist`).
+59: `zarr` distributed checkpoint backend is deprecated. Please switch to PyTorch Distributed format (`torch_dist`).
+56: `zarr` distributed checkpoint backend is deprecated. Please switch to PyTorch Distributed format (`torch_dist`).
+60: `zarr` distributed checkpoint backend is deprecated. Please switch to PyTorch Distributed format (`torch_dist`).
+61: `zarr` distributed checkpoint backend is deprecated. Please switch to PyTorch Distributed format (`torch_dist`).
+62: `zarr` distributed checkpoint backend is deprecated. Please switch to PyTorch Distributed format (`torch_dist`).
+ 4: `zarr` distributed checkpoint backend is deprecated. Please switch to PyTorch Distributed format (`torch_dist`).
+63: `zarr` distributed checkpoint backend is deprecated. Please switch to PyTorch Distributed format (`torch_dist`).
+41: `zarr` distributed checkpoint backend is deprecated. Please switch to PyTorch Distributed format (`torch_dist`).
+43: `zarr` distributed checkpoint backend is deprecated. Please switch to PyTorch Distributed format (`torch_dist`).
+44: `zarr` distributed checkpoint backend is deprecated. Please switch to PyTorch Distributed format (`torch_dist`).
+47: `zarr` distributed checkpoint backend is deprecated. Please switch to PyTorch Distributed format (`torch_dist`).
+40: `zarr` distributed checkpoint backend is deprecated. Please switch to PyTorch Distributed format (`torch_dist`).
+45: `zarr` distributed checkpoint backend is deprecated. Please switch to PyTorch Distributed format (`torch_dist`).
+46: `zarr` distributed checkpoint backend is deprecated. Please switch to PyTorch Distributed format (`torch_dist`).
+42: `zarr` distributed checkpoint backend is deprecated. Please switch to PyTorch Distributed format (`torch_dist`).
+ 1: `zarr` distributed checkpoint backend is deprecated. Please switch to PyTorch Distributed format (`torch_dist`).
+ 7: `zarr` distributed checkpoint backend is deprecated. Please switch to PyTorch Distributed format (`torch_dist`).
+ 5: `zarr` distributed checkpoint backend is deprecated. Please switch to PyTorch Distributed format (`torch_dist`).
+ 8: !!! [UB] Global ranks on node 1: [8, 9, 10, 11, 12, 13, 14, 15]
+48: !!! [UB] Global ranks on node 6: [48, 49, 50, 51, 52, 53, 54, 55]
+40: !!! [UB] Global ranks on node 5: [40, 41, 42, 43, 44, 45, 46, 47]
+24: !!! [UB] Global ranks on node 3: [24, 25, 26, 27, 28, 29, 30, 31]
+ 0: !!! [UB] Number of physical nodes: 8
+ 0: !!! [UB] Global ranks on node 0: [0, 1, 2, 3, 4, 5, 6, 7]
+16: !!! [UB] Global ranks on node 2: [16, 17, 18, 19, 20, 21, 22, 23]
+32: !!! [UB] Global ranks on node 4: [32, 33, 34, 35, 36, 37, 38, 39]
+ 0: !!! [UB] Create Userbuffers Communicator
+ 0: UB_TIMEOUT is set to 110 sec, 217800000000 cycles, freq: 1980000khz
+56: !!! [UB] Global ranks on node 7: [56, 57, 58, 59, 60, 61, 62, 63]
+ 0: MC initialized succesfully, window size = 549755813888
+ 0: !!! [UBP2P] Register UBuf 1
+ 0: !!! [UBP2P] Register UBuf 2
+ 0: !!! [UBP2P] Register UBuf 3
+ 0: !!! [UBP2P] Register UBuf 4
+ 0: !!! [UBP2P] Register UBuf 5
+ 0: !!! [UB] Register UBuf 6
+ 0: !!! [UB] Register UBuf 7
+ 0: !!! [UB] Register UBuf 8
+ 0: !!! [UB] Register UBuf 9
+ 0: !!! [UB] Register UBuf 10
+ 0: :::MLLOG {"namespace": "", "time_ms": 1759281302909, "event_type": "INTERVAL_END", "key": "init_stop", "value": null, "metadata": {"file": "/workspace/ft-llm/custom_callbacks.py", "lineno": 271}}
+ 0: :::MLLOG {"namespace": "", "time_ms": 1759281302909, "event_type": "INTERVAL_START", "key": "run_start", "value": null, "metadata": {"file": "/workspace/ft-llm/custom_callbacks.py", "lineno": 271}}
+ 0: :::MLLOG {"namespace": "", "time_ms": 1759281302910, "event_type": "INTERVAL_START", "key": "block_start", "value": null, "metadata": {"file": "/workspace/ft-llm/custom_callbacks.py", "lineno": 272, "samples_count": 0}}
+ 0: :::MLLOG {"namespace": "", "time_ms": 1759281311636, "event_type": "POINT_IN_TIME", "key": "train_loss", "value": 2.004768133163452, "metadata": {"file": "/workspace/ft-llm/custom_callbacks.py", "lineno": 223, "samples_count": 160, "lr": 0.0004998463440980931}}
+ 0: :::MLLOG {"namespace": "", "time_ms": 1759281320376, "event_type": "POINT_IN_TIME", "key": "train_loss", "value": 1.479365348815918, "metadata": {"file": "/workspace/ft-llm/custom_callbacks.py", "lineno": 223, "samples_count": 320, "lr": 0.0004993855652734615}}
+ 0: :::MLLOG {"namespace": "", "time_ms": 1759281329112, "event_type": "POINT_IN_TIME", "key": "train_loss", "value": 1.3787264823913574, "metadata": {"file": "/workspace/ft-llm/custom_callbacks.py", "lineno": 223, "samples_count": 480, "lr": 0.0004986182299371925}}
+ 0: :::MLLOG {"namespace": "", "time_ms": 1759281337888, "event_type": "POINT_IN_TIME", "key": "train_loss", "value": 1.3236489295959473, "metadata": {"file": "/workspace/ft-llm/custom_callbacks.py", "lineno": 223, "samples_count": 640, "lr": 0.0004975452813341115}}
+ 0: :::MLLOG {"namespace": "", "time_ms": 1759281346692, "event_type": "POINT_IN_TIME", "key": "train_loss", "value": 1.3297574520111084, "metadata": {"file": "/workspace/ft-llm/custom_callbacks.py", "lineno": 223, "samples_count": 800, "lr": 0.0004961680383833005}}
+ 0: :::MLLOG {"namespace": "", "time_ms": 1759281355512, "event_type": "POINT_IN_TIME", "key": "train_loss", "value": 1.3727917671203613, "metadata": {"file": "/workspace/ft-llm/custom_callbacks.py", "lineno": 223, "samples_count": 960, "lr": 0.0004944881940568219}}
+ 0: :::MLLOG {"namespace": "", "time_ms": 1759281364370, "event_type": "POINT_IN_TIME", "key": "train_loss", "value": 1.3770549297332764, "metadata": {"file": "/workspace/ft-llm/custom_callbacks.py", "lineno": 223, "samples_count": 1120, "lr": 0.000492507813298636}}
+ 0: :::MLLOG {"namespace": "", "time_ms": 1759281373198, "event_type": "POINT_IN_TIME", "key": "train_loss", "value": 1.2968552112579346, "metadata": {"file": "/workspace/ft-llm/custom_callbacks.py", "lineno": 223, "samples_count": 1280, "lr": 0.000490229330486275}}
+ 0: :::MLLOG {"namespace": "", "time_ms": 1759281382031, "event_type": "POINT_IN_TIME", "key": "train_loss", "value": 1.3022453784942627, "metadata": {"file": "/workspace/ft-llm/custom_callbacks.py", "lineno": 223, "samples_count": 1440, "lr": 0.0004876555464383907}}
+ 0: [NeMo W 2025-09-30 20:16:29 nemo_logging:349] /usr/local/lib/python3.10/dist-packages/transformers/utils/hub.py:128: FutureWarning: Using `TRANSFORMERS_CACHE` is deprecated and will be removed in v5 of Transformers. Use `HF_HOME` instead.
+ 0:       warnings.warn(
+ 0:     
+19: `zarr` distributed checkpoint backend is deprecated. Please switch to PyTorch Distributed format (`torch_dist`).
+16: `zarr` distributed checkpoint backend is deprecated. Please switch to PyTorch Distributed format (`torch_dist`).
+17: `zarr` distributed checkpoint backend is deprecated. Please switch to PyTorch Distributed format (`torch_dist`).
+20: `zarr` distributed checkpoint backend is deprecated. Please switch to PyTorch Distributed format (`torch_dist`).
+21: `zarr` distributed checkpoint backend is deprecated. Please switch to PyTorch Distributed format (`torch_dist`).
+23: `zarr` distributed checkpoint backend is deprecated. Please switch to PyTorch Distributed format (`torch_dist`).
+22: `zarr` distributed checkpoint backend is deprecated. Please switch to PyTorch Distributed format (`torch_dist`).
+18: `zarr` distributed checkpoint backend is deprecated. Please switch to PyTorch Distributed format (`torch_dist`).
+48: `zarr` distributed checkpoint backend is deprecated. Please switch to PyTorch Distributed format (`torch_dist`).
+49: `zarr` distributed checkpoint backend is deprecated. Please switch to PyTorch Distributed format (`torch_dist`).
+54: `zarr` distributed checkpoint backend is deprecated. Please switch to PyTorch Distributed format (`torch_dist`).
+55: `zarr` distributed checkpoint backend is deprecated. Please switch to PyTorch Distributed format (`torch_dist`).
+52: `zarr` distributed checkpoint backend is deprecated. Please switch to PyTorch Distributed format (`torch_dist`).
+53: `zarr` distributed checkpoint backend is deprecated. Please switch to PyTorch Distributed format (`torch_dist`).
+50: `zarr` distributed checkpoint backend is deprecated. Please switch to PyTorch Distributed format (`torch_dist`).
+51: `zarr` distributed checkpoint backend is deprecated. Please switch to PyTorch Distributed format (`torch_dist`).
+32: `zarr` distributed checkpoint backend is deprecated. Please switch to PyTorch Distributed format (`torch_dist`).
+33: `zarr` distributed checkpoint backend is deprecated. Please switch to PyTorch Distributed format (`torch_dist`).
+34: `zarr` distributed checkpoint backend is deprecated. Please switch to PyTorch Distributed format (`torch_dist`).
+35: `zarr` distributed checkpoint backend is deprecated. Please switch to PyTorch Distributed format (`torch_dist`).
+36: `zarr` distributed checkpoint backend is deprecated. Please switch to PyTorch Distributed format (`torch_dist`).
+37: `zarr` distributed checkpoint backend is deprecated. Please switch to PyTorch Distributed format (`torch_dist`).
+39: `zarr` distributed checkpoint backend is deprecated. Please switch to PyTorch Distributed format (`torch_dist`).
+38: `zarr` distributed checkpoint backend is deprecated. Please switch to PyTorch Distributed format (`torch_dist`).
+ 6: `zarr` distributed checkpoint backend is deprecated. Please switch to PyTorch Distributed format (`torch_dist`).
+ 7: `zarr` distributed checkpoint backend is deprecated. Please switch to PyTorch Distributed format (`torch_dist`).
+ 8: `zarr` distributed checkpoint backend is deprecated. Please switch to PyTorch Distributed format (`torch_dist`).
+ 2: `zarr` distributed checkpoint backend is deprecated. Please switch to PyTorch Distributed format (`torch_dist`).
+ 3: `zarr` distributed checkpoint backend is deprecated. Please switch to PyTorch Distributed format (`torch_dist`).
+ 5: `zarr` distributed checkpoint backend is deprecated. Please switch to PyTorch Distributed format (`torch_dist`).
+10: `zarr` distributed checkpoint backend is deprecated. Please switch to PyTorch Distributed format (`torch_dist`).
+14: `zarr` distributed checkpoint backend is deprecated. Please switch to PyTorch Distributed format (`torch_dist`).
+15: `zarr` distributed checkpoint backend is deprecated. Please switch to PyTorch Distributed format (`torch_dist`).
+ 0: `zarr` distributed checkpoint backend is deprecated. Please switch to PyTorch Distributed format (`torch_dist`).
+58: `zarr` distributed checkpoint backend is deprecated. Please switch to PyTorch Distributed format (`torch_dist`).
+59: `zarr` distributed checkpoint backend is deprecated. Please switch to PyTorch Distributed format (`torch_dist`).
+60: `zarr` distributed checkpoint backend is deprecated. Please switch to PyTorch Distributed format (`torch_dist`).
+61: `zarr` distributed checkpoint backend is deprecated. Please switch to PyTorch Distributed format (`torch_dist`).
+62: `zarr` distributed checkpoint backend is deprecated. Please switch to PyTorch Distributed format (`torch_dist`).
+56: `zarr` distributed checkpoint backend is deprecated. Please switch to PyTorch Distributed format (`torch_dist`).
+63: `zarr` distributed checkpoint backend is deprecated. Please switch to PyTorch Distributed format (`torch_dist`).
+ 4: `zarr` distributed checkpoint backend is deprecated. Please switch to PyTorch Distributed format (`torch_dist`).
+ 1: `zarr` distributed checkpoint backend is deprecated. Please switch to PyTorch Distributed format (`torch_dist`).
+57: `zarr` distributed checkpoint backend is deprecated. Please switch to PyTorch Distributed format (`torch_dist`).
+24: `zarr` distributed checkpoint backend is deprecated. Please switch to PyTorch Distributed format (`torch_dist`).
+29: `zarr` distributed checkpoint backend is deprecated. Please switch to PyTorch Distributed format (`torch_dist`).
+30: `zarr` distributed checkpoint backend is deprecated. Please switch to PyTorch Distributed format (`torch_dist`).
+31: `zarr` distributed checkpoint backend is deprecated. Please switch to PyTorch Distributed format (`torch_dist`).
+27: `zarr` distributed checkpoint backend is deprecated. Please switch to PyTorch Distributed format (`torch_dist`).
+28: `zarr` distributed checkpoint backend is deprecated. Please switch to PyTorch Distributed format (`torch_dist`).
+26: `zarr` distributed checkpoint backend is deprecated. Please switch to PyTorch Distributed format (`torch_dist`).
+11: `zarr` distributed checkpoint backend is deprecated. Please switch to PyTorch Distributed format (`torch_dist`).
+ 9: `zarr` distributed checkpoint backend is deprecated. Please switch to PyTorch Distributed format (`torch_dist`).
+12: `zarr` distributed checkpoint backend is deprecated. Please switch to PyTorch Distributed format (`torch_dist`).
+13: `zarr` distributed checkpoint backend is deprecated. Please switch to PyTorch Distributed format (`torch_dist`).
+25: `zarr` distributed checkpoint backend is deprecated. Please switch to PyTorch Distributed format (`torch_dist`).
+44: `zarr` distributed checkpoint backend is deprecated. Please switch to PyTorch Distributed format (`torch_dist`).
+45: `zarr` distributed checkpoint backend is deprecated. Please switch to PyTorch Distributed format (`torch_dist`).
+46: `zarr` distributed checkpoint backend is deprecated. Please switch to PyTorch Distributed format (`torch_dist`).
+47: `zarr` distributed checkpoint backend is deprecated. Please switch to PyTorch Distributed format (`torch_dist`).
+40: `zarr` distributed checkpoint backend is deprecated. Please switch to PyTorch Distributed format (`torch_dist`).
+41: `zarr` distributed checkpoint backend is deprecated. Please switch to PyTorch Distributed format (`torch_dist`).
+43: `zarr` distributed checkpoint backend is deprecated. Please switch to PyTorch Distributed format (`torch_dist`).
+42: `zarr` distributed checkpoint backend is deprecated. Please switch to PyTorch Distributed format (`torch_dist`).
+ 0: :::MLLOG {"namespace": "", "time_ms": 1759281395168, "event_type": "POINT_IN_TIME", "key": "tracked_stats", "value": {"throughput": 18.20431394126477}, "metadata": {"file": "/workspace/ft-llm/custom_callbacks.py", "lineno": 287, "step": 1536}}
+ 0: :::MLLOG {"namespace": "", "time_ms": 1759281395168, "event_type": "INTERVAL_END", "key": "block_stop", "value": null, "metadata": {"file": "/workspace/ft-llm/custom_callbacks.py", "lineno": 236, "samples_count": 1536}}
+ 0: :::MLLOG {"namespace": "", "time_ms": 1759281395168, "event_type": "INTERVAL_START", "key": "eval_start", "value": null, "metadata": {"file": "/workspace/ft-llm/custom_callbacks.py", "lineno": 241, "samples_count": 1536}}
+ 0: setting number of microbatches to constant 1
+ 0: setting number of microbatches to constant 1
+ 0: :::MLLOG {"namespace": "", "time_ms": 1759281400427, "event_type": "POINT_IN_TIME", "key": "eval_accuracy", "value": 0.9505981206893921, "metadata": {"file": "/workspace/ft-llm/custom_callbacks.py", "lineno": 307, "samples_count": 1536}}
+ 0: :::MLLOG {"namespace": "", "time_ms": 1759281400427, "event_type": "INTERVAL_END", "key": "eval_stop", "value": null, "metadata": {"file": "/workspace/ft-llm/custom_callbacks.py", "lineno": 312, "samples_count": 1536}}
+ 0: :::MLLOG {"namespace": "", "time_ms": 1759281400428, "event_type": "INTERVAL_START", "key": "block_start", "value": null, "metadata": {"file": "/workspace/ft-llm/custom_callbacks.py", "lineno": 253, "samples_count": 1536}}
+ 0: :::MLLOG {"namespace": "", "time_ms": 1759281404026, "event_type": "POINT_IN_TIME", "key": "train_loss", "value": 1.3436137437820435, "metadata": {"file": "/workspace/ft-llm/custom_callbacks.py", "lineno": 223, "samples_count": 1600, "lr": 0.000484789624971857}}
+ 0: :::MLLOG {"namespace": "", "time_ms": 1759281412890, "event_type": "POINT_IN_TIME", "key": "train_loss", "value": 1.2631111145019531, "metadata": {"file": "/workspace/ft-llm/custom_callbacks.py", "lineno": 223, "samples_count": 1760, "lr": 0.0004816350890126555}}
+ 0: :::MLLOG {"namespace": "", "time_ms": 1759281421712, "event_type": "POINT_IN_TIME", "key": "train_loss", "value": 1.3537911176681519, "metadata": {"file": "/workspace/ft-llm/custom_callbacks.py", "lineno": 223, "samples_count": 1920, "lr": 0.0004781958162653297}}
+ 0: :::MLLOG {"namespace": "", "time_ms": 1759281421718, "event_type": "POINT_IN_TIME", "key": "tracked_stats", "value": {"throughput": 18.047820946234413}, "metadata": {"file": "/workspace/ft-llm/custom_callbacks.py", "lineno": 287, "step": 1920}}
+ 0: :::MLLOG {"namespace": "", "time_ms": 1759281421718, "event_type": "INTERVAL_END", "key": "block_stop", "value": null, "metadata": {"file": "/workspace/ft-llm/custom_callbacks.py", "lineno": 236, "samples_count": 1920}}
+ 0: :::MLLOG {"namespace": "", "time_ms": 1759281421718, "event_type": "INTERVAL_START", "key": "eval_start", "value": null, "metadata": {"file": "/workspace/ft-llm/custom_callbacks.py", "lineno": 241, "samples_count": 1920}}
+ 0: setting number of microbatches to constant 1
+ 0: setting number of microbatches to constant 1
+ 0: :::MLLOG {"namespace": "", "time_ms": 1759281426176, "event_type": "POINT_IN_TIME", "key": "eval_accuracy", "value": 0.9449113011360168, "metadata": {"file": "/workspace/ft-llm/custom_callbacks.py", "lineno": 307, "samples_count": 1920}}
+ 0: :::MLLOG {"namespace": "", "time_ms": 1759281426176, "event_type": "INTERVAL_END", "key": "eval_stop", "value": null, "metadata": {"file": "/workspace/ft-llm/custom_callbacks.py", "lineno": 312, "samples_count": 1920}}
+ 0: :::MLLOG {"namespace": "", "time_ms": 1759281426176, "event_type": "INTERVAL_START", "key": "block_start", "value": null, "metadata": {"file": "/workspace/ft-llm/custom_callbacks.py", "lineno": 253, "samples_count": 1920}}
+ 0: :::MLLOG {"namespace": "", "time_ms": 1759281435005, "event_type": "POINT_IN_TIME", "key": "train_loss", "value": 1.3367383480072021, "metadata": {"file": "/workspace/ft-llm/custom_callbacks.py", "lineno": 223, "samples_count": 2080, "lr": 0.0004744760344463267}}
+ 0: :::MLLOG {"namespace": "", "time_ms": 1759281443830, "event_type": "POINT_IN_TIME", "key": "train_loss", "value": 1.3146495819091797, "metadata": {"file": "/workspace/ft-llm/custom_callbacks.py", "lineno": 223, "samples_count": 2240, "lr": 0.00047048031608708875}}
+ 0: :::MLLOG {"namespace": "", "time_ms": 1759281447364, "event_type": "POINT_IN_TIME", "key": "tracked_stats", "value": {"throughput": 18.13418476782184}, "metadata": {"file": "/workspace/ft-llm/custom_callbacks.py", "lineno": 287, "step": 2304}}
+ 0: :::MLLOG {"namespace": "", "time_ms": 1759281447365, "event_type": "INTERVAL_END", "key": "block_stop", "value": null, "metadata": {"file": "/workspace/ft-llm/custom_callbacks.py", "lineno": 236, "samples_count": 2304}}
+ 0: :::MLLOG {"namespace": "", "time_ms": 1759281447365, "event_type": "INTERVAL_START", "key": "eval_start", "value": null, "metadata": {"file": "/workspace/ft-llm/custom_callbacks.py", "lineno": 241, "samples_count": 2304}}
+ 0: setting number of microbatches to constant 1
+ 0: setting number of microbatches to constant 1
+ 0: :::MLLOG {"namespace": "", "time_ms": 1759281451768, "event_type": "POINT_IN_TIME", "key": "eval_accuracy", "value": 0.9387688636779785, "metadata": {"file": "/workspace/ft-llm/custom_callbacks.py", "lineno": 307, "samples_count": 2304}}
+ 0: :::MLLOG {"namespace": "", "time_ms": 1759281451769, "event_type": "INTERVAL_END", "key": "eval_stop", "value": null, "metadata": {"file": "/workspace/ft-llm/custom_callbacks.py", "lineno": 312, "samples_count": 2304}}
+ 0: :::MLLOG {"namespace": "", "time_ms": 1759281451769, "event_type": "INTERVAL_START", "key": "block_start", "value": null, "metadata": {"file": "/workspace/ft-llm/custom_callbacks.py", "lineno": 253, "samples_count": 2304}}
+ 0: :::MLLOG {"namespace": "", "time_ms": 1759281457105, "event_type": "POINT_IN_TIME", "key": "train_loss", "value": 1.3119105100631714, "metadata": {"file": "/workspace/ft-llm/custom_callbacks.py", "lineno": 223, "samples_count": 2400, "lr": 0.000466213572913282}}
+ 0: :::MLLOG {"namespace": "", "time_ms": 1759281465943, "event_type": "POINT_IN_TIME", "key": "train_loss", "value": 1.3003071546554565, "metadata": {"file": "/workspace/ft-llm/custom_callbacks.py", "lineno": 223, "samples_count": 2560, "lr": 0.00046168104980707104}}
+ 0: :::MLLOG {"namespace": "", "time_ms": 1759281473010, "event_type": "POINT_IN_TIME", "key": "tracked_stats", "value": {"throughput": 18.089940414862646}, "metadata": {"file": "/workspace/ft-llm/custom_callbacks.py", "lineno": 287, "step": 2688}}
+ 0: :::MLLOG {"namespace": "", "time_ms": 1759281473010, "event_type": "INTERVAL_END", "key": "block_stop", "value": null, "metadata": {"file": "/workspace/ft-llm/custom_callbacks.py", "lineno": 236, "samples_count": 2688}}
+ 0: :::MLLOG {"namespace": "", "time_ms": 1759281473010, "event_type": "INTERVAL_START", "key": "eval_start", "value": null, "metadata": {"file": "/workspace/ft-llm/custom_callbacks.py", "lineno": 241, "samples_count": 2688}}
+ 0: setting number of microbatches to constant 1
+ 0: setting number of microbatches to constant 1
+ 0: :::MLLOG {"namespace": "", "time_ms": 1759281477410, "event_type": "POINT_IN_TIME", "key": "eval_accuracy", "value": 0.9335039854049683, "metadata": {"file": "/workspace/ft-llm/custom_callbacks.py", "lineno": 307, "samples_count": 2688}}
+ 0: :::MLLOG {"namespace": "", "time_ms": 1759281477411, "event_type": "INTERVAL_END", "key": "eval_stop", "value": null, "metadata": {"file": "/workspace/ft-llm/custom_callbacks.py", "lineno": 312, "samples_count": 2688}}
+ 0: :::MLLOG {"namespace": "", "time_ms": 1759281477411, "event_type": "INTERVAL_START", "key": "block_start", "value": null, "metadata": {"file": "/workspace/ft-llm/custom_callbacks.py", "lineno": 253, "samples_count": 2688}}
+ 0: :::MLLOG {"namespace": "", "time_ms": 1759281479180, "event_type": "POINT_IN_TIME", "key": "train_loss", "value": 1.3192694187164307, "metadata": {"file": "/workspace/ft-llm/custom_callbacks.py", "lineno": 223, "samples_count": 2720, "lr": 0.0004568883183598622}}
+ 0: :::MLLOG {"namespace": "", "time_ms": 1759281488012, "event_type": "POINT_IN_TIME", "key": "train_loss", "value": 1.3026467561721802, "metadata": {"file": "/workspace/ft-llm/custom_callbacks.py", "lineno": 223, "samples_count": 2880, "lr": 0.0004518412700234406}}
+ 0: :::MLLOG {"namespace": "", "time_ms": 1759281496834, "event_type": "POINT_IN_TIME", "key": "train_loss", "value": 1.2794346809387207, "metadata": {"file": "/workspace/ft-llm/custom_callbacks.py", "lineno": 223, "samples_count": 3040, "lr": 0.0004465461088679189}}
+ 0: :::MLLOG {"namespace": "", "time_ms": 1759281498609, "event_type": "POINT_IN_TIME", "key": "tracked_stats", "value": {"throughput": 18.12556508022373}, "metadata": {"file": "/workspace/ft-llm/custom_callbacks.py", "lineno": 287, "step": 3072}}
+ 0: :::MLLOG {"namespace": "", "time_ms": 1759281498610, "event_type": "INTERVAL_END", "key": "block_stop", "value": null, "metadata": {"file": "/workspace/ft-llm/custom_callbacks.py", "lineno": 236, "samples_count": 3072}}
+ 0: :::MLLOG {"namespace": "", "time_ms": 1759281498610, "event_type": "INTERVAL_START", "key": "eval_start", "value": null, "metadata": {"file": "/workspace/ft-llm/custom_callbacks.py", "lineno": 241, "samples_count": 3072}}
+ 0: setting number of microbatches to constant 1
+ 0: setting number of microbatches to constant 1
+ 0: :::MLLOG {"namespace": "", "time_ms": 1759281503008, "event_type": "POINT_IN_TIME", "key": "eval_accuracy", "value": 0.9293261170387268, "metadata": {"file": "/workspace/ft-llm/custom_callbacks.py", "lineno": 307, "samples_count": 3072}}
+ 0: :::MLLOG {"namespace": "", "time_ms": 1759281503008, "event_type": "INTERVAL_END", "key": "eval_stop", "value": null, "metadata": {"file": "/workspace/ft-llm/custom_callbacks.py", "lineno": 312, "samples_count": 3072}}
+ 0: :::MLLOG {"namespace": "", "time_ms": 1759281503008, "event_type": "INTERVAL_START", "key": "block_start", "value": null, "metadata": {"file": "/workspace/ft-llm/custom_callbacks.py", "lineno": 253, "samples_count": 3072}}
+ 0: :::MLLOG {"namespace": "", "time_ms": 1759281510069, "event_type": "POINT_IN_TIME", "key": "train_loss", "value": 1.3507332801818848, "metadata": {"file": "/workspace/ft-llm/custom_callbacks.py", "lineno": 223, "samples_count": 3200, "lr": 0.0004410093439554019}}
+ 0: :::MLLOG {"namespace": "", "time_ms": 1759281518894, "event_type": "POINT_IN_TIME", "key": "train_loss", "value": 1.2928869724273682, "metadata": {"file": "/workspace/ft-llm/custom_callbacks.py", "lineno": 223, "samples_count": 3360, "lr": 0.0004352377813387398}}
+ 0: :::MLLOG {"namespace": "", "time_ms": 1759281524196, "event_type": "POINT_IN_TIME", "key": "tracked_stats", "value": {"throughput": 18.13573561806213}, "metadata": {"file": "/workspace/ft-llm/custom_callbacks.py", "lineno": 287, "step": 3456}}
+ 0: :::MLLOG {"namespace": "", "time_ms": 1759281524196, "event_type": "INTERVAL_END", "key": "block_stop", "value": null, "metadata": {"file": "/workspace/ft-llm/custom_callbacks.py", "lineno": 236, "samples_count": 3456}}
+ 0: :::MLLOG {"namespace": "", "time_ms": 1759281524196, "event_type": "INTERVAL_START", "key": "eval_start", "value": null, "metadata": {"file": "/workspace/ft-llm/custom_callbacks.py", "lineno": 241, "samples_count": 3456}}
+ 0: setting number of microbatches to constant 1
+ 0: setting number of microbatches to constant 1
+ 0: :::MLLOG {"namespace": "", "time_ms": 1759281528626, "event_type": "POINT_IN_TIME", "key": "eval_accuracy", "value": 0.9285601377487183, "metadata": {"file": "/workspace/ft-llm/custom_callbacks.py", "lineno": 307, "samples_count": 3456}}
+ 0: :::MLLOG {"namespace": "", "time_ms": 1759281528626, "event_type": "INTERVAL_END", "key": "eval_stop", "value": null, "metadata": {"file": "/workspace/ft-llm/custom_callbacks.py", "lineno": 312, "samples_count": 3456}}
+ 0: :::MLLOG {"namespace": "", "time_ms": 1759281528626, "event_type": "INTERVAL_START", "key": "block_start", "value": null, "metadata": {"file": "/workspace/ft-llm/custom_callbacks.py", "lineno": 253, "samples_count": 3456}}
+ 0: :::MLLOG {"namespace": "", "time_ms": 1759281532217, "event_type": "POINT_IN_TIME", "key": "train_loss", "value": 1.2498713731765747, "metadata": {"file": "/workspace/ft-llm/custom_callbacks.py", "lineno": 223, "samples_count": 3520, "lr": 0.00042923851569520683}}
+ 0: :::MLLOG {"namespace": "", "time_ms": 1759281541048, "event_type": "POINT_IN_TIME", "key": "train_loss", "value": 1.2924939393997192, "metadata": {"file": "/workspace/ft-llm/custom_callbacks.py", "lineno": 223, "samples_count": 3680, "lr": 0.0004230189216053889}}
+ 0: :::MLLOG {"namespace": "", "time_ms": 1759281549868, "event_type": "POINT_IN_TIME", "key": "train_loss", "value": 1.3047958612442017, "metadata": {"file": "/workspace/ft-llm/custom_callbacks.py", "lineno": 223, "samples_count": 3840, "lr": 0.000416586644488001}}
+ 0: :::MLLOG {"namespace": "", "time_ms": 1759281549874, "event_type": "POINT_IN_TIME", "key": "tracked_stats", "value": {"throughput": 18.083948559982947}, "metadata": {"file": "/workspace/ft-llm/custom_callbacks.py", "lineno": 287, "step": 3840}}
+ 0: :::MLLOG {"namespace": "", "time_ms": 1759281549874, "event_type": "INTERVAL_END", "key": "block_stop", "value": null, "metadata": {"file": "/workspace/ft-llm/custom_callbacks.py", "lineno": 236, "samples_count": 3840}}
+ 0: :::MLLOG {"namespace": "", "time_ms": 1759281549874, "event_type": "INTERVAL_START", "key": "eval_start", "value": null, "metadata": {"file": "/workspace/ft-llm/custom_callbacks.py", "lineno": 241, "samples_count": 3840}}
+ 0: setting number of microbatches to constant 1
+ 0: setting number of microbatches to constant 1
+ 0: :::MLLOG {"namespace": "", "time_ms": 1759281554322, "event_type": "POINT_IN_TIME", "key": "eval_accuracy", "value": 0.9274172186851501, "metadata": {"file": "/workspace/ft-llm/custom_callbacks.py", "lineno": 307, "samples_count": 3840}}
+ 0: :::MLLOG {"namespace": "", "time_ms": 1759281554323, "event_type": "INTERVAL_END", "key": "eval_stop", "value": null, "metadata": {"file": "/workspace/ft-llm/custom_callbacks.py", "lineno": 312, "samples_count": 3840}}
+ 0: :::MLLOG {"namespace": "", "time_ms": 1759281554323, "event_type": "INTERVAL_START", "key": "block_start", "value": null, "metadata": {"file": "/workspace/ft-llm/custom_callbacks.py", "lineno": 253, "samples_count": 3840}}
+ 0: :::MLLOG {"namespace": "", "time_ms": 1759281563145, "event_type": "POINT_IN_TIME", "key": "train_loss", "value": 1.3099273443222046, "metadata": {"file": "/workspace/ft-llm/custom_callbacks.py", "lineno": 223, "samples_count": 4000, "lr": 0.0004099495912017773}}
+ 0: :::MLLOG {"namespace": "", "time_ms": 1759281571969, "event_type": "POINT_IN_TIME", "key": "train_loss", "value": 1.2847082614898682, "metadata": {"file": "/workspace/ft-llm/custom_callbacks.py", "lineno": 223, "samples_count": 4160, "lr": 0.0004031159203259875}}
+ 0: :::MLLOG {"namespace": "", "time_ms": 1759281575505, "event_type": "POINT_IN_TIME", "key": "tracked_stats", "value": {"throughput": 18.13994415878707}, "metadata": {"file": "/workspace/ft-llm/custom_callbacks.py", "lineno": 287, "step": 4224}}
+ 0: :::MLLOG {"namespace": "", "time_ms": 1759281575505, "event_type": "INTERVAL_END", "key": "block_stop", "value": null, "metadata": {"file": "/workspace/ft-llm/custom_callbacks.py", "lineno": 236, "samples_count": 4224}}
+ 0: :::MLLOG {"namespace": "", "time_ms": 1759281575505, "event_type": "INTERVAL_START", "key": "eval_start", "value": null, "metadata": {"file": "/workspace/ft-llm/custom_callbacks.py", "lineno": 241, "samples_count": 4224}}
+ 0: setting number of microbatches to constant 1
+ 0: setting number of microbatches to constant 1
+ 0: :::MLLOG {"namespace": "", "time_ms": 1759281579898, "event_type": "POINT_IN_TIME", "key": "eval_accuracy", "value": 0.9228324890136719, "metadata": {"file": "/workspace/ft-llm/custom_callbacks.py", "lineno": 307, "samples_count": 4224}}
+ 0: :::MLLOG {"namespace": "", "time_ms": 1759281579899, "event_type": "INTERVAL_END", "key": "eval_stop", "value": null, "metadata": {"file": "/workspace/ft-llm/custom_callbacks.py", "lineno": 312, "samples_count": 4224}}
+ 0: :::MLLOG {"namespace": "", "time_ms": 1759281579899, "event_type": "INTERVAL_END", "key": "run_stop", "value": 0.9228324890136719, "metadata": {"file": "/workspace/ft-llm/custom_callbacks.py", "lineno": 321, "samples_count": 4224, "status": "success"}}
+22: sys:1: DeprecationWarning: builtin type swigvarlink has no __module__ attribute
+41: sys:1: DeprecationWarning: builtin type swigvarlink has no __module__ attribute
+ 4: sys:1: DeprecationWarning: builtin type swigvarlink has no __module__ attribute
+ 8: sys:1: DeprecationWarning: builtin type swigvarlink has no __module__ attribute
+45: sys:1: DeprecationWarning: builtin type swigvarlink has no __module__ attribute
+58: sys:1: DeprecationWarning: builtin type swigvarlink has no __module__ attribute
+20: sys:1: DeprecationWarning: builtin type swigvarlink has no __module__ attribute
+53: sys:1: DeprecationWarning: builtin type swigvarlink has no __module__ attribute
+52: sys:1: DeprecationWarning: builtin type swigvarlink has no __module__ attribute
+55: sys:1: DeprecationWarning: builtin type swigvarlink has no __module__ attribute
+26: sys:1: DeprecationWarning: builtin type swigvarlink has no __module__ attribute
+59: sys:1: DeprecationWarning: builtin type swigvarlink has no __module__ attribute
+42: sys:1: DeprecationWarning: builtin type swigvarlink has no __module__ attribute
+47: sys:1: DeprecationWarning: builtin type swigvarlink has no __module__ attribute
+34: sys:1: DeprecationWarning: builtin type swigvarlink has no __module__ attribute
+29: sys:1: DeprecationWarning: builtin type swigvarlink has no __module__ attribute
+24: sys:1: DeprecationWarning: builtin type swigvarlink has no __module__ attribute
+31: sys:1: DeprecationWarning: builtin type swigvarlink has no __module__ attribute
+ 6: sys:1: DeprecationWarning: builtin type swigvarlink has no __module__ attribute
+51: sys:1: DeprecationWarning: builtin type swigvarlink has no __module__ attribute
+10: sys:1: DeprecationWarning: builtin type swigvarlink has no __module__ attribute
+ 0: sys:1: DeprecationWarning: builtin type swigvarlink has no __module__ attribute
+28: sys:1: DeprecationWarning: builtin type swigvarlink has no __module__ attribute
+63: sys:1: DeprecationWarning: builtin type swigvarlink has no __module__ attribute
+16: sys:1: DeprecationWarning: builtin type swigvarlink has no __module__ attribute
+23: sys:1: DeprecationWarning: builtin type swigvarlink has no __module__ attribute
+56: sys:1: DeprecationWarning: builtin type swigvarlink has no __module__ attribute
+21: sys:1: DeprecationWarning: builtin type swigvarlink has no __module__ attribute
+43: sys:1: DeprecationWarning: builtin type swigvarlink has no __module__ attribute
+ 9: sys:1: DeprecationWarning: builtin type swigvarlink has no __module__ attribute
+11: sys:1: DeprecationWarning: builtin type swigvarlink has no __module__ attribute
+12: sys:1: DeprecationWarning: builtin type swigvarlink has no __module__ attribute
+14: sys:1: DeprecationWarning: builtin type swigvarlink has no __module__ attribute
+33: sys:1: DeprecationWarning: builtin type swigvarlink has no __module__ attribute
+18: sys:1: DeprecationWarning: builtin type swigvarlink has no __module__ attribute
+50: sys:1: DeprecationWarning: builtin type swigvarlink has no __module__ attribute
+32: sys:1: DeprecationWarning: builtin type swigvarlink has no __module__ attribute
+35: sys:1: DeprecationWarning: builtin type swigvarlink has no __module__ attribute
+ 1: sys:1: DeprecationWarning: builtin type swigvarlink has no __module__ attribute
+49: sys:1: DeprecationWarning: builtin type swigvarlink has no __module__ attribute
+48: sys:1: DeprecationWarning: builtin type swigvarlink has no __module__ attribute
+57: sys:1: DeprecationWarning: builtin type swigvarlink has no __module__ attribute
+ 3: sys:1: DeprecationWarning: builtin type swigvarlink has no __module__ attribute
+19: sys:1: DeprecationWarning: builtin type swigvarlink has no __module__ attribute
+17: sys:1: DeprecationWarning: builtin type swigvarlink has no __module__ attribute
+30: sys:1: DeprecationWarning: builtin type swigvarlink has no __module__ attribute
+44: sys:1: DeprecationWarning: builtin type swigvarlink has no __module__ attribute
+46: sys:1: DeprecationWarning: builtin type swigvarlink has no __module__ attribute
+40: sys:1: DeprecationWarning: builtin type swigvarlink has no __module__ attribute
+54: sys:1: DeprecationWarning: builtin type swigvarlink has no __module__ attribute
+60: sys:1: DeprecationWarning: builtin type swigvarlink has no __module__ attribute
+ 5: sys:1: DeprecationWarning: builtin type swigvarlink has no __module__ attribute
+37: sys:1: DeprecationWarning: builtin type swigvarlink has no __module__ attribute
+38: sys:1: DeprecationWarning: builtin type swigvarlink has no __module__ attribute
+62: sys:1: DeprecationWarning: builtin type swigvarlink has no __module__ attribute
+ 7: sys:1: DeprecationWarning: builtin type swigvarlink has no __module__ attribute
+36: sys:1: DeprecationWarning: builtin type swigvarlink has no __module__ attribute
+13: sys:1: DeprecationWarning: builtin type swigvarlink has no __module__ attribute
+ 2: sys:1: DeprecationWarning: builtin type swigvarlink has no __module__ attribute
+39: sys:1: DeprecationWarning: builtin type swigvarlink has no __module__ attribute
+15: sys:1: DeprecationWarning: builtin type swigvarlink has no __module__ attribute
+25: sys:1: DeprecationWarning: builtin type swigvarlink has no __module__ attribute
+27: sys:1: DeprecationWarning: builtin type swigvarlink has no __module__ attribute
+61: sys:1: DeprecationWarning: builtin type swigvarlink has no __module__ attribute
+ 0: ENDING TIMING RUN AT 2025-09-30 08:20:02 PM
+ 0: RESULT,LLM_FINETUNING,,448,nvidia,2025-09-30 08:12:34 PM
+++ date +%s
++ echo 'RUNANDTIME_STOP 1759281608'
+RUNANDTIME_STOP 1759281608
++ set -e

@@ -1,0 +1,72 @@
+[
+    {
+        "name": "/data",
+        "subdirs": [
+            {
+                "path": "/data",
+                "elements": 2,
+                "dir_size": 195980
+            }
+        ]
+    },
+    {
+        "name": "/ckpt",
+        "subdirs": [
+            {
+                "path": "/ckpt/model_weights/model.output_layer.weight",
+                "elements": 1,
+                "dir_size": 512012
+            },
+            {
+                "path": "/ckpt/model_weights/model.embedding.word_embeddings.weight",
+                "elements": 1,
+                "dir_size": 512012
+            },
+            {
+                "path": "/ckpt/model_weights/model.decoder.layers.self_attention.linear_qkv.weight",
+                "elements": 80,
+                "dir_size": 13107232
+            },
+            {
+                "path": "/ckpt/model_weights/model.decoder.layers.self_attention.linear_qkv.layer_norm_weight",
+                "elements": 80,
+                "dir_size": 1288
+            },
+            {
+                "path": "/ckpt/model_weights/model.decoder.layers.self_attention.linear_proj.weight",
+                "elements": 80,
+                "dir_size": 10485800
+            },
+            {
+                "path": "/ckpt/model_weights/model.decoder.layers.mlp.linear_fc2.weight",
+                "elements": 80,
+                "dir_size": 36700368
+            },
+            {
+                "path": "/ckpt/model_weights/model.decoder.layers.mlp.linear_fc1.weight",
+                "elements": 80,
+                "dir_size": 73400648
+            },
+            {
+                "path": "/ckpt/model_weights/model.decoder.layers.mlp.linear_fc1.layer_norm_weight",
+                "elements": 80,
+                "dir_size": 1288
+            },
+            {
+                "path": "/ckpt/model_weights/model.decoder.final_layernorm.weight",
+                "elements": 1,
+                "dir_size": 24
+            },
+            {
+                "path": "/ckpt/model_weights",
+                "elements": 15,
+                "dir_size": 134721980
+            },
+            {
+                "path": "/ckpt",
+                "elements": 4,
+                "dir_size": 134722972
+            }
+        ]
+    }
+]

@@ -1,0 +1,85 @@
+launching experiment using: --env=CP --env=CUBLAS_FORCE_XMMA_KERNEL_INIT --env=CUDA_DEVICE_MAX_CONNECTIONS --env=CUDNN_FRONTEND_ATTN_DP_WORKSPACE_LIMIT --env=DGXNGPU --env=DGXNNODES --env=DGXSYSTEM --env=ENABLE_TRANSPOSE_CACHE --env=FP8 --env=FP8_ACTIVATION --env=FP8_AMAX_ALGO --env=FP8_AMAX_HISTORY --env=FP8_DPA --env=FP8_REDUCE_AMAX --env=FUSED_SOFTMAX --env=HYDRA_FULL_ERROR --env=LORA_A2A --env=LR --env=MAX_STEPS --env=MBS --env=MC_TP_OVERLAP_AG --env=MC_TP_OVERLAP_RS --env=MC_TP_OVERLAP_RS_DGRAD --env=MINIBS --env=MLPERF_SUBMISSION_ORG --env=MLPERF_SUBMISSION_PLATFORM --env=NCCL_MIN_CTAS --env=NCCL_MIN_P2P_NCHANNELS --env=NCCL_NCHANNELS_PER_NET_PEER --env=NCCL_NVLS_ENABLE --env=NVIDIA_PYTORCH_VERSION --env=NVTE_CK_IS_V3_ATOMIC_FP32 --env=NVTE_CK_USES_BWD_V3 --env=NVTE_CK_USES_FWD_V3 --env=NVTE_DEBUG --env=NVTE_DEBUG_LEVEL --env=NVTE_FP8_DPA_BWD --env=NVTE_FUSED_ATTN --env=NVTE_FUSED_ATTN_AOTRITON --env=NVTE_FUSED_ATTN_CK --env=NVTE_RS_STRIDED_ATOMIC --env=NVTE_USE_CAST_TRANSPOSE_TRITON --env=NVTE_USE_HIPBLASLT --env=NVTE_USE_OPTIMIZED_HIPIFIED_CAST_TRANSPOSE --env=NVTE_USE_RMSNORM_TRITON --env=OMP_NUM_THREADS --env=POSSIBLE_USER_WARNINGS --env=PP --env=PROFILE_RPD --env=PT_TENSOR_VALIDATION --env=RMSNORM_CAST --env=SKIP_EVALS --env=SP --env=TORCH_BLAS_PREFER_HIPBLASLT --env=TP --env=TP_COMM_OVERLAP --env=USE_HIPBLASLT --env=USE_TE_SWIGLU --env=VAL_CHECK_INTERVAL --env=VBOOST_VALUE --env=WALLTIME --env=WALLTIME_MINUTES --env=WARMUP --env=DGXSYSTEM --env=SEED=24195 mlperf_llama2sft bash ./run_and_time.sh
+STARTING TIMING RUN AT 2025-10-05 10:34:36 PM
+[Gloo] Rank 1 is connected to 7 peer ranks. Expected number of connected peer ranks is : 7
+[Gloo] Rank 0 is connected to 7 peer ranks. Expected number of connected peer ranks is : 7
+[Gloo] Rank 2 is connected to 7 peer ranks. Expected number of connected peer ranks is : 7
+[Gloo] Rank 4 is connected to 7 peer ranks. Expected number of connected peer ranks is : 7
+[Gloo] Rank 3 is connected to 7 peer ranks. Expected number of connected peer ranks is : 7
+[Gloo] Rank 5 is connected to 7 peer ranks. Expected number of connected peer ranks is : 7
+[Gloo] Rank 7 is connected to [Gloo] Rank 7 peer ranks. Expected number of connected peer ranks is : 7
+6 is connected to 7 peer ranks. Expected number of connected peer ranks is : 7
+[Gloo] Rank 0 is connected to 7 peer ranks. Expected number of connected peer ranks is : 7
+[Gloo] Rank 1 is connected to 7 peer ranks. Expected number of connected peer ranks is : 7
+[Gloo] Rank 2 is connected to 7 peer ranks. Expected number of connected peer ranks is : 7
+[Gloo] Rank 3 is connected to 7 peer ranks. Expected number of connected peer ranks is : 7
+[Gloo] Rank 4 is connected to 7 peer ranks. Expected number of connected peer ranks is : 7
+[Gloo] Rank 5 is connected to 7 peer ranks. Expected number of connected peer ranks is : 7
+[Gloo] Rank 6 is connected to 7 peer ranks. Expected number of connected peer ranks is : 7
+[Gloo] Rank 7 is connected to 7 peer ranks. Expected number of connected peer ranks is : 7
+[Gloo] Rank 0 is connected to 7 peer ranks. Expected number of connected peer ranks is : 7
+[Gloo] Rank 1 is connected to 7 peer ranks. Expected number of connected peer ranks is : 7
+[Gloo] Rank 5 is connected to 7 peer ranks. Expected number of connected peer ranks is : 7
+[Gloo] Rank 2 is connected to 7 peer ranks. Expected number of connected peer ranks is : 7
+[Gloo] Rank 6 is connected to 7 peer ranks. Expected number of connected peer ranks is : [Gloo] Rank 7
+3 is connected to 7 peer ranks. Expected number of connected peer ranks is : 7
+[Gloo] Rank 4 is connected to 7 peer ranks. Expected number of connected peer ranks is : 7
+[Gloo] Rank 7 is connected to 7 peer ranks. Expected number of connected peer ranks is : 7
+Loading distributed checkpoint with TensorStoreLoadShardedStrategy
+Loading distributed checkpoint directly on the GPU
+> building indices for blendable datasets ...
+ > sample ratios:
+   dataset 0, input: 1, achieved: 1
+:::MLLOG {"namespace": "", "time_ms": 1759703770874, "event_type": "POINT_IN_TIME", "key": "cache_clear", "value": true, "metadata": {"file": "/workspace/code/src/callbacks/custom_callbacks.py", "lineno": 253}}
+:::MLLOG {"namespace": "", "time_ms": 1759703770874, "event_type": "INTERVAL_START", "key": "init_start", "value": null, "metadata": {"file": "/workspace/code/src/callbacks/custom_callbacks.py", "lineno": 254}}
+:::MLLOG {"namespace": "", "time_ms": 1759703770874, "event_type": "POINT_IN_TIME", "key": "submission_benchmark", "value": "llama2_70b_lora", "metadata": {"file": "/workspace/code/src/callbacks/custom_callbacks.py", "lineno": 255}}
+:::MLLOG {"namespace": "", "time_ms": 1759703770874, "event_type": "POINT_IN_TIME", "key": "submission_org", "value": "AMD", "metadata": {"file": "/workspace/code/src/callbacks/custom_callbacks.py", "lineno": 255}}
+:::MLLOG {"namespace": "", "time_ms": 1759703770874, "event_type": "POINT_IN_TIME", "key": "submission_division", "value": "closed", "metadata": {"file": "/workspace/code/src/callbacks/custom_callbacks.py", "lineno": 255}}
+:::MLLOG {"namespace": "", "time_ms": 1759703770875, "event_type": "POINT_IN_TIME", "key": "submission_status", "value": "onprem", "metadata": {"file": "/workspace/code/src/callbacks/custom_callbacks.py", "lineno": 255}}
+:::MLLOG {"namespace": "", "time_ms": 1759703770875, "event_type": "POINT_IN_TIME", "key": "submission_platform", "value": "1xMI355X", "metadata": {"file": "/workspace/code/src/callbacks/custom_callbacks.py", "lineno": 255}}
+:::MLLOG {"namespace": "", "time_ms": 1759703770875, "event_type": "POINT_IN_TIME", "key": "seed", "value": 24195, "metadata": {"file": "/workspace/code/src/callbacks/custom_callbacks.py", "lineno": 256}}
+:::MLLOG {"namespace": "", "time_ms": 1759703770875, "event_type": "POINT_IN_TIME", "key": "global_batch_size", "value": 8, "metadata": {"file": "/workspace/code/src/callbacks/custom_callbacks.py", "lineno": 262}}
+:::MLLOG {"namespace": "", "time_ms": 1759703771078, "event_type": "POINT_IN_TIME", "key": "train_samples", "value": 3901, "metadata": {"file": "/workspace/code/src/callbacks/custom_callbacks.py", "lineno": 267}}
+:::MLLOG {"namespace": "", "time_ms": 1759703771085, "event_type": "POINT_IN_TIME", "key": "eval_samples", "value": 173, "metadata": {"file": "/workspace/code/src/callbacks/custom_callbacks.py", "lineno": 271}}
+:::MLLOG {"namespace": "", "time_ms": 1759703771086, "event_type": "POINT_IN_TIME", "key": "opt_learning_rate_warmup_factor", "value": 0.0, "metadata": {"file": "/workspace/code/src/callbacks/custom_callbacks.py", "lineno": 275}}
+:::MLLOG {"namespace": "", "time_ms": 1759703771086, "event_type": "POINT_IN_TIME", "key": "opt_adamw_weight_decay", "value": 0.0001, "metadata": {"file": "/workspace/code/src/callbacks/custom_callbacks.py", "lineno": 279}}
+:::MLLOG {"namespace": "", "time_ms": 1759703771086, "event_type": "POINT_IN_TIME", "key": "opt_gradient_clip_norm", "value": 0.3, "metadata": {"file": "/workspace/code/src/callbacks/custom_callbacks.py", "lineno": 283}}
+:::MLLOG {"namespace": "", "time_ms": 1759703771086, "event_type": "POINT_IN_TIME", "key": "gradient_accumulation_steps", "value": 1, "metadata": {"file": "/workspace/code/src/callbacks/custom_callbacks.py", "lineno": 288}}
+:::MLLOG {"namespace": "", "time_ms": 1759703771086, "event_type": "POINT_IN_TIME", "key": "opt_learning_rate_training_steps", "value": 1024, "metadata": {"file": "/workspace/code/src/callbacks/custom_callbacks.py", "lineno": 289}}
+:::MLLOG {"namespace": "", "time_ms": 1759703771086, "event_type": "POINT_IN_TIME", "key": "opt_base_learning_rate", "value": 0.0004, "metadata": {"file": "/workspace/code/src/callbacks/custom_callbacks.py", "lineno": 290}}
+:::MLLOG {"namespace": "", "time_ms": 1759703771086, "event_type": "POINT_IN_TIME", "key": "lora_rank", "value": 16, "metadata": {"file": "/workspace/code/src/callbacks/custom_callbacks.py", "lineno": 291}}
+:::MLLOG {"namespace": "", "time_ms": 1759703771086, "event_type": "POINT_IN_TIME", "key": "lora_alpha", "value": 32, "metadata": {"file": "/workspace/code/src/callbacks/custom_callbacks.py", "lineno": 292}}
+:::MLLOG {"namespace": "", "time_ms": 1759703835656, "event_type": "INTERVAL_END", "key": "init_stop", "value": null, "metadata": {"file": "/workspace/code/src/callbacks/custom_callbacks.py", "lineno": 196}}
+:::MLLOG {"namespace": "", "time_ms": 1759703835656, "event_type": "INTERVAL_START", "key": "run_start", "value": null, "metadata": {"file": "/workspace/code/src/callbacks/custom_callbacks.py", "lineno": 196}}
+:::MLLOG {"namespace": "", "time_ms": 1759703835656, "event_type": "INTERVAL_START", "key": "block_start", "value": null, "metadata": {"file": "/workspace/code/src/callbacks/custom_callbacks.py", "lineno": 197, "samples_count": 0}}
+:::MLLOG {"namespace": "", "time_ms": 1759704104806, "event_type": "POINT_IN_TIME", "key": "tracked_stats", "value": {"throughput": 5.859261289306354}, "metadata": {"file": "/workspace/code/src/callbacks/custom_callbacks.py", "lineno": 217, "step": 1536}}
+:::MLLOG {"namespace": "", "time_ms": 1759704104806, "event_type": "INTERVAL_END", "key": "block_stop", "value": null, "metadata": {"file": "/workspace/code/src/callbacks/custom_callbacks.py", "lineno": 157, "samples_count": 1536, "curr_global_step": 192, "self.gbs": 8}}
+:::MLLOG {"namespace": "", "time_ms": 1759704104806, "event_type": "INTERVAL_START", "key": "eval_start", "value": null, "metadata": {"file": "/workspace/code/src/callbacks/custom_callbacks.py", "lineno": 166, "samples_count": 1536}}
+:::MLLOG {"namespace": "", "time_ms": 1759704117324, "event_type": "POINT_IN_TIME", "key": "eval_accuracy", "value": 0.9428715109825134, "metadata": {"file": "/workspace/code/src/callbacks/custom_callbacks.py", "lineno": 237, "samples_count": 1536}}
+:::MLLOG {"namespace": "", "time_ms": 1759704117324, "event_type": "INTERVAL_END", "key": "eval_stop", "value": null, "metadata": {"file": "/workspace/code/src/callbacks/custom_callbacks.py", "lineno": 242, "samples_count": 1536}}
+:::MLLOG {"namespace": "", "time_ms": 1759704117324, "event_type": "INTERVAL_START", "key": "block_start", "value": null, "metadata": {"file": "/workspace/code/src/callbacks/custom_callbacks.py", "lineno": 180, "samples_count": 1536}}
+:::MLLOG {"namespace": "", "time_ms": 1759704182877, "event_type": "POINT_IN_TIME", "key": "tracked_stats", "value": {"throughput": 5.860058052100889}, "metadata": {"file": "/workspace/code/src/callbacks/custom_callbacks.py", "lineno": 217, "step": 1920}}
+:::MLLOG {"namespace": "", "time_ms": 1759704182878, "event_type": "INTERVAL_END", "key": "block_stop", "value": null, "metadata": {"file": "/workspace/code/src/callbacks/custom_callbacks.py", "lineno": 157, "samples_count": 1920, "curr_global_step": 240, "self.gbs": 8}}
+:::MLLOG {"namespace": "", "time_ms": 1759704182878, "event_type": "INTERVAL_START", "key": "eval_start", "value": null, "metadata": {"file": "/workspace/code/src/callbacks/custom_callbacks.py", "lineno": 166, "samples_count": 1920}}
+:::MLLOG {"namespace": "", "time_ms": 1759704195265, "event_type": "POINT_IN_TIME", "key": "eval_accuracy", "value": 0.9381888508796692, "metadata": {"file": "/workspace/code/src/callbacks/custom_callbacks.py", "lineno": 237, "samples_count": 1920}}
+:::MLLOG {"namespace": "", "time_ms": 1759704195265, "event_type": "INTERVAL_END", "key": "eval_stop", "value": null, "metadata": {"file": "/workspace/code/src/callbacks/custom_callbacks.py", "lineno": 242, "samples_count": 1920}}
+:::MLLOG {"namespace": "", "time_ms": 1759704195265, "event_type": "INTERVAL_START", "key": "block_start", "value": null, "metadata": {"file": "/workspace/code/src/callbacks/custom_callbacks.py", "lineno": 180, "samples_count": 1920}}
+:::MLLOG {"namespace": "", "time_ms": 1759704260814, "event_type": "POINT_IN_TIME", "key": "tracked_stats", "value": {"throughput": 5.860455421901041}, "metadata": {"file": "/workspace/code/src/callbacks/custom_callbacks.py", "lineno": 217, "step": 2304}}
+:::MLLOG {"namespace": "", "time_ms": 1759704260815, "event_type": "INTERVAL_END", "key": "block_stop", "value": null, "metadata": {"file": "/workspace/code/src/callbacks/custom_callbacks.py", "lineno": 157, "samples_count": 2304, "curr_global_step": 288, "self.gbs": 8}}
+:::MLLOG {"namespace": "", "time_ms": 1759704260815, "event_type": "INTERVAL_START", "key": "eval_start", "value": null, "metadata": {"file": "/workspace/code/src/callbacks/custom_callbacks.py", "lineno": 166, "samples_count": 2304}}
+:::MLLOG {"namespace": "", "time_ms": 1759704273192, "event_type": "POINT_IN_TIME", "key": "eval_accuracy", "value": 0.9293727874755859, "metadata": {"file": "/workspace/code/src/callbacks/custom_callbacks.py", "lineno": 237, "samples_count": 2304}}
+:::MLLOG {"namespace": "", "time_ms": 1759704273192, "event_type": "INTERVAL_END", "key": "eval_stop", "value": null, "metadata": {"file": "/workspace/code/src/callbacks/custom_callbacks.py", "lineno": 242, "samples_count": 2304}}
+:::MLLOG {"namespace": "", "time_ms": 1759704273192, "event_type": "INTERVAL_START", "key": "block_start", "value": null, "metadata": {"file": "/workspace/code/src/callbacks/custom_callbacks.py", "lineno": 180, "samples_count": 2304}}
+:::MLLOG {"namespace": "", "time_ms": 1759704338739, "event_type": "POINT_IN_TIME", "key": "tracked_stats", "value": {"throughput": 5.860632822824071}, "metadata": {"file": "/workspace/code/src/callbacks/custom_callbacks.py", "lineno": 217, "step": 2688}}
+:::MLLOG {"namespace": "", "time_ms": 1759704338740, "event_type": "INTERVAL_END", "key": "block_stop", "value": null, "metadata": {"file": "/workspace/code/src/callbacks/custom_callbacks.py", "lineno": 157, "samples_count": 2688, "curr_global_step": 336, "self.gbs": 8}}
+:::MLLOG {"namespace": "", "time_ms": 1759704338740, "event_type": "INTERVAL_START", "key": "eval_start", "value": null, "metadata": {"file": "/workspace/code/src/callbacks/custom_callbacks.py", "lineno": 166, "samples_count": 2688}}
+:::MLLOG {"namespace": "", "time_ms": 1759704351134, "event_type": "POINT_IN_TIME", "key": "eval_accuracy", "value": 0.9274187684059143, "metadata": {"file": "/workspace/code/src/callbacks/custom_callbacks.py", "lineno": 237, "samples_count": 2688}}
+:::MLLOG {"namespace": "", "time_ms": 1759704351134, "event_type": "INTERVAL_END", "key": "eval_stop", "value": null, "metadata": {"file": "/workspace/code/src/callbacks/custom_callbacks.py", "lineno": 242, "samples_count": 2688}}
+:::MLLOG {"namespace": "", "time_ms": 1759704351134, "event_type": "INTERVAL_START", "key": "block_start", "value": null, "metadata": {"file": "/workspace/code/src/callbacks/custom_callbacks.py", "lineno": 180, "samples_count": 2688}}
+:::MLLOG {"namespace": "", "time_ms": 1759704416685, "event_type": "POINT_IN_TIME", "key": "tracked_stats", "value": {"throughput": 5.86032438796662}, "metadata": {"file": "/workspace/code/src/callbacks/custom_callbacks.py", "lineno": 217, "step": 3072}}
+:::MLLOG {"namespace": "", "time_ms": 1759704416685, "event_type": "INTERVAL_END", "key": "block_stop", "value": null, "metadata": {"file": "/workspace/code/src/callbacks/custom_callbacks.py", "lineno": 157, "samples_count": 3072, "curr_global_step": 384, "self.gbs": 8}}
+:::MLLOG {"namespace": "", "time_ms": 1759704416685, "event_type": "INTERVAL_START", "key": "eval_start", "value": null, "metadata": {"file": "/workspace/code/src/callbacks/custom_callbacks.py", "lineno": 166, "samples_count": 3072}}
+:::MLLOG {"namespace": "", "time_ms": 1759704429068, "event_type": "POINT_IN_TIME", "key": "eval_accuracy", "value": 0.9228313565254211, "metadata": {"file": "/workspace/code/src/callbacks/custom_callbacks.py", "lineno": 237, "samples_count": 3072}}
+:::MLLOG {"namespace": "", "time_ms": 1759704429068, "event_type": "INTERVAL_END", "key": "eval_stop", "value": null, "metadata": {"file": "/workspace/code/src/callbacks/custom_callbacks.py", "lineno": 242, "samples_count": 3072}}
+:::MLLOG {"namespace": "", "time_ms": 1759704429072, "event_type": "INTERVAL_END", "key": "run_stop", "value": null, "metadata": {"file": "/workspace/code/src/callbacks/custom_callbacks.py", "lineno": 205, "samples_count": 3072, "status": "success", "duration": "593.4160254001617 sec -> 9.890267090002697 minutes"}}
+ENDING TIMING RUN AT 2025-10-05 10:47:47 PM
+RESULT,LLM_FINETUNING,,791,AMD,2025-10-05 10:34:36 PM

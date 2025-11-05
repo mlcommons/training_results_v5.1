@@ -1,0 +1,65 @@
+qkv_dgrad:
+  method: bulk
+  num_sm: 2           # was 4 → half the persistent size
+  cga_size: 1         # was 2 → half per-SM reservation
+  set_sm_margin: 0
+
+qkv_wgrad:
+  method: bulk
+  num_sm: 2
+  cga_size: 1
+  set_sm_margin: 0
+
+fc1_dgrad:
+  method: bulk
+  num_sm: 2
+  cga_size: 1
+  set_sm_margin: 0
+
+fc1_wgrad:
+  method: bulk
+  num_sm: 2
+  cga_size: 1
+  set_sm_margin: 0
+
+## Ring-exchange overlap with AllGather
+qkv_fprop:
+  method: ring_exchange
+  num_sm: 1
+  set_sm_margin: 0
+  atomic_gemm: 0
+
+proj_dgrad:
+  method: ring_exchange
+  num_sm: 1
+  set_sm_margin: 0
+  atomic_gemm: 0
+
+fc1_fprop:
+  method: ring_exchange
+  num_sm: 1
+  set_sm_margin: 0
+  atomic_gemm: 0
+
+fc2_dgrad:
+  method: ring_exchange
+  num_sm: 1
+  set_sm_margin: 0
+  atomic_gemm: 0
+
+# Chunked-collective overlap with ReduceScatter
+proj_fprop:
+  method: pipeline
+  num_sm: 8           # was 24 → ~⅓ persistent mem
+  cga_size: 1         # was 2  → half per-SM reservation
+  num_splits: 2       # was 4  → half total allocation
+  set_sm_margin: 1
+  atomic_gemm: ${oc.decode:${oc.env:TE_UB_ATOMIC_GEMM_RS_PROJ,1}}
+  fp8_buf: 0          # force off to avoid FP8 buffer overhead in eval
+
+fc2_fprop:
+  method: ring_exchange
+  num_sm: 1
+  set_sm_margin: 1
+  atomic_gemm: ${oc.decode:${oc.env:TE_UB_ATOMIC_GEMM_RS_FC2,0}}
+  fp8_buf: 0

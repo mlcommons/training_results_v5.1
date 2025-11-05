@@ -1,0 +1,265 @@
+#!/bin/bash
+#SBATCH --job-name=ft-llm-4n
+#SBATCH --nodes=4
+#SBATCH --gres=gpu:b200:8         
+#SBATCH --ntasks-per-node=8       
+#SBATCH --cpus-per-task=14
+#SBATCH --mem=0
+#SBATCH --time=12:00:00
+#SBATCH --exclusive
+#SBATCH --output=./logs/log_4n8g_%j.out
+#SBATCH --error=./logs/log_4n8g_%j.err
+
+module purge || true
+
+module load apptainer  # if applicable
+
+set -euxo pipefail
+
+echo "PROLOG_START $(date +%s)"
+
+export CONT=./llama2_70b_lora-amd.sif
+export DATADIR=./gov_report
+export MODEL=./model
+export LOGDIR="$PWD/results"
+export DEBUG_IN_CWD=1
+export PYTHONFAULTHANDLER=1
+export DGXNGPU="${SLURM_GPUS_ON_NODE:-8}"
+export MLPERF_SUBMITTER="University of Florida"
+export MLPERF_SYSTEM_NAME="HiPerGator NVIDIA DGX B200"
+export NCCL_NET_MERGE_LEVEL=LOC
+
+source config_DGXB200_4x8x1xtp1pp1cp4.sh 
+
+############################
+# Required env
+############################
+: "${CONT:?CONT not set (path to .sif)}"
+: "${DGXSYSTEM:?DGXSYSTEM not set}"
+: "${WALLTIME_RUNANDTIME:?WALLTIME_RUNANDTIME not set}"   # HH:MM:SS
+
+############################
+# Defaults / knobs
+############################
+: "${CHECK_COMPLIANCE:=1}"
+: "${MLPERF_RULESET:=5.1.0}"
+: "${MLPERF_SYSTEM_NAME:=unknown}"
+: "${MLPERF_SCALE:=unknown}"
+: "${MLPERF_CLUSTER_NAME:=unknown}"
+: "${MILESTONE_YML:=unknown}"
+: "${DGXNGPU:=8}"                 # GPUs per node
+: "${NEXP:=1}"
+: "${SEED_BASE:=${SEED-$RANDOM}}"
+: "${DATESTAMP:=$(date +'%y%m%d%H%M%S%N')}"
+: "${CLEAR_CACHES:=1}"
+: "${LOGDIR:=./results}"
+# No passwordless sudo on many clusters; default to no-op
+: "${DROPCACHE_CMD:=true}"
+: "${POWERLOGDIR:=' '}"
+: "${POWERCMDDIR:=' '}"
+: "${SET_MAXQ_CLK:=0}"
+: "${SET_MINEDP_CLK:=0}"
+: "${NCCL_TEST:=1}"
+: "${NCCL_TEST_WALLTIME:=5}"      # short sanity check
+: "${NVTX_FLAG:=0}"
+: "${WORK_DIR:=/workspace/ft-llm}"
+: "${EXTRA_ASSETS:=}"
+: "${DGXNNODES:=${SLURM_JOB_NUM_NODES:-1}}"
+: "${MINIBS:=unknown}"
+
+# Rendezvous (torchrun c10d)
+: "${MASTER_PORT:=29500}"
+export MASTER_PORT
+export MASTER_ADDR="$(scontrol show hostnames "${SLURM_JOB_NODELIST-}" | head -n1)"
+echo "using MASTER_ADDR \"${MASTER_ADDR}\" of list \"${SLURM_JOB_NODELIST}\""
+
+# RUNSUB_DIR (dir of this script)
+if [[ -n "${SLURM_JOB_ID:-}" ]]; then
+  export RUNSUB_DIR="$(dirname "$(scontrol show job "${SLURM_JOB_ID}" | awk -F= '/Command=/{print $2}')" )"
+else
+  export RUNSUB_DIR="$(dirname "${BASH_SOURCE[0]}")"
+fi
+
+export MODEL_NAME="llama2_70b_lora"
+export MODEL_FRAMEWORK="pytorch"
+LOGBASE="${DATESTAMP}"
+export SPREFIX="${MODEL_NAME}_${MODEL_FRAMEWORK}_${DGXNNODES:-1}x${DGXNGPU}x${MINIBS:-mb}_${DATESTAMP}"
+readonly _logfile_base="${LOGDIR}/${DATESTAMP}"
+readonly _seed_override=${SEED:-}
+
+############################################
+# srun helper
+############################################
+# Usage: srun_appt [srun args ...] -- <cmd ...>
+srun_appt() {
+  local srun_args=() cmd=() seen_delim=0
+  for arg in "$@"; do
+    if [[ $seen_delim -eq 0 ]]; then
+      [[ "$arg" == "--" ]] && seen_delim=1 || srun_args+=("$arg")
+    else
+      cmd+=("$arg")
+    fi
+  done
+  srun "${srun_args[@]}" \
+    apptainer exec \
+      --nv \
+      ${BIND_STR:+-B "${BIND_STR}"} \
+      --pwd "${WORK_DIR}" \
+      --env MASTER_ADDR="${MASTER_ADDR}",MASTER_PORT="${MASTER_PORT}" \
+      --env DGXNGPU="${DGXNGPU}" \
+      "${CONT}" \
+      "${cmd[@]}"
+}
+
+############################################
+# Mounts from config_mounts.sh
+############################################
+source "${RUNSUB_DIR}/config_mounts.sh" || true
+
+BIND_STR="${_cont_mounts:-}"
+
+############################################
+# Host info
+############################################
+MLPERF_HOST_OS=$(srun -N1 -n1 bash <<'EOF'
+  set -e
+  source /etc/os-release || true
+  source /etc/dgx-release || true
+  echo "${PRETTY_NAME} / ${DGX_PRETTY_NAME:-???} ${DGX_OTA_VERSION:-${DGX_SWBUILD_VERSION:-???}}"
+EOF
+)
+export MLPERF_HOST_OS
+
+############################################
+# Mount checks (singleton)
+############################################
+if [[ "${INIT_EXPECTED_MOUNTS:-0}" -eq 1 ]]; then
+  srun_appt -N1 -n1 -- \
+    python3 -m mlperf_common.mountcheck \
+      --expected_mounts_csv "${LOGDIR}/${SPREFIX}_expected-mounts.csv" \
+      --mounts_to_verify ${mounts_to_verify:-""} --initialize
+fi
+
+if [[ "${VERIFY_MOUNTS:-1}" -eq 1 ]]; then
+  (
+    srun_appt -N1 -n1 -- \
+      python3 -m mlperf_common.mountcheck \
+        --expected_mounts_csv expected-mounts.csv \
+        --mounts_to_verify ${mounts_to_verify:-""}
+  ) |& tee "${LOGDIR}/${SPREFIX}_mountcheck.log"
+fi
+
+############################################
+# Power / Telemetry (host-side scripts)
+############################################
+if [[ -f "${POWERCMDDIR}/power_monitor.sh" ]]; then
+  ( umask 0002; mkdir -p "${POWERLOGDIR}" )
+  if [[ ${SLURM_JOB_NUM_NODES} -gt 64 ]]; then
+    ( srun --overlap --ntasks=64 bash "${POWERCMDDIR}/power_monitor.sh" ) &
+  else
+    ( srun --overlap --ntasks-per-node=1 bash "${POWERCMDDIR}/power_monitor.sh" ) &
+  fi
+fi
+
+if [[ -f "${GRACE_POWER_SCRIPT:-}" ]]; then
+  NODENAME="$(hostname | sed 's/\..*//')"
+  ( srun --overlap --ntasks-per-node=1 bash "${GRACE_POWER_SCRIPT}" ) &
+  EXTRA_ASSETS="${EXTRA_ASSETS} --asset /results/cpu_power/${SLURM_JOB_ID}_${NODENAME}_cpu_power.log"
+fi
+
+if [[ -f "${TELEMETRY_SCRIPT:-}" ]]; then
+  NODENAME="$(hostname | sed 's/\..*//')"
+  TELEMETRY_FNAME="/results/gpu_telemetry/${SLURM_JOB_ID}_${NODENAME}_gpu_telemetry.log"
+  ( srun -N1 --overlap bash "${TELEMETRY_SCRIPT}" ) &
+  EXTRA_ASSETS="${EXTRA_ASSETS} --asset ${TELEMETRY_FNAME}"
+fi
+
+############################
+# Clocks (disabled – no sudo available)
+############################
+echo "Clock/VBOOST tuning skipped (no sudo). Logging current clocks/power…"
+srun -N1 -n1 nvidia-smi \
+  --query-gpu=gpu_name,uuid,clocks.current.sm,clocks.current.graphics,clocks.max.sm,clocks.max.graphics,pstate,power.draw,power.limit \
+  --format=csv \
+  | tee -a "${LOGDIR}/${SPREFIX}_clocks.csv" || true
+
+echo "PROLOG_STOP $(date +%s)"
+
+############################################
+# EXPERIMENT LOOP
+############################################
+for _experiment_index in $(seq 1 "${NEXP}"); do
+  echo "EXPERIMENT_START $(date +%s)"
+  (
+    echo "Beginning trial ${_experiment_index} of ${NEXP}"
+    echo ":::DLPAL ${CONT} ${SLURM_JOB_ID} ${SLURM_JOB_NUM_NODES} ${SLURM_JOB_NODELIST} ${MLPERF_CLUSTER_NAME} ${DGXSYSTEM}"
+
+    # (Optional) sysjson — safe to skip during debugging; won’t fail job
+    srun_appt -N1 -n1 -- mlperf-sysjson.sh || echo "[warn] sysjson failed"
+
+    srun -N1 -n1 bash -lc 'echo ":::GITCOMMITID ${GITCOMMIT_ID:-NA} ${LAUNCHER_GIT_COMMIT_ID:-NA}"'
+
+    # Clear caches (no sudo) + ALWAYS emit MLPerf event for compliance
+    had_clear=false
+
+    if [[ "${CLEAR_CACHES}" -eq 1 ]]; then
+      # Optional: try user-space eviction with vmtouch (host side), if available
+      # This does NOT need sudo. It evicts file pages from the page cache.
+      if command -v vmtouch >/dev/null 2>&1; then
+        # Prefer host DATADIR; fallback to container path /data if not set
+        TARGET_PATH="${DATADIR:-/data}"
+        srun -N1 -n1 bash -lc "vmtouch -ev \"${TARGET_PATH}\" || true"
+        had_clear=true
+      else
+        echo "[cache_clear] vmtouch not found; skipping user-space eviction."
+      fi
+    fi
+
+    # Emit the required MLPerf event inside the container so it lands in the MLPerf log
+    if $had_clear; then
+      srun_appt -N1 -n1 -- python - <<'PY'
+from mlperf_common.callbacks import mllogger
+mllogger.event(key=mllogger.constants.CACHE_CLEAR, value=True)
+PY
+    else
+      srun_appt -N1 -n1 -- python - <<'PY'
+from mlperf_common.callbacks import mllogger
+mllogger.event(key=mllogger.constants.CACHE_CLEAR, value=False)
+PY
+    fi
+
+    # Run experiment
+    export SEED=$(( SEED_BASE - 1 + 10#${_experiment_index} ))
+    set +e
+    echo "RUNANDTIME_START $(date +%s)"
+    srun_appt -N1 -n1 -- bash -lc 'printf "%s\n" "#!/usr/bin/env bash" "exec torchrun \"\$@\"" > ~/slurm2pytorch && chmod +x ~/slurm2pytorch'
+    # then launch using the alias:
+    srun_appt -l --mpi="${SLURM_MPI_TYPE:-pmix}" --ntasks-per-node="${DGXNGPU}" \
+        --time="${WALLTIME_RUNANDTIME}" --\
+        slurm2pytorch ./run_and_time.sh
+    echo "RUNANDTIME_STOP $(date +%s)"
+    set -e
+  ) |& tee "${_logfile_base}_${_experiment_index}.log"
+
+  # Compliance checker (inside container)
+  if [[ "${CHECK_COMPLIANCE}" -eq 1 ]]; then
+    srun apptainer exec --nv \
+      -B "$(realpath "${LOGDIR}"):/results" \
+      --pwd /results \
+      "${CONT}" \
+      python3 -m mlperf_logging.compliance_checker --usage training \
+        --ruleset "${MLPERF_RULESET}" \
+        --log_output "/results/compliance_${DATESTAMP}.out" \
+        "/results/${LOGBASE}_${_experiment_index}.log" \
+      || true
+    EXTRA_ASSETS="${EXTRA_ASSETS} --asset /results/compliance_${DATESTAMP}.out"
+  fi
+
+  # Add stat*.json if present
+  stat_file=$(find "${LOGDIR}" -maxdepth 1 -name "stat*.json" -type f -printf "%f" -quit || true)
+  if [[ -n "${stat_file:-}" && -f "${LOGDIR}/${stat_file}" ]]; then
+    EXTRA_ASSETS="${EXTRA_ASSETS} --asset /results/${stat_file}"
+  fi
+
+  echo "EXPERIMENT_STOP $(date +%s)"
+done

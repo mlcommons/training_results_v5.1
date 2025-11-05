@@ -1,0 +1,1081 @@
++ echo 'Beginning trial 7 of 10'
+Beginning trial 7 of 10
++ echo ':::DLPAL /mnt/nfs_server/ml_commons/images/llama2_70b_lora_20251007.sqsh 240 1 slurm-worker-4 '\''unknown'\'' DGXB200_1x8x1xtp1pp1cp1'
+:::DLPAL /mnt/nfs_server/ml_commons/images/llama2_70b_lora_20251007.sqsh 240 1 slurm-worker-4 'unknown' DGXB200_1x8x1xtp1pp1cp1
+++ srun -N1 -n1 --container-name=llama2_70b_lora_240 --no-container-mount-home --container-remap-root --container-writable mlperf-sysjson.sh
++ echo ':::SYSJSON {"submitter":"UNKNOWN_MLPERF_SUBMITTER","division":"closed","status":"Available on-premise","system_name":"UNKNOWN_MLPERF_SYSTEM_NAME","number_of_nodes":"1","host_processors_per_node":"2","host_processor_model_name":"Intel(R) Xeon(R) 6776P","host_processor_core_count":"64","host_processor_vcpu_count":"","host_processor_frequency":"","host_processor_caches":"","host_processor_interconnect":"","host_memory_capacity":"3.0 TB","host_storage_type":"","host_storage_capacity":"","host_networking":"","host_networking_topology":"","host_memory_configuration":"","accelerators_per_node":"8","accelerator_model_name":"NVIDIA B300 SXM6 AC","accelerator_host_interconnect":"","accelerator_frequency":"","accelerator_on-chip_memories":"","accelerator_memory_configuration":"","accelerator_memory_capacity":"275040 MiB","accelerator_interconnect":"","accelerator_interconnect_topology":"","cooling":"","hw_notes":"","framework":"PyTorch NVIDIA Release 25.09","framework_name":"","other_software_stack":{"cuda_version":"13.0.1.012","cuda_driver_version":"580.82.07","nccl_version":"2.27.7","cublas_version":"13.0.2.14","cudnn_version":"9.13.1.26","trt_version":"10.13.3.9","dali_version":"1.51.2","mofed_version":"5.4-rdmacore56.0","openmpi_version":"4.1.7","kernel_version":"Linux 6.14.0-1008-nvidia","nvidia_kernel_driver":"580.82.07"},"operating_system":"Ubuntu 24.04.3 LTS","sw_notes":""}'
+:::SYSJSON {"submitter":"UNKNOWN_MLPERF_SUBMITTER","division":"closed","status":"Available on-premise","system_name":"UNKNOWN_MLPERF_SYSTEM_NAME","number_of_nodes":"1","host_processors_per_node":"2","host_processor_model_name":"Intel(R) Xeon(R) 6776P","host_processor_core_count":"64","host_processor_vcpu_count":"","host_processor_frequency":"","host_processor_caches":"","host_processor_interconnect":"","host_memory_capacity":"3.0 TB","host_storage_type":"","host_storage_capacity":"","host_networking":"","host_networking_topology":"","host_memory_configuration":"","accelerators_per_node":"8","accelerator_model_name":"NVIDIA B300 SXM6 AC","accelerator_host_interconnect":"","accelerator_frequency":"","accelerator_on-chip_memories":"","accelerator_memory_configuration":"","accelerator_memory_capacity":"275040 MiB","accelerator_interconnect":"","accelerator_interconnect_topology":"","cooling":"","hw_notes":"","framework":"PyTorch NVIDIA Release 25.09","framework_name":"","other_software_stack":{"cuda_version":"13.0.1.012","cuda_driver_version":"580.82.07","nccl_version":"2.27.7","cublas_version":"13.0.2.14","cudnn_version":"9.13.1.26","trt_version":"10.13.3.9","dali_version":"1.51.2","mofed_version":"5.4-rdmacore56.0","openmpi_version":"4.1.7","kernel_version":"Linux 6.14.0-1008-nvidia","nvidia_kernel_driver":"580.82.07"},"operating_system":"Ubuntu 24.04.3 LTS","sw_notes":""}
++ srun -N1 -n1 --container-name=llama2_70b_lora_240 --no-container-mount-home --container-remap-root --container-writable bash -c 'echo ":::GITCOMMITID ${GIT_COMMIT_ID} ${LAUNCHER_GIT_COMMIT_ID}"'
+:::GITCOMMITID 90eb7c20e8856ae9c1976e552401b633293651b9 
++ '[' 1 -eq 1 ']'
++ srun --ntasks-per-node=1 --mpi=pmix bash -c 'echo -n '\''Clearing cache on '\'' && hostname && sync && sudo /sbin/sysctl vm.drop_caches=3'
+Clearing cache on lbm0-0004.bm.hwinfra.net
+vm.drop_caches = 3
++ srun --ntasks-per-node=1 --mpi=pmix --container-name=llama2_70b_lora_240 --no-container-mount-home --container-remap-root --container-writable python -c '
+from mlperf_common.callbacks import mllogger
+mllogger.event(key=mllogger.constants.CACHE_CLEAR, value=True)'
+/usr/local/lib/python3.12/dist-packages/torch/cuda/__init__.py:63: FutureWarning: The pynvml package is deprecated. Please install nvidia-ml-py instead. If you did not install pynvml directly, please report this to the maintainers of the package that installed pynvml for you.
+  import pynvml  # type: ignore[import]
+:::MLLOG {"namespace": "", "time_ms": 1759979832284, "event_type": "POINT_IN_TIME", "key": "cache_clear", "value": true, "metadata": {"file": "<string>", "lineno": 3}}
++ export SEED=4273
++ SEED=4273
++ set +e
+++ date +%s
++ echo 'RUNANDTIME_START 1759979833'
+RUNANDTIME_START 1759979833
++ srun -l --mpi=pmix --cpu-bind=verbose,mask_cpu:0xffffffff,0xffffffff00000000,0xffffffff00000000000000000000000000000000,0xffffffff0000000000000000000000000000000000000000,0xffffffff0000000000000000,0xffffffff000000000000000000000000,0xffffffff000000000000000000000000000000000000000000000000,0xffffffff00000000000000000000000000000000000000000000000000000000 --mem=0 --cpus-per-task=32 --ntasks-per-node=8 --time=25 --container-name=llama2_70b_lora_240 --no-container-mount-home --container-remap-root --container-writable --container-mounts=/run/tmpfs/dataset/llama2_70b_lora/gov_report:/data:ro,/run/tmpfs/dataset/llama2_70b_lora/model:/ckpt:ro,/mnt/nfs_server/ml_commons/results/llama2_70b_lora:/results:rw --container-workdir=/workspace/ft-llm --container-env=MASTER_PORT,MASTER_ADDR slurm2pytorch ./run_and_time.sh
+0: cpu-bind=MASK - slurm-worker-4, task  0  0 [1730767]: mask 0xffffffff set
+0: cpu-bind=MASK - slurm-worker-4, task  1  1 [1730768]: mask 0xffffffff00000000 set
+0: cpu-bind=MASK - slurm-worker-4, task  2  2 [1730769]: mask 0xffffffff00000000000000000000000000000000 set
+0: cpu-bind=MASK - slurm-worker-4, task  3  3 [1730770]: mask 0xffffffff0000000000000000000000000000000000000000 set
+0: cpu-bind=MASK - slurm-worker-4, task  4  4 [1730771]: mask 0xffffffff0000000000000000 set
+0: cpu-bind=MASK - slurm-worker-4, task  5  5 [1730772]: mask 0xffffffff000000000000000000000000 set
+0: cpu-bind=MASK - slurm-worker-4, task  6  6 [1730773]: mask 0xffffffff000000000000000000000000000000000000000000000000 set
+0: cpu-bind=MASK - slurm-worker-4, task  7  7 [1730774]: mask 0xffffffff00000000000000000000000000000000000000000000000000000000 set
+3: [2025-10-09 03:17:36,385][nemo.lightning.pytorch.strategies.megatron_strategy][INFO] - Initializing distributed: GLOBAL_RANK: 3, MEMBER: 4/8
+6: [2025-10-09 03:17:37,196][nemo.lightning.pytorch.strategies.megatron_strategy][INFO] - Initializing distributed: GLOBAL_RANK: 6, MEMBER: 7/8
+7: [2025-10-09 03:17:37,352][nemo.lightning.pytorch.strategies.megatron_strategy][INFO] - Initializing distributed: GLOBAL_RANK: 7, MEMBER: 8/8
+2: [2025-10-09 03:17:40,399][nemo.lightning.pytorch.strategies.megatron_strategy][INFO] - Initializing distributed: GLOBAL_RANK: 2, MEMBER: 3/8
+1: [2025-10-09 03:17:40,427][nemo.lightning.pytorch.strategies.megatron_strategy][INFO] - Initializing distributed: GLOBAL_RANK: 1, MEMBER: 2/8
+0: :::MLLOG {"namespace": "", "time_ms": 1759979860451, "event_type": "INTERVAL_START", "key": "init_start", "value": null, "metadata": {"file": "/workspace/ft-llm/train.py", "lineno": 490}}
+0: :::MLLOG {"namespace": "", "time_ms": 1759979860451, "event_type": "POINT_IN_TIME", "key": "submission_benchmark", "value": "llama2_70b_lora", "metadata": {"file": "/workspace/ft-llm/train.py", "lineno": 491}}
+0: :::MLLOG {"namespace": "", "time_ms": 1759979860451, "event_type": "POINT_IN_TIME", "key": "submission_org", "value": "SUBMISSION_ORG_PLACEHOLDER", "metadata": {"file": "/workspace/ft-llm/train.py", "lineno": 491}}
+0: :::MLLOG {"namespace": "", "time_ms": 1759979860451, "event_type": "POINT_IN_TIME", "key": "submission_division", "value": "closed", "metadata": {"file": "/workspace/ft-llm/train.py", "lineno": 491}}
+0: :::MLLOG {"namespace": "", "time_ms": 1759979860452, "event_type": "POINT_IN_TIME", "key": "submission_status", "value": "onprem", "metadata": {"file": "/workspace/ft-llm/train.py", "lineno": 491}}
+0: :::MLLOG {"namespace": "", "time_ms": 1759979860452, "event_type": "POINT_IN_TIME", "key": "submission_platform", "value": "1xSUBMISSION_PLATFORM_PLACEHOLDER", "metadata": {"file": "/workspace/ft-llm/train.py", "lineno": 491}}
+0: :::MLLOG {"namespace": "", "time_ms": 1759979860452, "event_type": "POINT_IN_TIME", "key": "target_accuracy", "value": 0.925, "metadata": {"file": "/workspace/ft-llm/train.py", "lineno": 494}}
+0: :::MLLOG {"namespace": "", "time_ms": 1759979860582, "event_type": "POINT_IN_TIME", "key": "opt_base_learning_rate", "value": 0.00055, "metadata": {"file": "/workspace/ft-llm/train.py", "lineno": 276}}
+0: :::MLLOG {"namespace": "", "time_ms": 1759979860582, "event_type": "POINT_IN_TIME", "key": "opt_adamw_weight_decay", "value": 0.0001, "metadata": {"file": "/workspace/ft-llm/train.py", "lineno": 277}}
+0: :::MLLOG {"namespace": "", "time_ms": 1759979860582, "event_type": "POINT_IN_TIME", "key": "opt_gradient_clip_norm", "value": 0.3, "metadata": {"file": "/workspace/ft-llm/train.py", "lineno": 278}}
+0: :::MLLOG {"namespace": "", "time_ms": 1759979860583, "event_type": "POINT_IN_TIME", "key": "opt_learning_rate_warmup_factor", "value": 0.0, "metadata": {"file": "/workspace/ft-llm/train.py", "lineno": 303}}
+0: :::MLLOG {"namespace": "", "time_ms": 1759979860586, "event_type": "POINT_IN_TIME", "key": "lora_rank", "value": 16, "metadata": {"file": "/workspace/ft-llm/train.py", "lineno": 312}}
+0: :::MLLOG {"namespace": "", "time_ms": 1759979860586, "event_type": "POINT_IN_TIME", "key": "lora_alpha", "value": 32, "metadata": {"file": "/workspace/ft-llm/train.py", "lineno": 313}}
+0: :::MLLOG {"namespace": "", "time_ms": 1759979860592, "event_type": "POINT_IN_TIME", "key": "opt_learning_rate_training_steps", "value": 800, "metadata": {"file": "/workspace/ft-llm/train.py", "lineno": 514}}
+0: GPU available: True (cuda), used: True
+0: TPU available: False, using: 0 TPU cores
+0: HPU available: False, using: 0 HPUs
+0: `Trainer(limit_val_batches=1.0)` was configured so 100% of the batches will be used..
+4: [2025-10-09 03:17:40,838][nemo.lightning.pytorch.strategies.megatron_strategy][INFO] - Initializing distributed: GLOBAL_RANK: 4, MEMBER: 5/8
+5: [2025-10-09 03:17:40,844][nemo.lightning.pytorch.strategies.megatron_strategy][INFO] - Initializing distributed: GLOBAL_RANK: 5, MEMBER: 6/8
+0: :::MLLOG {"namespace": "", "time_ms": 1759979861405, "event_type": "POINT_IN_TIME", "key": "global_batch_size", "value": 8, "metadata": {"file": "/usr/local/lib/python3.12/dist-packages/mlperf_common/callbacks/logging.py", "lineno": 297}}
+0: :::MLLOG {"namespace": "", "time_ms": 1759979861426, "event_type": "POINT_IN_TIME", "key": "train_samples", "value": 3901, "metadata": {"file": "/usr/local/lib/python3.12/dist-packages/mlperf_common/callbacks/logging.py", "lineno": 297}}
+0: :::MLLOG {"namespace": "", "time_ms": 1759979861426, "event_type": "POINT_IN_TIME", "key": "eval_samples", "value": 173, "metadata": {"file": "/usr/local/lib/python3.12/dist-packages/mlperf_common/callbacks/logging.py", "lineno": 297}}
+0: :::MLLOG {"namespace": "", "time_ms": 1759979861426, "event_type": "POINT_IN_TIME", "key": "gradient_accumulation_steps", "value": 1, "metadata": {"file": "/usr/local/lib/python3.12/dist-packages/mlperf_common/callbacks/logging.py", "lineno": 297}}
+0: [NeMo I 2025-10-09 03:17:41 nemo_logging:393] Experiments will be logged at /workspace/ft-llm/nemo_experiments/default/2025-10-09_03-17-41
+0: :::MLLOG {"namespace": "", "time_ms": 1759979861429, "event_type": "POINT_IN_TIME", "key": "seed", "value": 4273, "metadata": {"file": "/workspace/ft-llm/train.py", "lineno": 563}}
+0: [NeMo I 2025-10-09 03:17:41 nemo_logging:393] Rank 0 has data parallel group : [0, 1, 2, 3, 4, 5, 6, 7]
+0: [NeMo I 2025-10-09 03:17:41 nemo_logging:393] Rank 0 has combined group of data parallel and context parallel : [0, 1, 2, 3, 4, 5, 6, 7]
+0: [NeMo I 2025-10-09 03:17:41 nemo_logging:393] All data parallel group ranks with context parallel combined: [[0, 1, 2, 3, 4, 5, 6, 7]]
+0: [NeMo I 2025-10-09 03:17:41 nemo_logging:393] Ranks 0 has data parallel rank: 0
+0: [NeMo I 2025-10-09 03:17:41 nemo_logging:393] Rank 0 has context parallel group: [0]
+0: [NeMo I 2025-10-09 03:17:41 nemo_logging:393] All context parallel group ranks: [[0], [1], [2], [3], [4], [5], [6], [7]]
+0: [NeMo I 2025-10-09 03:17:41 nemo_logging:393] Ranks 0 has context parallel rank: 0
+0: [NeMo I 2025-10-09 03:17:41 nemo_logging:393] Rank 0 has model parallel group: [0]
+0: [NeMo I 2025-10-09 03:17:41 nemo_logging:393] All model parallel group ranks: [[0], [1], [2], [3], [4], [5], [6], [7]]
+0: [NeMo I 2025-10-09 03:17:41 nemo_logging:393] Rank 0 has tensor model parallel group: [0]
+0: [NeMo I 2025-10-09 03:17:41 nemo_logging:393] All tensor model parallel group ranks: [[0], [1], [2], [3], [4], [5], [6], [7]]
+0: [NeMo I 2025-10-09 03:17:41 nemo_logging:393] Rank 0 has tensor model parallel rank: 0
+0: [NeMo I 2025-10-09 03:17:41 nemo_logging:393] Rank 0 has pipeline model parallel group: [0]
+0: [NeMo I 2025-10-09 03:17:41 nemo_logging:393] Rank 0 has embedding group: [0]
+0: [NeMo I 2025-10-09 03:17:41 nemo_logging:393] All pipeline model parallel group ranks: [[0], [1], [2], [3], [4], [5], [6], [7]]
+0: [NeMo I 2025-10-09 03:17:41 nemo_logging:393] Rank 0 has pipeline model parallel rank 0
+0: [NeMo I 2025-10-09 03:17:41 nemo_logging:393] All embedding group ranks: [[0], [1], [2], [3], [4], [5], [6], [7]]
+0: [NeMo I 2025-10-09 03:17:41 nemo_logging:393] Rank 0 has embedding rank: 0
+0: [2025-10-09 03:17:41,438][nemo.lightning.pytorch.strategies.megatron_strategy][INFO] - Initializing distributed: GLOBAL_RANK: 0, MEMBER: 1/8
+0: ----------------------------------------------------------------------------------------------------
+0: distributed_backend=nccl
+0: All distributed processes registered. Starting with 8 processes
+0: ----------------------------------------------------------------------------------------------------
+0: 
+0: [Gloo] Rank 0 is connected to 7 peer ranks. Expected number of connected peer ranks is : 7
+2: [Gloo] Rank 2 is connected to 7 peer ranks. Expected number of connected peer ranks is : 7
+1: [Gloo] Rank 1 is connected to 7 peer ranks. Expected number of connected peer ranks is : 7
+4: [Gloo] Rank 4 is connected to 7 peer ranks. Expected number of connected peer ranks is : 7
+6: [Gloo] Rank 6 is connected to 7 peer ranks. Expected number of connected peer ranks is : 7
+3: [Gloo] Rank 3 is connected to 7 peer ranks. Expected number of connected peer ranks is : 7
+7: [Gloo] Rank 7 is connected to 7 peer ranks. Expected number of connected peer ranks is : 7
+5: [Gloo] Rank 5 is connected to 7 peer ranks. Expected number of connected peer ranks is : 7
+3: [Gloo] Rank 3 is connected to 7 peer ranks. Expected number of connected peer ranks is : 7
+7: [Gloo] Rank 7 is connected to 7 peer ranks. Expected number of connected peer ranks is : 7
+0: [Gloo] Rank 0 is connected to 7 peer ranks. Expected number of connected peer ranks is : 7
+1: [Gloo] Rank 1 is connected to 7 peer ranks. Expected number of connected peer ranks is : 7
+2: [Gloo] Rank 2 is connected to 7 peer ranks. Expected number of connected peer ranks is : 7
+4: [Gloo] Rank 4 is connected to 7 peer ranks. Expected number of connected peer ranks is : 7
+5: [Gloo] Rank 5 is connected to 7 peer ranks. Expected number of connected peer ranks is : 7
+6: [Gloo] Rank 6 is connected to 7 peer ranks. Expected number of connected peer ranks is : 7
+0: [Gloo] Rank 0 is connected to 7 peer ranks. Expected number of connected peer ranks is : 7
+1: [Gloo] Rank 1 is connected to 7 peer ranks. Expected number of connected peer ranks is : 7
+3: [Gloo] Rank 3 is connected to 7 peer ranks. Expected number of connected peer ranks is : 7
+5: [Gloo] Rank 5 is connected to 7 peer ranks. Expected number of connected peer ranks is : 7
+2: [Gloo] Rank 2 is connected to 7 peer ranks. Expected number of connected peer ranks is : 7
+4: [Gloo] Rank 4 is connected to 7 peer ranks. Expected number of connected peer ranks is : 7
+7: [Gloo] Rank 7 is connected to 7 peer ranks. Expected number of connected peer ranks is : 7
+6: [Gloo] Rank 6 is connected to 7 peer ranks. Expected number of connected peer ranks is : 7
+1: [Gloo] Rank 1 is connected to 7 peer ranks. Expected number of connected peer ranks is : 7
+2: [Gloo] Rank 2 is connected to 7 peer ranks. Expected number of connected peer ranks is : 7
+0: [Gloo] Rank 0 is connected to 7 peer ranks. Expected number of connected peer ranks is : 7
+4: [Gloo] Rank 4 is connected to 7 peer ranks. Expected number of connected peer ranks is : 7
+6: [Gloo] Rank 6 is connected to 7 peer ranks. Expected number of connected peer ranks is : 7
+3: [Gloo] Rank 3 is connected to 7 peer ranks. Expected number of connected peer ranks is : 7
+5: [Gloo] Rank 5 is connected to 7 peer ranks. Expected number of connected peer ranks is : 7
+7: [Gloo] Rank 7 is connected to 7 peer ranks. Expected number of connected peer ranks is : 7
+0: [NeMo I 2025-10-09 03:17:49 nemo_logging:393] Setting up ModelTransform for stage: TrainerFn.FITTING
+0: [NeMo I 2025-10-09 03:17:49 nemo_logging:393] Found model_transform attribute on pl_module
+0: [NeMo I 2025-10-09 03:17:49 nemo_logging:393] Set model_transform to: <function _call_counter.<locals>.wrapper at 0x7a4c300a0e00>
+0: [NeMo I 2025-10-09 03:17:49 nemo_logging:393] Padded vocab_size: 32000, original vocab_size: 32000, dummy tokens: 0.
+3: LOCAL_RANK: 3 - CUDA_VISIBLE_DEVICES: [0,1,2,3,4,5,6,7]
+2: LOCAL_RANK: 2 - CUDA_VISIBLE_DEVICES: [0,1,2,3,4,5,6,7]
+1: LOCAL_RANK: 1 - CUDA_VISIBLE_DEVICES: [0,1,2,3,4,5,6,7]
+0: LOCAL_RANK: 0 - CUDA_VISIBLE_DEVICES: [0,1,2,3,4,5,6,7]
+0: [NeMo I 2025-10-09 03:17:49 nemo_logging:393] Copying Trainer's 'max_steps' (800) to LR scheduler's 'max_steps'.
+0: [NeMo I 2025-10-09 03:17:49 num_microbatches_calculator:228] setting number of microbatches to constant 1
+0: [NeMo I 2025-10-09 03:17:49 nemo_logging:393] Doing selective restore from RestoreConfig(path='/ckpt', load_model_state=True, load_optim_state=False, load_artifacts=False)
+5: LOCAL_RANK: 5 - CUDA_VISIBLE_DEVICES: [0,1,2,3,4,5,6,7]
+0: [NeMo W 2025-10-09 03:17:49 serialization:184] DEPRECATED: Passing 'checkpoint_dir' as a Path object in load_common_state_dict will no longer be supported in a future release. Please pass it as a string instead.
+6: LOCAL_RANK: 6 - CUDA_VISIBLE_DEVICES: [0,1,2,3,4,5,6,7]
+0: [NeMo I 2025-10-09 03:17:49 nemo_logging:393] Loaded sharded_state_dict_metadata from checkpoint: {'distrib_optim_sharding_type': 'fully_sharded_model_space'}
+0: [NeMo W 2025-10-09 03:17:49 mapping:155] ShardedTensor.prepend_axis_num greater than 0 is deprecated. In Megatron-Core this can be prevented by setting sharded_state_dict metadata['singleton_local_shards'] to True.
+4: LOCAL_RANK: 4 - CUDA_VISIBLE_DEVICES: [0,1,2,3,4,5,6,7]
+7: LOCAL_RANK: 7 - CUDA_VISIBLE_DEVICES: [0,1,2,3,4,5,6,7]
+0: [NeMo I 2025-10-09 03:23:13 nemo_logging:393] Global Checkpoint Load : Rank : 0 : Start time : 1759979869.932s : Time spent in load_checkpoint: 323.909s
+0: [NeMo I 2025-10-09 03:23:13 nemo_logging:393] Restoring model weights from RestoreConfig(path='/ckpt', load_model_state=True, load_optim_state=False, load_artifacts=False)
+0: [NeMo I 2025-10-09 03:23:13 nemo_logging:393] Finished restoring from RestoreConfig(path='/ckpt', load_model_state=True, load_optim_state=False, load_artifacts=False), cleaning up.
+0: SLURM auto-requeueing enabled. Setting signal handlers.
+3: SLURM auto-requeueing enabled. Setting signal handlers.
+6: SLURM auto-requeueing enabled. Setting signal handlers.
+7: SLURM auto-requeueing enabled. Setting signal handlers.
+1: SLURM auto-requeueing enabled. Setting signal handlers.
+2: SLURM auto-requeueing enabled. Setting signal handlers.
+4: SLURM auto-requeueing enabled. Setting signal handlers.
+5: SLURM auto-requeueing enabled. Setting signal handlers.
+0: Optimized config:
+0: skip_evals: 3
+0: load_ckpt: true
+0: data_root: /data
+0: ckpt_root: /ckpt
+0: trainer:
+0:   devices: 8
+0:   num_nodes: 1
+0:   max_steps: 800
+0:   val_check_interval: 192
+0:   limit_val_batches: 1.0
+0: model:
+0:   num_layers: 80
+0:   seed: 4273
+0:   tensor_model_parallel_size: 1
+0:   pipeline_model_parallel_size: 1
+0:   context_parallel_size: 1
+0:   eval_cp: null
+0:   global_batch_size: 8
+0:   micro_batch_size: 1
+0:   val_micro_batch_size: 1
+0:   val_global_batch_size: 8
+0:   max_position_embeddings: 8192
+0:   encoder_seq_length: 8192
+0:   sequence_parallel: 0
+0:   ub_tp_comm_overlap: false
+0:   first_last_layers_bf16: false
+0:   num_layers_at_start_in_bf16: 0
+0:   num_layers_at_end_in_bf16: 0
+0:   fp4: true
+0:   fp4_recipe: nvfp4
+0:   fp4_param: false
+0:   fp8: false
+0:   fp8_param_gather: 0
+0:   fp8_recipe: delayed
+0:   fp8_hybrid: true
+0:   fp8_amax_history_len: 4
+0:   fp8_amax_compute_algo: max
+0:   reduce_amax: true
+0:   fp8_e4m3: false
+0:   fp8_interval: 1
+0:   fp8_margin: 0
+0:   fp8_dot_product_attention: 1
+0:   cp_comm_type: a2a
+0:   activation_func_fp8_input_store: 0
+0:   healing_iter: 350
+0:   healing_precision: FP8_DS
+0:   pre_quantized_model: true
+0:   store_gpu: false
+0:   reset_cg_after_healing: false
+0:   external_cuda_graph: false
+0:   enable_cuda_graph: false
+0:   cuda_graph_scope: full_iteration
+0:   use_te_rng_tracker: true
+0:   enable_cg_fp8_weight_caching: 0
+0:   cpu_offloading: false
+0:   cpu_offloading_num_layers: 20
+0:   cpu_offloading_double_buffering: false
+0:   cpu_offloading_activations: true
+0:   cpu_offloading_weights: false
+0:   dropout_recompute: false
+0:   recompute_granularity: null
+0:   recompute_method: null
+0:   recompute_num_layers: null
+0:   distribute_saved_activations: false
+0:   recompute_modules: null
+0:   use_transformer_engine_op_fuser: 1
+0:   fused_single_qkv_rope: 1
+0:   fsdp: null
+0:   use_sharp: false
+0:   memory_profile:
+0:     enabled: false
+0:     start_step: 1
+0:     end_step: 4
+0:     rank: 0
+0:     output_path: /results/
+0:   custom:
+0:     warmup: true
+0:     warmup_healing: false
+0:     warmup_train_steps: 5
+0:     warmup_validation_steps: 5
+0:     reset_fp8_stats_after_warmup: 1
+0: optim:
+0:   lr: 0.00055
+0:   use_distributed_optimizer: true
+0:   overlap_param_gather_with_optimizer_step: false
+0:   sched:
+0:     warmup_steps: 0
+0: ddp:
+0:   overlap_grad_reduce: false
+0:   overlap_param_gather: false
+0:   fp8_param_gather: 0
+0:   average_in_collective: false
+0:   nccl_ub: false
+0: dataloader:
+0:   num_workers: 8
+0: 
+0: 
+0: MCore config:
+0: Llama2Config70B(tensor_model_parallel_size=1,
+0:                 pipeline_model_parallel_comm_backend=None,
+0:                 pipeline_model_parallel_size=1,
+0:                 virtual_pipeline_model_parallel_size=None,
+0:                 sequence_parallel=0,
+0:                 context_parallel_size=1,
+0:                 hierarchical_context_parallel_sizes=None,
+0:                 expert_model_parallel_size=1,
+0:                 expert_tensor_parallel_size=1,
+0:                 moe_extended_tp=False,
+0:                 perform_initialization=True,
+0:                 use_cpu_initialization=False,
+0:                 fp16=False,
+0:                 bf16=True,
+0:                 params_dtype=torch.bfloat16,
+0:                 timers=<megatron.core.timers.Timers object at 0x7a4c318e4500>,
+0:                 finalize_model_grads_func=None,
+0:                 grad_scale_func=None,
+0:                 no_sync_func=None,
+0:                 grad_sync_func=None,
+0:                 param_sync_func=None,
+0:                 deterministic_mode=False,
+0:                 enable_autocast=False,
+0:                 autocast_dtype=torch.bfloat16,
+0:                 num_microbatches_with_partial_activation_checkpoints=None,
+0:                 gradient_accumulation_fusion=False,
+0:                 async_tensor_model_parallel_allreduce=False,
+0:                 use_te_rng_tracker=True,
+0:                 tp_comm_overlap=False,
+0:                 tp_comm_bulk_wgrad=True,
+0:                 tp_comm_bulk_dgrad=True,
+0:                 tp_comm_overlap_ag=True,
+0:                 tp_comm_overlap_rs=True,
+0:                 tp_comm_overlap_rs_dgrad=False,
+0:                 tp_comm_split_ag=True,
+0:                 tp_comm_atomic_ag=False,
+0:                 tp_comm_split_rs=True,
+0:                 tp_comm_atomic_rs=False,
+0:                 cross_entropy_loss_fusion=False,
+0:                 cross_entropy_fusion_impl='native',
+0:                 tp_comm_overlap_disable_qkv=True,
+0:                 tp_comm_overlap_disable_fc1=False,
+0:                 tp_comm_bootstrap_backend='nccl',
+0:                 overlap_moe_expert_parallel_comm=False,
+0:                 delay_wgrad_compute=False,
+0:                 pipeline_dtype=torch.bfloat16,
+0:                 variable_seq_lengths=False,
+0:                 overlap_p2p_comm=False,
+0:                 batch_p2p_comm=True,
+0:                 batch_p2p_sync=True,
+0:                 use_ring_exchange_p2p=False,
+0:                 deallocate_pipeline_outputs=True,
+0:                 defer_embedding_wgrad_compute=False,
+0:                 wgrad_deferral_limit=0,
+0:                 overlap_p2p_comm_warmup_flush=False,
+0:                 microbatch_group_size_per_vp_stage=1,
+0:                 cpu_offloading=False,
+0:                 cpu_offloading_num_layers=20,
+0:                 _cpu_offloading_context=None,
+0:                 cpu_offloading_activations=True,
+0:                 cpu_offloading_weights=False,
+0:                 cpu_offloading_double_buffering=False,
+0:                 barrier_with_L1_time=True,
+0:                 num_layers=80,
+0:                 mtp_num_layers=None,
+0:                 mtp_loss_scaling_factor=None,
+0:                 num_layers_in_first_pipeline_stage=None,
+0:                 num_layers_in_last_pipeline_stage=None,
+0:                 pipeline_model_parallel_layout=None,
+0:                 account_for_embedding_in_pipeline_split=False,
+0:                 account_for_loss_in_pipeline_split=False,
+0:                 hidden_size=8192,
+0:                 num_attention_heads=64,
+0:                 attention_backend=<AttnBackend.auto: 5>,
+0:                 softmax_scale=None,
+0:                 softmax_type='vanilla',
+0:                 num_query_groups=8,
+0:                 ffn_hidden_size=28672,
+0:                 kv_channels=128,
+0:                 hidden_dropout=0.0,
+0:                 attention_dropout=0.0,
+0:                 fp32_residual_connection=False,
+0:                 apply_residual_connection_post_layernorm=False,
+0:                 layernorm_epsilon=1e-05,
+0:                 layernorm_zero_centered_gamma=False,
+0:                 add_bias_linear=False,
+0:                 add_qkv_bias=False,
+0:                 gated_linear_unit=True,
+0:                 activation_func=<function silu at 0x7a4f381d0ea0>,
+0:                 activation_func_fp8_input_store=0,
+0:                 glu_linear_offset=0.0,
+0:                 activation_func_clamp_value=None,
+0:                 num_moe_experts=None,
+0:                 rotary_interleaved=False,
+0:                 window_size=None,
+0:                 window_attn_skip_freq=None,
+0:                 normalization='RMSNorm',
+0:                 qk_layernorm=False,
+0:                 test_mode=False,
+0:                 calculate_per_token_loss=False,
+0:                 multi_latent_attention=False,
+0:                 no_rope_freq=None,
+0:                 moe_deepep_num_sms=20,
+0:                 init_method=functools.partial(<function normal_ at 0x7a4f38055800>, mean=0.0, std=0.02),
+0:                 output_layer_init_method=functools.partial(<function normal_ at 0x7a4f38055800>, mean=0.0, std=0.0015811388300841897),
+0:                 init_method_std=0.02,
+0:                 embedding_init_method=functools.partial(<function normal_ at 0x7a4f38055800>, mean=0.0, std=0.02),
+0:                 embedding_init_method_std=0.02,
+0:                 init_model_with_meta_device=False,
+0:                 apply_query_key_layer_scaling=False,
+0:                 attention_softmax_in_fp32=False,
+0:                 disable_bf16_reduced_precision_matmul=False,
+0:                 bias_activation_fusion=True,
+0:                 masked_softmax_fusion=True,
+0:                 persist_layer_norm=True,
+0:                 memory_efficient_layer_norm=False,
+0:                 bias_dropout_fusion=True,
+0:                 apply_rope_fusion=True,
+0:                 use_fused_weighted_squared_relu=False,
+0:                 fused_single_qkv_rope=1,
+0:                 recompute_granularity=None,
+0:                 recompute_method=None,
+0:                 recompute_num_layers=None,
+0:                 distribute_saved_activations=False,
+0:                 recompute_modules=['core_attn'],
+0:                 fp8=None,
+0:                 fp8_recipe='delayed',
+0:                 fp8_param=False,
+0:                 fp8_margin=0,
+0:                 fp8_interval=1,
+0:                 fp8_amax_history_len=4,
+0:                 fp8_amax_compute_algo='max',
+0:                 fp8_wgrad=True,
+0:                 fp8_dot_product_attention=1,
+0:                 fp8_multi_head_attention=False,
+0:                 tp_only_amax_red=False,
+0:                 first_last_layers_bf16=False,
+0:                 num_layers_at_start_in_bf16=0,
+0:                 num_layers_at_end_in_bf16=0,
+0:                 use_kitchen=False,
+0:                 fp4='e2m1',
+0:                 fp4_recipe='nvfp4',
+0:                 fp4_param=False,
+0:                 moe_shared_expert_intermediate_size=None,
+0:                 moe_shared_expert_overlap=False,
+0:                 moe_layer_freq=1,
+0:                 moe_ffn_hidden_size=None,
+0:                 moe_router_load_balancing_type='aux_loss',
+0:                 moe_router_topk=2,
+0:                 moe_router_topk_limited_devices=None,
+0:                 moe_router_padding_for_fp8=False,
+0:                 moe_router_num_groups=None,
+0:                 moe_router_group_topk=None,
+0:                 moe_router_pre_softmax=False,
+0:                 moe_router_topk_scaling_factor=None,
+0:                 moe_router_score_function='softmax',
+0:                 moe_router_dtype=None,
+0:                 moe_router_enable_expert_bias=False,
+0:                 moe_router_bias_update_rate=0.001,
+0:                 moe_router_force_load_balancing=False,
+0:                 moe_grouped_gemm=False,
+0:                 moe_use_legacy_grouped_gemm=False,
+0:                 moe_aux_loss_coeff=0.0,
+0:                 moe_z_loss_coeff=None,
+0:                 moe_input_jitter_eps=None,
+0:                 moe_token_dropping=False,
+0:                 moe_token_dispatcher_type='allgather',
+0:                 moe_enable_deepep=False,
+0:                 moe_per_layer_logging=False,
+0:                 moe_expert_capacity_factor=None,
+0:                 moe_pad_expert_input_to_capacity=False,
+0:                 moe_token_drop_policy='probs',
+0:                 moe_layer_recompute=False,
+0:                 moe_permute_fusion=False,
+0:                 moe_router_fusion=False,
+0:                 moe_apply_probs_on_input=False,
+0:                 cp_comm_type='a2a',
+0:                 enable_cuda_graph=False,
+0:                 cuda_graph_use_single_mempool=False,
+0:                 cuda_graph_retain_backward_graph=False,
+0:                 cuda_graph_warmup_steps=3,
+0:                 external_cuda_graph=False,
+0:                 cuda_graph_scope='full_iteration',
+0:                 clone_scatter_output_in_embedding=True,
+0:                 disable_parameter_transpose_cache=False,
+0:                 config_logger_dir='',
+0:                 flash_decode=False,
+0:                 use_te_activation_func=False,
+0:                 inference_rng_tracker=False,
+0:                 inference_sampling_seed=42,
+0:                 symmetric_ar_type=None,
+0:                 mrope_section=None,
+0:                 is_hybrid_model=False,
+0:                 mamba_state_dim=128,
+0:                 mamba_head_dim=64,
+0:                 mamba_num_groups=8,
+0:                 mamba_num_heads=None,
+0:                 use_mamba_mem_eff_path=True,
+0:                 mlp_chunks_for_prefill=1,
+0:                 heterogeneous_block_specs=False,
+0:                 hetereogenous_dist_checkpoint=False,
+0:                 quant_recipe=None,
+0:                 transformer_impl='transformer_engine',
+0:                 fp16_lm_cross_entropy=False,
+0:                 parallel_output=True,
+0:                 share_embeddings_and_output_weights=False,
+0:                 make_vocab_size_divisible_by=128,
+0:                 position_embedding_type='rope',
+0:                 rotary_base=10000,
+0:                 rotary_percent=1.0,
+0:                 seq_len_interpolation_factor=None,
+0:                 seq_length=8192,
+0:                 scatter_embedding_sequence_parallel=True,
+0:                 use_transformer_engine_full_layer_spec=False,
+0:                 transformer_layer_spec=<function default_layer_spec at 0x7a4c32bb59e0>,
+0:                 forward_step_fn=<function gpt_forward_step at 0x7a4c32bb4220>,
+0:                 data_step_fn=<function gpt_data_step at 0x7a4c32d223e0>,
+0:                 generation_config=None,
+0:                 vocab_size=None,
+0:                 tp_comm_overlap_cfg=None,
+0:                 use_transformer_engine_op_fuser=1)
+0: Pre-quantized model to FP8_DS on CPU and NVFP4 in-place
+0: [NeMo I 2025-10-09 03:24:09 nemo_logging:393] Adding lora to: module.decoder.layers.0.self_attention.linear_proj
+0: [NeMo I 2025-10-09 03:24:09 nemo_logging:393] Adding lora to: module.decoder.layers.0.self_attention.linear_qkv
+0: [NeMo I 2025-10-09 03:24:09 nemo_logging:393] Adding lora to: module.decoder.layers.1.self_attention.linear_proj
+0: [NeMo I 2025-10-09 03:24:09 nemo_logging:393] Adding lora to: module.decoder.layers.1.self_attention.linear_qkv
+0: [NeMo I 2025-10-09 03:24:09 nemo_logging:393] Adding lora to: module.decoder.layers.2.self_attention.linear_proj
+0: [NeMo I 2025-10-09 03:24:09 nemo_logging:393] Adding lora to: module.decoder.layers.2.self_attention.linear_qkv
+0: [NeMo I 2025-10-09 03:24:09 nemo_logging:393] Adding lora to: module.decoder.layers.3.self_attention.linear_proj
+0: [NeMo I 2025-10-09 03:24:09 nemo_logging:393] Adding lora to: module.decoder.layers.3.self_attention.linear_qkv
+0: [NeMo I 2025-10-09 03:24:09 nemo_logging:393] Adding lora to: module.decoder.layers.4.self_attention.linear_proj
+0: [NeMo I 2025-10-09 03:24:09 nemo_logging:393] Adding lora to: module.decoder.layers.4.self_attention.linear_qkv
+0: [NeMo I 2025-10-09 03:24:09 nemo_logging:393] Adding lora to: module.decoder.layers.5.self_attention.linear_proj
+0: [NeMo I 2025-10-09 03:24:09 nemo_logging:393] Adding lora to: module.decoder.layers.5.self_attention.linear_qkv
+0: [NeMo I 2025-10-09 03:24:09 nemo_logging:393] Adding lora to: module.decoder.layers.6.self_attention.linear_proj
+0: [NeMo I 2025-10-09 03:24:09 nemo_logging:393] Adding lora to: module.decoder.layers.6.self_attention.linear_qkv
+0: [NeMo I 2025-10-09 03:24:09 nemo_logging:393] Adding lora to: module.decoder.layers.7.self_attention.linear_proj
+0: [NeMo I 2025-10-09 03:24:09 nemo_logging:393] Adding lora to: module.decoder.layers.7.self_attention.linear_qkv
+0: [NeMo I 2025-10-09 03:24:09 nemo_logging:393] Adding lora to: module.decoder.layers.8.self_attention.linear_proj
+0: [NeMo I 2025-10-09 03:24:09 nemo_logging:393] Adding lora to: module.decoder.layers.8.self_attention.linear_qkv
+0: [NeMo I 2025-10-09 03:24:09 nemo_logging:393] Adding lora to: module.decoder.layers.9.self_attention.linear_proj
+0: [NeMo I 2025-10-09 03:24:09 nemo_logging:393] Adding lora to: module.decoder.layers.9.self_attention.linear_qkv
+0: [NeMo I 2025-10-09 03:24:09 nemo_logging:393] Adding lora to: module.decoder.layers.10.self_attention.linear_proj
+0: [NeMo I 2025-10-09 03:24:09 nemo_logging:393] Adding lora to: module.decoder.layers.10.self_attention.linear_qkv
+0: [NeMo I 2025-10-09 03:24:09 nemo_logging:393] Adding lora to: module.decoder.layers.11.self_attention.linear_proj
+0: [NeMo I 2025-10-09 03:24:09 nemo_logging:393] Adding lora to: module.decoder.layers.11.self_attention.linear_qkv
+0: [NeMo I 2025-10-09 03:24:09 nemo_logging:393] Adding lora to: module.decoder.layers.12.self_attention.linear_proj
+0: [NeMo I 2025-10-09 03:24:09 nemo_logging:393] Adding lora to: module.decoder.layers.12.self_attention.linear_qkv
+0: [NeMo I 2025-10-09 03:24:09 nemo_logging:393] Adding lora to: module.decoder.layers.13.self_attention.linear_proj
+0: [NeMo I 2025-10-09 03:24:09 nemo_logging:393] Adding lora to: module.decoder.layers.13.self_attention.linear_qkv
+0: [NeMo I 2025-10-09 03:24:09 nemo_logging:393] Adding lora to: module.decoder.layers.14.self_attention.linear_proj
+0: [NeMo I 2025-10-09 03:24:09 nemo_logging:393] Adding lora to: module.decoder.layers.14.self_attention.linear_qkv
+0: [NeMo I 2025-10-09 03:24:09 nemo_logging:393] Adding lora to: module.decoder.layers.15.self_attention.linear_proj
+0: [NeMo I 2025-10-09 03:24:09 nemo_logging:393] Adding lora to: module.decoder.layers.15.self_attention.linear_qkv
+0: [NeMo I 2025-10-09 03:24:09 nemo_logging:393] Adding lora to: module.decoder.layers.16.self_attention.linear_proj
+0: [NeMo I 2025-10-09 03:24:09 nemo_logging:393] Adding lora to: module.decoder.layers.16.self_attention.linear_qkv
+0: [NeMo I 2025-10-09 03:24:09 nemo_logging:393] Adding lora to: module.decoder.layers.17.self_attention.linear_proj
+0: [NeMo I 2025-10-09 03:24:09 nemo_logging:393] Adding lora to: module.decoder.layers.17.self_attention.linear_qkv
+0: [NeMo I 2025-10-09 03:24:09 nemo_logging:393] Adding lora to: module.decoder.layers.18.self_attention.linear_proj
+0: [NeMo I 2025-10-09 03:24:09 nemo_logging:393] Adding lora to: module.decoder.layers.18.self_attention.linear_qkv
+0: [NeMo I 2025-10-09 03:24:09 nemo_logging:393] Adding lora to: module.decoder.layers.19.self_attention.linear_proj
+0: [NeMo I 2025-10-09 03:24:09 nemo_logging:393] Adding lora to: module.decoder.layers.19.self_attention.linear_qkv
+0: [NeMo I 2025-10-09 03:24:09 nemo_logging:393] Adding lora to: module.decoder.layers.20.self_attention.linear_proj
+0: [NeMo I 2025-10-09 03:24:09 nemo_logging:393] Adding lora to: module.decoder.layers.20.self_attention.linear_qkv
+0: [NeMo I 2025-10-09 03:24:09 nemo_logging:393] Adding lora to: module.decoder.layers.21.self_attention.linear_proj
+0: [NeMo I 2025-10-09 03:24:09 nemo_logging:393] Adding lora to: module.decoder.layers.21.self_attention.linear_qkv
+0: [NeMo I 2025-10-09 03:24:09 nemo_logging:393] Adding lora to: module.decoder.layers.22.self_attention.linear_proj
+0: [NeMo I 2025-10-09 03:24:09 nemo_logging:393] Adding lora to: module.decoder.layers.22.self_attention.linear_qkv
+0: [NeMo I 2025-10-09 03:24:09 nemo_logging:393] Adding lora to: module.decoder.layers.23.self_attention.linear_proj
+0: [NeMo I 2025-10-09 03:24:09 nemo_logging:393] Adding lora to: module.decoder.layers.23.self_attention.linear_qkv
+0: [NeMo I 2025-10-09 03:24:09 nemo_logging:393] Adding lora to: module.decoder.layers.24.self_attention.linear_proj
+0: [NeMo I 2025-10-09 03:24:09 nemo_logging:393] Adding lora to: module.decoder.layers.24.self_attention.linear_qkv
+0: [NeMo I 2025-10-09 03:24:09 nemo_logging:393] Adding lora to: module.decoder.layers.25.self_attention.linear_proj
+0: [NeMo I 2025-10-09 03:24:09 nemo_logging:393] Adding lora to: module.decoder.layers.25.self_attention.linear_qkv
+0: [NeMo I 2025-10-09 03:24:09 nemo_logging:393] Adding lora to: module.decoder.layers.26.self_attention.linear_proj
+0: [NeMo I 2025-10-09 03:24:09 nemo_logging:393] Adding lora to: module.decoder.layers.26.self_attention.linear_qkv
+0: [NeMo I 2025-10-09 03:24:09 nemo_logging:393] Adding lora to: module.decoder.layers.27.self_attention.linear_proj
+0: [NeMo I 2025-10-09 03:24:09 nemo_logging:393] Adding lora to: module.decoder.layers.27.self_attention.linear_qkv
+0: [NeMo I 2025-10-09 03:24:09 nemo_logging:393] Adding lora to: module.decoder.layers.28.self_attention.linear_proj
+0: [NeMo I 2025-10-09 03:24:09 nemo_logging:393] Adding lora to: module.decoder.layers.28.self_attention.linear_qkv
+0: [NeMo I 2025-10-09 03:24:09 nemo_logging:393] Adding lora to: module.decoder.layers.29.self_attention.linear_proj
+0: [NeMo I 2025-10-09 03:24:09 nemo_logging:393] Adding lora to: module.decoder.layers.29.self_attention.linear_qkv
+0: [NeMo I 2025-10-09 03:24:09 nemo_logging:393] Adding lora to: module.decoder.layers.30.self_attention.linear_proj
+0: [NeMo I 2025-10-09 03:24:09 nemo_logging:393] Adding lora to: module.decoder.layers.30.self_attention.linear_qkv
+0: [NeMo I 2025-10-09 03:24:09 nemo_logging:393] Adding lora to: module.decoder.layers.31.self_attention.linear_proj
+0: [NeMo I 2025-10-09 03:24:09 nemo_logging:393] Adding lora to: module.decoder.layers.31.self_attention.linear_qkv
+0: [NeMo I 2025-10-09 03:24:09 nemo_logging:393] Adding lora to: module.decoder.layers.32.self_attention.linear_proj
+0: [NeMo I 2025-10-09 03:24:09 nemo_logging:393] Adding lora to: module.decoder.layers.32.self_attention.linear_qkv
+0: [NeMo I 2025-10-09 03:24:09 nemo_logging:393] Adding lora to: module.decoder.layers.33.self_attention.linear_proj
+0: [NeMo I 2025-10-09 03:24:09 nemo_logging:393] Adding lora to: module.decoder.layers.33.self_attention.linear_qkv
+0: [NeMo I 2025-10-09 03:24:09 nemo_logging:393] Adding lora to: module.decoder.layers.34.self_attention.linear_proj
+0: [NeMo I 2025-10-09 03:24:09 nemo_logging:393] Adding lora to: module.decoder.layers.34.self_attention.linear_qkv
+0: [NeMo I 2025-10-09 03:24:09 nemo_logging:393] Adding lora to: module.decoder.layers.35.self_attention.linear_proj
+0: [NeMo I 2025-10-09 03:24:09 nemo_logging:393] Adding lora to: module.decoder.layers.35.self_attention.linear_qkv
+0: [NeMo I 2025-10-09 03:24:09 nemo_logging:393] Adding lora to: module.decoder.layers.36.self_attention.linear_proj
+0: [NeMo I 2025-10-09 03:24:09 nemo_logging:393] Adding lora to: module.decoder.layers.36.self_attention.linear_qkv
+0: [NeMo I 2025-10-09 03:24:09 nemo_logging:393] Adding lora to: module.decoder.layers.37.self_attention.linear_proj
+0: [NeMo I 2025-10-09 03:24:09 nemo_logging:393] Adding lora to: module.decoder.layers.37.self_attention.linear_qkv
+0: [NeMo I 2025-10-09 03:24:09 nemo_logging:393] Adding lora to: module.decoder.layers.38.self_attention.linear_proj
+0: [NeMo I 2025-10-09 03:24:09 nemo_logging:393] Adding lora to: module.decoder.layers.38.self_attention.linear_qkv
+0: [NeMo I 2025-10-09 03:24:09 nemo_logging:393] Adding lora to: module.decoder.layers.39.self_attention.linear_proj
+0: [NeMo I 2025-10-09 03:24:09 nemo_logging:393] Adding lora to: module.decoder.layers.39.self_attention.linear_qkv
+0: [NeMo I 2025-10-09 03:24:09 nemo_logging:393] Adding lora to: module.decoder.layers.40.self_attention.linear_proj
+0: [NeMo I 2025-10-09 03:24:09 nemo_logging:393] Adding lora to: module.decoder.layers.40.self_attention.linear_qkv
+0: [NeMo I 2025-10-09 03:24:09 nemo_logging:393] Adding lora to: module.decoder.layers.41.self_attention.linear_proj
+0: [NeMo I 2025-10-09 03:24:09 nemo_logging:393] Adding lora to: module.decoder.layers.41.self_attention.linear_qkv
+0: [NeMo I 2025-10-09 03:24:09 nemo_logging:393] Adding lora to: module.decoder.layers.42.self_attention.linear_proj
+0: [NeMo I 2025-10-09 03:24:09 nemo_logging:393] Adding lora to: module.decoder.layers.42.self_attention.linear_qkv
+0: [NeMo I 2025-10-09 03:24:09 nemo_logging:393] Adding lora to: module.decoder.layers.43.self_attention.linear_proj
+0: [NeMo I 2025-10-09 03:24:09 nemo_logging:393] Adding lora to: module.decoder.layers.43.self_attention.linear_qkv
+0: [NeMo I 2025-10-09 03:24:09 nemo_logging:393] Adding lora to: module.decoder.layers.44.self_attention.linear_proj
+0: [NeMo I 2025-10-09 03:24:09 nemo_logging:393] Adding lora to: module.decoder.layers.44.self_attention.linear_qkv
+0: [NeMo I 2025-10-09 03:24:09 nemo_logging:393] Adding lora to: module.decoder.layers.45.self_attention.linear_proj
+0: [NeMo I 2025-10-09 03:24:09 nemo_logging:393] Adding lora to: module.decoder.layers.45.self_attention.linear_qkv
+0: [NeMo I 2025-10-09 03:24:09 nemo_logging:393] Adding lora to: module.decoder.layers.46.self_attention.linear_proj
+0: [NeMo I 2025-10-09 03:24:09 nemo_logging:393] Adding lora to: module.decoder.layers.46.self_attention.linear_qkv
+0: [NeMo I 2025-10-09 03:24:09 nemo_logging:393] Adding lora to: module.decoder.layers.47.self_attention.linear_proj
+0: [NeMo I 2025-10-09 03:24:09 nemo_logging:393] Adding lora to: module.decoder.layers.47.self_attention.linear_qkv
+0: [NeMo I 2025-10-09 03:24:09 nemo_logging:393] Adding lora to: module.decoder.layers.48.self_attention.linear_proj
+0: [NeMo I 2025-10-09 03:24:09 nemo_logging:393] Adding lora to: module.decoder.layers.48.self_attention.linear_qkv
+0: [NeMo I 2025-10-09 03:24:09 nemo_logging:393] Adding lora to: module.decoder.layers.49.self_attention.linear_proj
+0: [NeMo I 2025-10-09 03:24:09 nemo_logging:393] Adding lora to: module.decoder.layers.49.self_attention.linear_qkv
+0: [NeMo I 2025-10-09 03:24:09 nemo_logging:393] Adding lora to: module.decoder.layers.50.self_attention.linear_proj
+0: [NeMo I 2025-10-09 03:24:09 nemo_logging:393] Adding lora to: module.decoder.layers.50.self_attention.linear_qkv
+0: [NeMo I 2025-10-09 03:24:09 nemo_logging:393] Adding lora to: module.decoder.layers.51.self_attention.linear_proj
+0: [NeMo I 2025-10-09 03:24:09 nemo_logging:393] Adding lora to: module.decoder.layers.51.self_attention.linear_qkv
+0: [NeMo I 2025-10-09 03:24:09 nemo_logging:393] Adding lora to: module.decoder.layers.52.self_attention.linear_proj
+0: [NeMo I 2025-10-09 03:24:09 nemo_logging:393] Adding lora to: module.decoder.layers.52.self_attention.linear_qkv
+0: [NeMo I 2025-10-09 03:24:09 nemo_logging:393] Adding lora to: module.decoder.layers.53.self_attention.linear_proj
+0: [NeMo I 2025-10-09 03:24:09 nemo_logging:393] Adding lora to: module.decoder.layers.53.self_attention.linear_qkv
+0: [NeMo I 2025-10-09 03:24:09 nemo_logging:393] Adding lora to: module.decoder.layers.54.self_attention.linear_proj
+0: [NeMo I 2025-10-09 03:24:09 nemo_logging:393] Adding lora to: module.decoder.layers.54.self_attention.linear_qkv
+0: [NeMo I 2025-10-09 03:24:09 nemo_logging:393] Adding lora to: module.decoder.layers.55.self_attention.linear_proj
+0: [NeMo I 2025-10-09 03:24:09 nemo_logging:393] Adding lora to: module.decoder.layers.55.self_attention.linear_qkv
+0: [NeMo I 2025-10-09 03:24:09 nemo_logging:393] Adding lora to: module.decoder.layers.56.self_attention.linear_proj
+0: [NeMo I 2025-10-09 03:24:09 nemo_logging:393] Adding lora to: module.decoder.layers.56.self_attention.linear_qkv
+0: [NeMo I 2025-10-09 03:24:09 nemo_logging:393] Adding lora to: module.decoder.layers.57.self_attention.linear_proj
+0: [NeMo I 2025-10-09 03:24:09 nemo_logging:393] Adding lora to: module.decoder.layers.57.self_attention.linear_qkv
+0: [NeMo I 2025-10-09 03:24:09 nemo_logging:393] Adding lora to: module.decoder.layers.58.self_attention.linear_proj
+0: [NeMo I 2025-10-09 03:24:09 nemo_logging:393] Adding lora to: module.decoder.layers.58.self_attention.linear_qkv
+0: [NeMo I 2025-10-09 03:24:09 nemo_logging:393] Adding lora to: module.decoder.layers.59.self_attention.linear_proj
+0: [NeMo I 2025-10-09 03:24:09 nemo_logging:393] Adding lora to: module.decoder.layers.59.self_attention.linear_qkv
+0: [NeMo I 2025-10-09 03:24:09 nemo_logging:393] Adding lora to: module.decoder.layers.60.self_attention.linear_proj
+0: [NeMo I 2025-10-09 03:24:09 nemo_logging:393] Adding lora to: module.decoder.layers.60.self_attention.linear_qkv
+0: [NeMo I 2025-10-09 03:24:09 nemo_logging:393] Adding lora to: module.decoder.layers.61.self_attention.linear_proj
+0: [NeMo I 2025-10-09 03:24:09 nemo_logging:393] Adding lora to: module.decoder.layers.61.self_attention.linear_qkv
+0: [NeMo I 2025-10-09 03:24:09 nemo_logging:393] Adding lora to: module.decoder.layers.62.self_attention.linear_proj
+0: [NeMo I 2025-10-09 03:24:09 nemo_logging:393] Adding lora to: module.decoder.layers.62.self_attention.linear_qkv
+0: [NeMo I 2025-10-09 03:24:09 nemo_logging:393] Adding lora to: module.decoder.layers.63.self_attention.linear_proj
+0: [NeMo I 2025-10-09 03:24:09 nemo_logging:393] Adding lora to: module.decoder.layers.63.self_attention.linear_qkv
+0: [NeMo I 2025-10-09 03:24:09 nemo_logging:393] Adding lora to: module.decoder.layers.64.self_attention.linear_proj
+0: [NeMo I 2025-10-09 03:24:09 nemo_logging:393] Adding lora to: module.decoder.layers.64.self_attention.linear_qkv
+0: [NeMo I 2025-10-09 03:24:09 nemo_logging:393] Adding lora to: module.decoder.layers.65.self_attention.linear_proj
+0: [NeMo I 2025-10-09 03:24:09 nemo_logging:393] Adding lora to: module.decoder.layers.65.self_attention.linear_qkv
+0: [NeMo I 2025-10-09 03:24:09 nemo_logging:393] Adding lora to: module.decoder.layers.66.self_attention.linear_proj
+0: [NeMo I 2025-10-09 03:24:09 nemo_logging:393] Adding lora to: module.decoder.layers.66.self_attention.linear_qkv
+0: [NeMo I 2025-10-09 03:24:09 nemo_logging:393] Adding lora to: module.decoder.layers.67.self_attention.linear_proj
+0: [NeMo I 2025-10-09 03:24:09 nemo_logging:393] Adding lora to: module.decoder.layers.67.self_attention.linear_qkv
+0: [NeMo I 2025-10-09 03:24:09 nemo_logging:393] Adding lora to: module.decoder.layers.68.self_attention.linear_proj
+0: [NeMo I 2025-10-09 03:24:09 nemo_logging:393] Adding lora to: module.decoder.layers.68.self_attention.linear_qkv
+0: [NeMo I 2025-10-09 03:24:09 nemo_logging:393] Adding lora to: module.decoder.layers.69.self_attention.linear_proj
+0: [NeMo I 2025-10-09 03:24:09 nemo_logging:393] Adding lora to: module.decoder.layers.69.self_attention.linear_qkv
+0: [NeMo I 2025-10-09 03:24:09 nemo_logging:393] Adding lora to: module.decoder.layers.70.self_attention.linear_proj
+0: [NeMo I 2025-10-09 03:24:09 nemo_logging:393] Adding lora to: module.decoder.layers.70.self_attention.linear_qkv
+0: [NeMo I 2025-10-09 03:24:09 nemo_logging:393] Adding lora to: module.decoder.layers.71.self_attention.linear_proj
+0: [NeMo I 2025-10-09 03:24:09 nemo_logging:393] Adding lora to: module.decoder.layers.71.self_attention.linear_qkv
+0: [NeMo I 2025-10-09 03:24:09 nemo_logging:393] Adding lora to: module.decoder.layers.72.self_attention.linear_proj
+0: [NeMo I 2025-10-09 03:24:09 nemo_logging:393] Adding lora to: module.decoder.layers.72.self_attention.linear_qkv
+0: [NeMo I 2025-10-09 03:24:09 nemo_logging:393] Adding lora to: module.decoder.layers.73.self_attention.linear_proj
+0: [NeMo I 2025-10-09 03:24:09 nemo_logging:393] Adding lora to: module.decoder.layers.73.self_attention.linear_qkv
+0: [NeMo I 2025-10-09 03:24:09 nemo_logging:393] Adding lora to: module.decoder.layers.74.self_attention.linear_proj
+0: [NeMo I 2025-10-09 03:24:09 nemo_logging:393] Adding lora to: module.decoder.layers.74.self_attention.linear_qkv
+0: [NeMo I 2025-10-09 03:24:09 nemo_logging:393] Adding lora to: module.decoder.layers.75.self_attention.linear_proj
+0: [NeMo I 2025-10-09 03:24:09 nemo_logging:393] Adding lora to: module.decoder.layers.75.self_attention.linear_qkv
+0: [NeMo I 2025-10-09 03:24:09 nemo_logging:393] Adding lora to: module.decoder.layers.76.self_attention.linear_proj
+0: [NeMo I 2025-10-09 03:24:09 nemo_logging:393] Adding lora to: module.decoder.layers.76.self_attention.linear_qkv
+0: [NeMo I 2025-10-09 03:24:09 nemo_logging:393] Adding lora to: module.decoder.layers.77.self_attention.linear_proj
+0: [NeMo I 2025-10-09 03:24:09 nemo_logging:393] Adding lora to: module.decoder.layers.77.self_attention.linear_qkv
+0: [NeMo I 2025-10-09 03:24:09 nemo_logging:393] Adding lora to: module.decoder.layers.78.self_attention.linear_proj
+0: [NeMo I 2025-10-09 03:24:09 nemo_logging:393] Adding lora to: module.decoder.layers.78.self_attention.linear_qkv
+0: [NeMo I 2025-10-09 03:24:09 nemo_logging:393] Adding lora to: module.decoder.layers.79.self_attention.linear_proj
+0: [NeMo I 2025-10-09 03:24:09 nemo_logging:393] Adding lora to: module.decoder.layers.79.self_attention.linear_qkv
+0: [NeMo I 2025-10-09 03:24:09 nemo_logging:393] After applying model_transform:
+0:     
+0:       | Name   | Type     | Params | Mode 
+0:     --------------------------------------------
+0:     0 | module | GPTModel | 69.0 B | train
+0:     --------------------------------------------
+0:     44.6 M    Trainable params
+0:     69.0 B    Non-trainable params
+0:     69.0 B    Total params
+0:     276,084.851Total estimated model params size (MB)
+0:     2569      Modules in train mode
+0:     0         Modules in eval mode
+0: [NeMo I 2025-10-09 03:24:09 nemo_logging:393] Initializing model parallel
+0: [NeMo I 2025-10-09 03:24:09 nemo_logging:393]  > number of parameters on (tensor, pipeline) model parallel rank (0 ,0): 69021212672
+0: [NeMo I 2025-10-09 03:24:09 nemo_logging:393]  > number of trainable parameters: 44564480 (0.06% of total)
+0: [NeMo I 2025-10-09 03:24:09 utils:662] Setting up DistributedDataParallel with config DistributedDataParallelConfig(grad_reduce_in_fp32=False, overlap_grad_reduce=False, overlap_param_gather=False, align_param_gather=False, use_distributed_optimizer=True, num_distributed_optimizer_instances=1, check_for_nan_in_grad=False, check_for_large_grads=False, bucket_size=None, pad_buckets_for_high_nccl_busbw=False, average_in_collective=False, fp8_param_gather=0, reuse_grad_buf_for_mxfp8_param_ag=False, use_megatron_fsdp=False, use_custom_fsdp=False, data_parallel_sharding_strategy='no_shard', gradient_reduce_div_fusion=True, suggested_communication_unit_size=None, preserve_fp32_weights=True, keep_fp8_transpose_cache=False, nccl_ub=False, fsdp_double_buffer=False, outer_dp_sharding_strategy='no_shard', disable_symmetric_registration=False, delay_wgrad_compute=False)
+0: [NeMo I 2025-10-09 03:24:09 utils:695] Number of buckets for gradient all-reduce / reduce-scatter: 1
+0:     Params for bucket 1 (44564480 elements, 44564480 padded size):
+0:     	module.decoder.layers.68.self_attention.linear_qkv.adapter.linear_in.weight
+0:     	module.decoder.layers.13.self_attention.linear_qkv.adapter.linear_in.weight
+0:     	module.decoder.layers.55.self_attention.linear_qkv.adapter.linear_in.weight
+0:     	module.decoder.layers.76.self_attention.linear_qkv.adapter.linear_in.weight
+0:     	module.decoder.layers.40.self_attention.linear_qkv.adapter.linear_out.weight
+0:     	module.decoder.layers.20.self_attention.linear_qkv.adapter.linear_in.weight
+0:     	module.decoder.layers.62.self_attention.linear_proj.adapter.linear_in.weight
+0:     	module.decoder.layers.7.self_attention.linear_proj.adapter.linear_in.weight
+0:     	module.decoder.layers.74.self_attention.linear_qkv.adapter.linear_out.weight
+0:     	module.decoder.layers.48.self_attention.linear_qkv.adapter.linear_in.weight
+0:     	module.decoder.layers.27.self_attention.linear_qkv.adapter.linear_out.weight
+0:     	module.decoder.layers.69.self_attention.linear_proj.adapter.linear_out.weight
+0:     	module.decoder.layers.34.self_attention.linear_proj.adapter.linear_in.weight
+0:     	module.decoder.layers.14.self_attention.linear_proj.adapter.linear_out.weight
+0:     	module.decoder.layers.56.self_attention.linear_proj.adapter.linear_out.weight
+0:     	module.decoder.layers.77.self_attention.linear_proj.adapter.linear_out.weight
+0:     	module.decoder.layers.40.self_attention.linear_qkv.adapter.linear_in.weight
+0:     	module.decoder.layers.21.self_attention.linear_proj.adapter.linear_out.weight
+0:     	module.decoder.layers.62.self_attention.linear_qkv.adapter.linear_out.weight
+0:     	module.decoder.layers.7.self_attention.linear_qkv.adapter.linear_in.weight
+0:     	module.decoder.layers.49.self_attention.linear_proj.adapter.linear_out.weight
+0:     	module.decoder.layers.27.self_attention.linear_qkv.adapter.linear_in.weight
+0:     	module.decoder.layers.14.self_attention.linear_proj.adapter.linear_in.weight
+0:     	module.decoder.layers.69.self_attention.linear_proj.adapter.linear_in.weight
+0:     	module.decoder.layers.34.self_attention.linear_qkv.adapter.linear_out.weight
+0:     	module.decoder.layers.56.self_attention.linear_proj.adapter.linear_in.weight
+0:     	module.decoder.layers.77.self_attention.linear_proj.adapter.linear_in.weight
+0:     	module.decoder.layers.41.self_attention.linear_proj.adapter.linear_out.weight
+0:     	module.decoder.layers.21.self_attention.linear_proj.adapter.linear_in.weight
+0:     	module.decoder.layers.62.self_attention.linear_qkv.adapter.linear_in.weight
+0:     	module.decoder.layers.8.self_attention.linear_proj.adapter.linear_in.weight
+0:     	module.decoder.layers.75.self_attention.linear_qkv.adapter.linear_out.weight
+0:     	module.decoder.layers.73.self_attention.linear_qkv.adapter.linear_out.weight
+0:     	module.decoder.layers.49.self_attention.linear_proj.adapter.linear_in.weight
+0:     	module.decoder.layers.47.self_attention.linear_proj.adapter.linear_out.weight
+0:     	module.decoder.layers.28.self_attention.linear_proj.adapter.linear_out.weight
+0:     	module.decoder.layers.69.self_attention.linear_qkv.adapter.linear_out.weight
+0:     	module.decoder.layers.34.self_attention.linear_qkv.adapter.linear_in.weight
+0:     	module.decoder.layers.14.self_attention.linear_qkv.adapter.linear_out.weight
+0:     	module.decoder.layers.56.self_attention.linear_qkv.adapter.linear_out.weight
+0:     	module.decoder.layers.77.self_attention.linear_qkv.adapter.linear_in.weight
+0:     	module.decoder.layers.41.self_attention.linear_proj.adapter.linear_in.weight
+0:     	module.decoder.layers.21.self_attention.linear_qkv.adapter.linear_out.weight
+0:     	module.decoder.layers.63.self_attention.linear_proj.adapter.linear_out.weight
+0:     	module.decoder.layers.8.self_attention.linear_qkv.adapter.linear_out.weight
+0:     	module.decoder.layers.49.self_attention.linear_qkv.adapter.linear_in.weight
+0:     	module.decoder.layers.28.self_attention.linear_proj.adapter.linear_in.weight
+0:     	module.decoder.layers.69.self_attention.linear_qkv.adapter.linear_in.weight
+0:     	module.decoder.layers.35.self_attention.linear_proj.adapter.linear_out.weight
+0:     	module.decoder.layers.14.self_attention.linear_qkv.adapter.linear_in.weight
+0:     	module.decoder.layers.56.self_attention.linear_qkv.adapter.linear_in.weight
+0:     	module.decoder.layers.78.self_attention.linear_proj.adapter.linear_out.weight
+0:     	module.decoder.layers.41.self_attention.linear_qkv.adapter.linear_in.weight
+0:     	module.decoder.layers.21.self_attention.linear_qkv.adapter.linear_in.weight
+0:     	module.decoder.layers.63.self_attention.linear_proj.adapter.linear_in.weight
+0:     	module.decoder.layers.8.self_attention.linear_qkv.adapter.linear_in.weight
+0:     	module.decoder.layers.50.self_attention.linear_proj.adapter.linear_out.weight
+0:     	module.decoder.layers.28.self_attention.linear_qkv.adapter.linear_out.weight
+0:     	module.decoder.layers.70.self_attention.linear_proj.adapter.linear_out.weight
+0:     	module.decoder.layers.35.self_attention.linear_proj.adapter.linear_in.weight
+0:     	module.decoder.layers.15.self_attention.linear_proj.adapter.linear_out.weight
+0:     	module.decoder.layers.57.self_attention.linear_proj.adapter.linear_out.weight
+0:     	module.decoder.layers.78.self_attention.linear_proj.adapter.linear_in.weight
+0:     	module.decoder.layers.42.self_attention.linear_proj.adapter.linear_out.weight
+0:     	module.decoder.layers.22.self_attention.linear_proj.adapter.linear_out.weight
+0:     	module.decoder.layers.63.self_attention.linear_qkv.adapter.linear_out.weight
+0:     	module.decoder.layers.9.self_attention.linear_proj.adapter.linear_out.weight
+0:     	module.decoder.layers.50.self_attention.linear_proj.adapter.linear_in.weight
+0:     	module.decoder.layers.28.self_attention.linear_qkv.adapter.linear_in.weight
+0:     	module.decoder.layers.15.self_attention.linear_proj.adapter.linear_in.weight
+0:     	module.decoder.layers.70.self_attention.linear_proj.adapter.linear_in.weight
+0:     	module.decoder.layers.35.self_attention.linear_qkv.adapter.linear_out.weight
+0:     	module.decoder.layers.57.self_attention.linear_proj.adapter.linear_in.weight
+0:     	module.decoder.layers.1.self_attention.linear_qkv.adapter.linear_out.weight
+0:     	module.decoder.layers.78.self_attention.linear_qkv.adapter.linear_out.weight
+0:     	module.decoder.layers.42.self_attention.linear_proj.adapter.linear_in.weight
+0:     	module.decoder.layers.22.self_attention.linear_proj.adapter.linear_in.weight
+0:     	module.decoder.layers.63.self_attention.linear_qkv.adapter.linear_in.weight
+0:     	module.decoder.layers.9.self_attention.linear_proj.adapter.linear_in.weight
+0:     	module.decoder.layers.50.self_attention.linear_qkv.adapter.linear_out.weight
+0:     	module.decoder.layers.29.self_attention.linear_proj.adapter.linear_out.weight
+0:     	module.decoder.layers.70.self_attention.linear_qkv.adapter.linear_in.weight
+0:     	module.decoder.layers.35.self_attention.linear_qkv.adapter.linear_in.weight
+0:     	module.decoder.layers.15.self_attention.linear_qkv.adapter.linear_out.weight
+0:     	module.decoder.layers.5.self_attention.linear_qkv.adapter.linear_out.weight
+0:     	module.decoder.layers.57.self_attention.linear_qkv.adapter.linear_out.weight
+0:     	module.decoder.layers.18.self_attention.linear_qkv.adapter.linear_out.weight
+0:     	module.decoder.layers.0.self_attention.linear_qkv.adapter.linear_out.weight
+0:     	module.decoder.layers.78.self_attention.linear_qkv.adapter.linear_in.weight
+0:     	module.decoder.layers.42.self_attention.linear_qkv.adapter.linear_in.weight
+0:     	module.decoder.layers.22.self_attention.linear_qkv.adapter.linear_in.weight
+0:     	module.decoder.layers.64.self_attention.linear_proj.adapter.linear_out.weight
+0:     	module.decoder.layers.9.self_attention.linear_qkv.adapter.linear_out.weight
+0:     	module.decoder.layers.50.self_attention.linear_qkv.adapter.linear_in.weight
+0:     	module.decoder.layers.29.self_attention.linear_proj.adapter.linear_in.weight
+0:     	module.decoder.layers.71.self_attention.linear_proj.adapter.linear_in.weight
+0:     	module.decoder.layers.36.self_attention.linear_proj.adapter.linear_out.weight
+0:     	module.decoder.layers.15.self_attention.linear_qkv.adapter.linear_in.weight
+0:     	module.decoder.layers.57.self_attention.linear_qkv.adapter.linear_in.weight
+0:     	module.decoder.layers.0.self_attention.linear_qkv.adapter.linear_in.weight
+0:     	module.decoder.layers.79.self_attention.linear_proj.adapter.linear_out.weight
+0:     	module.decoder.layers.43.self_attention.linear_proj.adapter.linear_out.weight
+0:     	module.decoder.layers.34.self_attention.linear_proj.adapter.linear_out.weight
+0:     	module.decoder.layers.23.self_attention.linear_proj.adapter.linear_out.weight
+0:     	module.decoder.layers.64.self_attention.linear_proj.adapter.linear_in.weight
+0:     	module.decoder.layers.9.self_attention.linear_qkv.adapter.linear_in.weight
+0:     	module.decoder.layers.65.self_attention.linear_qkv.adapter.linear_out.weight
+0:     	module.decoder.layers.51.self_attention.linear_proj.adapter.linear_out.weight
+0:     	module.decoder.layers.29.self_attention.linear_qkv.adapter.linear_in.weight
+0:     	module.decoder.layers.71.self_attention.linear_qkv.adapter.linear_out.weight
+0:     	module.decoder.layers.36.self_attention.linear_proj.adapter.linear_in.weight
+0:     	module.decoder.layers.16.self_attention.linear_proj.adapter.linear_out.weight
+0:     	module.decoder.layers.58.self_attention.linear_proj.adapter.linear_out.weight
+0:     	module.decoder.layers.1.self_attention.linear_proj.adapter.linear_in.weight
+0:     	module.decoder.layers.79.self_attention.linear_proj.adapter.linear_in.weight
+0:     	module.decoder.layers.43.self_attention.linear_proj.adapter.linear_in.weight
+0:     	module.decoder.layers.23.self_attention.linear_proj.adapter.linear_in.weight
+0:     	module.decoder.layers.64.self_attention.linear_qkv.adapter.linear_out.weight
+0:     	module.decoder.layers.10.self_attention.linear_proj.adapter.linear_out.weight
+0:     	module.decoder.layers.51.self_attention.linear_proj.adapter.linear_in.weight
+0:     	module.decoder.layers.30.self_attention.linear_proj.adapter.linear_out.weight
+0:     	module.decoder.layers.71.self_attention.linear_qkv.adapter.linear_in.weight
+0:     	module.decoder.layers.36.self_attention.linear_qkv.adapter.linear_out.weight
+0:     	module.decoder.layers.16.self_attention.linear_proj.adapter.linear_in.weight
+0:     	module.decoder.layers.58.self_attention.linear_proj.adapter.linear_in.weight
+0:     	module.decoder.layers.2.self_attention.linear_proj.adapter.linear_out.weight
+0:     	module.decoder.layers.79.self_attention.linear_qkv.adapter.linear_out.weight
+0:     	module.decoder.layers.43.self_attention.linear_qkv.adapter.linear_out.weight
+0:     	module.decoder.layers.23.self_attention.linear_qkv.adapter.linear_out.weight
+0:     	module.decoder.layers.6.self_attention.linear_qkv.adapter.linear_out.weight
+0:     	module.decoder.layers.64.self_attention.linear_qkv.adapter.linear_in.weight
+0:     	module.decoder.layers.10.self_attention.linear_qkv.adapter.linear_out.weight
+0:     	module.decoder.layers.51.self_attention.linear_qkv.adapter.linear_out.weight
+0:     	module.decoder.layers.30.self_attention.linear_proj.adapter.linear_in.weight
+0:     	module.decoder.layers.72.self_attention.linear_proj.adapter.linear_out.weight
+0:     	module.decoder.layers.36.self_attention.linear_qkv.adapter.linear_in.weight
+0:     	module.decoder.layers.16.self_attention.linear_qkv.adapter.linear_out.weight
+0:     	module.decoder.layers.58.self_attention.linear_qkv.adapter.linear_out.weight
+0:     	module.decoder.layers.19.self_attention.linear_proj.adapter.linear_out.weight
+0:     	module.decoder.layers.1.self_attention.linear_qkv.adapter.linear_in.weight
+0:     	module.decoder.layers.79.self_attention.linear_qkv.adapter.linear_in.weight
+0:     	module.decoder.layers.43.self_attention.linear_qkv.adapter.linear_in.weight
+0:     	module.decoder.layers.23.self_attention.linear_qkv.adapter.linear_in.weight
+0:     	module.decoder.layers.65.self_attention.linear_proj.adapter.linear_out.weight
+0:     	module.decoder.layers.10.self_attention.linear_proj.adapter.linear_in.weight
+0:     	module.decoder.layers.76.self_attention.linear_proj.adapter.linear_out.weight
+0:     	module.decoder.layers.51.self_attention.linear_qkv.adapter.linear_in.weight
+0:     	module.decoder.layers.30.self_attention.linear_qkv.adapter.linear_out.weight
+0:     	module.decoder.layers.72.self_attention.linear_proj.adapter.linear_in.weight
+0:     	module.decoder.layers.37.self_attention.linear_proj.adapter.linear_out.weight
+0:     	module.decoder.layers.16.self_attention.linear_qkv.adapter.linear_in.weight
+0:     	module.decoder.layers.58.self_attention.linear_qkv.adapter.linear_in.weight
+0:     	module.decoder.layers.2.self_attention.linear_qkv.adapter.linear_in.weight
+0:     	module.decoder.layers.44.self_attention.linear_proj.adapter.linear_out.weight
+0:     	module.decoder.layers.24.self_attention.linear_proj.adapter.linear_out.weight
+0:     	module.decoder.layers.65.self_attention.linear_proj.adapter.linear_in.weight
+0:     	module.decoder.layers.10.self_attention.linear_qkv.adapter.linear_in.weight
+0:     	module.decoder.layers.77.self_attention.linear_qkv.adapter.linear_out.weight
+0:     	module.decoder.layers.55.self_attention.linear_qkv.adapter.linear_out.weight
+0:     	module.decoder.layers.52.self_attention.linear_proj.adapter.linear_out.weight
+0:     	module.decoder.layers.30.self_attention.linear_qkv.adapter.linear_in.weight
+0:     	module.decoder.layers.72.self_attention.linear_qkv.adapter.linear_out.weight
+0:     	module.decoder.layers.37.self_attention.linear_proj.adapter.linear_in.weight
+0:     	module.decoder.layers.17.self_attention.linear_proj.adapter.linear_out.weight
+0:     	module.decoder.layers.59.self_attention.linear_proj.adapter.linear_out.weight
+0:     	module.decoder.layers.2.self_attention.linear_proj.adapter.linear_in.weight
+0:     	module.decoder.layers.44.self_attention.linear_proj.adapter.linear_in.weight
+0:     	module.decoder.layers.24.self_attention.linear_proj.adapter.linear_in.weight
+0:     	module.decoder.layers.65.self_attention.linear_qkv.adapter.linear_in.weight
+0:     	module.decoder.layers.11.self_attention.linear_proj.adapter.linear_out.weight
+0:     	module.decoder.layers.52.self_attention.linear_proj.adapter.linear_in.weight
+0:     	module.decoder.layers.31.self_attention.linear_proj.adapter.linear_out.weight
+0:     	module.decoder.layers.72.self_attention.linear_qkv.adapter.linear_in.weight
+0:     	module.decoder.layers.37.self_attention.linear_qkv.adapter.linear_out.weight
+0:     	module.decoder.layers.17.self_attention.linear_proj.adapter.linear_in.weight
+0:     	module.decoder.layers.59.self_attention.linear_proj.adapter.linear_in.weight
+0:     	module.decoder.layers.3.self_attention.linear_proj.adapter.linear_out.weight
+0:     	module.decoder.layers.44.self_attention.linear_qkv.adapter.linear_out.weight
+0:     	module.decoder.layers.24.self_attention.linear_qkv.adapter.linear_out.weight
+0:     	module.decoder.layers.66.self_attention.linear_proj.adapter.linear_out.weight
+0:     	module.decoder.layers.52.self_attention.linear_qkv.adapter.linear_out.weight
+0:     	module.decoder.layers.31.self_attention.linear_proj.adapter.linear_in.weight
+0:     	module.decoder.layers.73.self_attention.linear_proj.adapter.linear_out.weight
+0:     	module.decoder.layers.37.self_attention.linear_qkv.adapter.linear_in.weight
+0:     	module.decoder.layers.17.self_attention.linear_qkv.adapter.linear_out.weight
+0:     	module.decoder.layers.59.self_attention.linear_qkv.adapter.linear_out.weight
+0:     	module.decoder.layers.3.self_attention.linear_proj.adapter.linear_in.weight
+0:     	module.decoder.layers.44.self_attention.linear_qkv.adapter.linear_in.weight
+0:     	module.decoder.layers.24.self_attention.linear_qkv.adapter.linear_in.weight
+0:     	module.decoder.layers.3.self_attention.linear_qkv.adapter.linear_out.weight
+0:     	module.decoder.layers.66.self_attention.linear_proj.adapter.linear_in.weight
+0:     	module.decoder.layers.11.self_attention.linear_proj.adapter.linear_in.weight
+0:     	module.decoder.layers.52.self_attention.linear_qkv.adapter.linear_in.weight
+0:     	module.decoder.layers.31.self_attention.linear_qkv.adapter.linear_out.weight
+0:     	module.decoder.layers.0.self_attention.linear_proj.adapter.linear_in.weight
+0:     	module.decoder.layers.73.self_attention.linear_proj.adapter.linear_in.weight
+0:     	module.decoder.layers.38.self_attention.linear_proj.adapter.linear_out.weight
+0:     	module.decoder.layers.17.self_attention.linear_qkv.adapter.linear_in.weight
+0:     	module.decoder.layers.59.self_attention.linear_qkv.adapter.linear_in.weight
+0:     	module.decoder.layers.3.self_attention.linear_qkv.adapter.linear_in.weight
+0:     	module.decoder.layers.45.self_attention.linear_proj.adapter.linear_in.weight
+0:     	module.decoder.layers.25.self_attention.linear_proj.adapter.linear_out.weight
+0:     	module.decoder.layers.66.self_attention.linear_qkv.adapter.linear_out.weight
+0:     	module.decoder.layers.11.self_attention.linear_qkv.adapter.linear_out.weight
+0:     	module.decoder.layers.53.self_attention.linear_qkv.adapter.linear_out.weight
+0:     	module.decoder.layers.53.self_attention.linear_proj.adapter.linear_out.weight
+0:     	module.decoder.layers.31.self_attention.linear_qkv.adapter.linear_in.weight
+0:     	module.decoder.layers.73.self_attention.linear_qkv.adapter.linear_in.weight
+0:     	module.decoder.layers.38.self_attention.linear_proj.adapter.linear_in.weight
+0:     	module.decoder.layers.18.self_attention.linear_proj.adapter.linear_out.weight
+0:     	module.decoder.layers.60.self_attention.linear_proj.adapter.linear_out.weight
+0:     	module.decoder.layers.6.self_attention.linear_proj.adapter.linear_out.weight
+0:     	module.decoder.layers.4.self_attention.linear_qkv.adapter.linear_out.weight
+0:     	module.decoder.layers.45.self_attention.linear_qkv.adapter.linear_out.weight
+0:     	module.decoder.layers.25.self_attention.linear_proj.adapter.linear_in.weight
+0:     	module.decoder.layers.66.self_attention.linear_qkv.adapter.linear_in.weight
+0:     	module.decoder.layers.12.self_attention.linear_proj.adapter.linear_out.weight
+0:     	module.decoder.layers.53.self_attention.linear_proj.adapter.linear_in.weight
+0:     	module.decoder.layers.32.self_attention.linear_proj.adapter.linear_out.weight
+0:     	module.decoder.layers.74.self_attention.linear_proj.adapter.linear_out.weight
+0:     	module.decoder.layers.38.self_attention.linear_qkv.adapter.linear_out.weight
+0:     	module.decoder.layers.18.self_attention.linear_proj.adapter.linear_in.weight
+0:     	module.decoder.layers.4.self_attention.linear_proj.adapter.linear_in.weight
+0:     	module.decoder.layers.60.self_attention.linear_proj.adapter.linear_in.weight
+0:     	module.decoder.layers.8.self_attention.linear_proj.adapter.linear_out.weight
+0:     	module.decoder.layers.45.self_attention.linear_qkv.adapter.linear_in.weight
+0:     	module.decoder.layers.25.self_attention.linear_qkv.adapter.linear_out.weight
+0:     	module.decoder.layers.67.self_attention.linear_proj.adapter.linear_out.weight
+0:     	module.decoder.layers.11.self_attention.linear_qkv.adapter.linear_in.weight
+0:     	module.decoder.layers.70.self_attention.linear_qkv.adapter.linear_out.weight
+0:     	module.decoder.layers.53.self_attention.linear_qkv.adapter.linear_in.weight
+0:     	module.decoder.layers.47.self_attention.linear_qkv.adapter.linear_out.weight
+0:     	module.decoder.layers.32.self_attention.linear_proj.adapter.linear_in.weight
+0:     	module.decoder.layers.74.self_attention.linear_proj.adapter.linear_in.weight
+0:     	module.decoder.layers.38.self_attention.linear_qkv.adapter.linear_in.weight
+0:     	module.decoder.layers.18.self_attention.linear_qkv.adapter.linear_in.weight
+0:     	module.decoder.layers.60.self_attention.linear_qkv.adapter.linear_out.weight
+0:     	module.decoder.layers.7.self_attention.linear_qkv.adapter.linear_out.weight
+0:     	module.decoder.layers.4.self_attention.linear_qkv.adapter.linear_in.weight
+0:     	module.decoder.layers.46.self_attention.linear_proj.adapter.linear_out.weight
+0:     	module.decoder.layers.25.self_attention.linear_qkv.adapter.linear_in.weight
+0:     	module.decoder.layers.67.self_attention.linear_proj.adapter.linear_in.weight
+0:     	module.decoder.layers.12.self_attention.linear_qkv.adapter.linear_out.weight
+0:     	module.decoder.layers.54.self_attention.linear_proj.adapter.linear_out.weight
+0:     	module.decoder.layers.48.self_attention.linear_proj.adapter.linear_out.weight
+0:     	module.decoder.layers.46.self_attention.linear_qkv.adapter.linear_out.weight
+0:     	module.decoder.layers.32.self_attention.linear_qkv.adapter.linear_in.weight
+0:     	module.decoder.layers.74.self_attention.linear_qkv.adapter.linear_in.weight
+0:     	module.decoder.layers.39.self_attention.linear_proj.adapter.linear_out.weight
+0:     	module.decoder.layers.19.self_attention.linear_proj.adapter.linear_in.weight
+0:     	module.decoder.layers.60.self_attention.linear_qkv.adapter.linear_in.weight
+0:     	module.decoder.layers.5.self_attention.linear_proj.adapter.linear_out.weight
+0:     	module.decoder.layers.46.self_attention.linear_proj.adapter.linear_in.weight
+0:     	module.decoder.layers.26.self_attention.linear_proj.adapter.linear_out.weight
+0:     	module.decoder.layers.67.self_attention.linear_qkv.adapter.linear_out.weight
+0:     	module.decoder.layers.12.self_attention.linear_proj.adapter.linear_in.weight
+0:     	module.decoder.layers.54.self_attention.linear_proj.adapter.linear_in.weight
+0:     	module.decoder.layers.49.self_attention.linear_qkv.adapter.linear_out.weight
+0:     	module.decoder.layers.45.self_attention.linear_proj.adapter.linear_out.weight
+0:     	module.decoder.layers.33.self_attention.linear_proj.adapter.linear_out.weight
+0:     	module.decoder.layers.75.self_attention.linear_proj.adapter.linear_out.weight
+0:     	module.decoder.layers.39.self_attention.linear_proj.adapter.linear_in.weight
+0:     	module.decoder.layers.19.self_attention.linear_qkv.adapter.linear_out.weight
+0:     	module.decoder.layers.5.self_attention.linear_proj.adapter.linear_in.weight
+0:     	module.decoder.layers.61.self_attention.linear_proj.adapter.linear_out.weight
+0:     	module.decoder.layers.32.self_attention.linear_qkv.adapter.linear_out.weight
+0:     	module.decoder.layers.46.self_attention.linear_qkv.adapter.linear_in.weight
+0:     	module.decoder.layers.26.self_attention.linear_proj.adapter.linear_in.weight
+0:     	module.decoder.layers.67.self_attention.linear_qkv.adapter.linear_in.weight
+0:     	module.decoder.layers.12.self_attention.linear_qkv.adapter.linear_in.weight
+0:     	module.decoder.layers.54.self_attention.linear_qkv.adapter.linear_out.weight
+0:     	module.decoder.layers.33.self_attention.linear_proj.adapter.linear_in.weight
+0:     	module.decoder.layers.1.self_attention.linear_proj.adapter.linear_out.weight
+0:     	module.decoder.layers.75.self_attention.linear_proj.adapter.linear_in.weight
+0:     	module.decoder.layers.39.self_attention.linear_qkv.adapter.linear_out.weight
+0:     	module.decoder.layers.19.self_attention.linear_qkv.adapter.linear_in.weight
+0:     	module.decoder.layers.61.self_attention.linear_proj.adapter.linear_in.weight
+0:     	module.decoder.layers.5.self_attention.linear_qkv.adapter.linear_in.weight
+0:     	module.decoder.layers.47.self_attention.linear_proj.adapter.linear_in.weight
+0:     	module.decoder.layers.26.self_attention.linear_qkv.adapter.linear_out.weight
+0:     	module.decoder.layers.68.self_attention.linear_proj.adapter.linear_out.weight
+0:     	module.decoder.layers.13.self_attention.linear_proj.adapter.linear_out.weight
+0:     	module.decoder.layers.71.self_attention.linear_proj.adapter.linear_out.weight
+0:     	module.decoder.layers.54.self_attention.linear_qkv.adapter.linear_in.weight
+0:     	module.decoder.layers.33.self_attention.linear_qkv.adapter.linear_out.weight
+0:     	module.decoder.layers.75.self_attention.linear_qkv.adapter.linear_in.weight
+0:     	module.decoder.layers.39.self_attention.linear_qkv.adapter.linear_in.weight
+0:     	module.decoder.layers.20.self_attention.linear_proj.adapter.linear_out.weight
+0:     	module.decoder.layers.6.self_attention.linear_proj.adapter.linear_in.weight
+0:     	module.decoder.layers.61.self_attention.linear_qkv.adapter.linear_out.weight
+0:     	module.decoder.layers.29.self_attention.linear_qkv.adapter.linear_out.weight
+0:     	module.decoder.layers.47.self_attention.linear_qkv.adapter.linear_in.weight
+0:     	module.decoder.layers.26.self_attention.linear_qkv.adapter.linear_in.weight
+0:     	module.decoder.layers.4.self_attention.linear_proj.adapter.linear_out.weight
+0:     	module.decoder.layers.68.self_attention.linear_proj.adapter.linear_in.weight
+0:     	module.decoder.layers.13.self_attention.linear_proj.adapter.linear_in.weight
+0:     	module.decoder.layers.55.self_attention.linear_proj.adapter.linear_out.weight
+0:     	module.decoder.layers.42.self_attention.linear_qkv.adapter.linear_out.weight
+0:     	module.decoder.layers.33.self_attention.linear_qkv.adapter.linear_in.weight
+0:     	module.decoder.layers.76.self_attention.linear_proj.adapter.linear_in.weight
+0:     	module.decoder.layers.40.self_attention.linear_proj.adapter.linear_out.weight
+0:     	module.decoder.layers.20.self_attention.linear_proj.adapter.linear_in.weight
+0:     	module.decoder.layers.61.self_attention.linear_qkv.adapter.linear_in.weight
+0:     	module.decoder.layers.6.self_attention.linear_qkv.adapter.linear_in.weight
+0:     	module.decoder.layers.48.self_attention.linear_proj.adapter.linear_in.weight
+0:     	module.decoder.layers.27.self_attention.linear_proj.adapter.linear_out.weight
+0:     	module.decoder.layers.0.self_attention.linear_proj.adapter.linear_out.weight
+0:     	module.decoder.layers.68.self_attention.linear_qkv.adapter.linear_out.weight
+0:     	module.decoder.layers.13.self_attention.linear_qkv.adapter.linear_out.weight
+0:     	module.decoder.layers.55.self_attention.linear_proj.adapter.linear_in.weight
+0:     	module.decoder.layers.41.self_attention.linear_qkv.adapter.linear_out.weight
+0:     	module.decoder.layers.76.self_attention.linear_qkv.adapter.linear_out.weight
+0:     	module.decoder.layers.40.self_attention.linear_proj.adapter.linear_in.weight
+0:     	module.decoder.layers.20.self_attention.linear_qkv.adapter.linear_out.weight
+0:     	module.decoder.layers.7.self_attention.linear_proj.adapter.linear_out.weight
+0:     	module.decoder.layers.62.self_attention.linear_proj.adapter.linear_out.weight
+0:     	module.decoder.layers.22.self_attention.linear_qkv.adapter.linear_out.weight
+0:     	module.decoder.layers.2.self_attention.linear_qkv.adapter.linear_out.weight
+0:     	module.decoder.layers.48.self_attention.linear_qkv.adapter.linear_out.weight
+0:     	module.decoder.layers.27.self_attention.linear_proj.adapter.linear_in.weight
+0: [NeMo I 2025-10-09 03:24:09 nemo_logging:393] Setting up optimizers
+0: [NeMo I 2025-10-09 03:24:09 utils:662] Setting up optimizer with config OptimizerConfig(optimizer='adam', lr=0.00055, min_lr=None, decoupled_lr=None, decoupled_min_lr=None, weight_decay=0.0001, fp8_recipe='delayed', fp16=False, bf16=True, reuse_grad_buf_for_mxfp8_param_ag=False, params_dtype=torch.bfloat16, use_precision_aware_optimizer=False, store_param_remainders=True, main_grads_dtype=torch.float32, main_params_dtype=torch.float32, exp_avg_dtype=torch.float32, exp_avg_sq_dtype=torch.float32, loss_scale=None, initial_loss_scale=4294967296, min_loss_scale=1.0, loss_scale_window=1000, hysteresis=2, adam_beta1=0.9, adam_beta2=0.999, adam_eps=1e-08, sgd_momentum=0.9, use_distributed_optimizer=True, overlap_param_gather=False, overlap_param_gather_with_optimizer_step=False, optimizer_cpu_offload=False, optimizer_offload_fraction=0.0, use_torch_optimizer_for_cpu_offload=False, overlap_cpu_optimizer_d2h_h2d=False, pin_cpu_grads=True, pin_cpu_params=True, clip_grad=0.3, log_num_zeros_in_grad=False, barrier_with_L1
+0: _time=False, timers=None, config_logger_dir='')
+0: [NeMo I 2025-10-09 03:24:31 num_microbatches_calculator:228] setting number of microbatches to constant 1
+0: [NeMo I 2025-10-09 03:24:37 num_microbatches_calculator:228] setting number of microbatches to constant 1
+0: :::MLLOG {"namespace": "", "time_ms": 1759980277348, "event_type": "POINT_IN_TIME", "key": "tracked_stats", "value": {"warmup_time": 416.7554157630075}, "metadata": {"file": "/usr/local/lib/python3.12/dist-packages/mlperf_common/callbacks/logging.py", "lineno": 163, "step": 0}}
+0: :::MLLOG {"namespace": "", "time_ms": 1759980277348, "event_type": "POINT_IN_TIME", "key": "tracked_stats", "value": {"init_finished": 0.000383144011721015}, "metadata": {"file": "/usr/local/lib/python3.12/dist-packages/mlperf_common/callbacks/logging.py", "lineno": 163, "step": 0}}
+0: :::MLLOG {"namespace": "", "time_ms": 1759980277348, "event_type": "INTERVAL_END", "key": "init_stop", "value": null, "metadata": {"file": "/usr/local/lib/python3.12/dist-packages/mlperf_common/callbacks/logging.py", "lineno": 83}}
+0: :::MLLOG {"namespace": "", "time_ms": 1759980277349, "event_type": "INTERVAL_START", "key": "run_start", "value": null, "metadata": {"file": "/usr/local/lib/python3.12/dist-packages/mlperf_common/callbacks/logging.py", "lineno": 83}}
+0: :::MLLOG {"namespace": "", "time_ms": 1759980277350, "event_type": "INTERVAL_START", "key": "block_start", "value": null, "metadata": {"file": "/usr/local/lib/python3.12/dist-packages/mlperf_common/callbacks/logging.py", "lineno": 185, "samples_count": 1536, "step": 0}}
+0: :::MLLOG {"namespace": "", "time_ms": 1759980286498, "event_type": "POINT_IN_TIME", "key": "tracked_stats", "value": {"train_loss": 2.1321918964385986}, "metadata": {"file": "/workspace/ft-llm/custom_callbacks.py", "lineno": 273, "samples_count": 80, "lr": 0.0005497879849661988, "step": 10}}
+0: :::MLLOG {"namespace": "", "time_ms": 1759980295583, "event_type": "POINT_IN_TIME", "key": "tracked_stats", "value": {"train_loss": 1.553162693977356}, "metadata": {"file": "/workspace/ft-llm/custom_callbacks.py", "lineno": 273, "samples_count": 160, "lr": 0.0005491522667766103, "step": 20}}
+0: :::MLLOG {"namespace": "", "time_ms": 1759980304719, "event_type": "POINT_IN_TIME", "key": "tracked_stats", "value": {"train_loss": 1.319043517112732}, "metadata": {"file": "/workspace/ft-llm/custom_callbacks.py", "lineno": 273, "samples_count": 240, "lr": 0.0005480938256626048, "step": 30}}
+0: :::MLLOG {"namespace": "", "time_ms": 1759980313844, "event_type": "POINT_IN_TIME", "key": "tracked_stats", "value": {"train_loss": 1.440632700920105}, "metadata": {"file": "/workspace/ft-llm/custom_callbacks.py", "lineno": 273, "samples_count": 320, "lr": 0.0005466142936636629, "step": 40}}
+0: :::MLLOG {"namespace": "", "time_ms": 1759980323146, "event_type": "POINT_IN_TIME", "key": "tracked_stats", "value": {"train_loss": 1.4986721277236938}, "metadata": {"file": "/workspace/ft-llm/custom_callbacks.py", "lineno": 273, "samples_count": 400, "lr": 0.0005447159521108884, "step": 50}}
+0: :::MLLOG {"namespace": "", "time_ms": 1759980332297, "event_type": "POINT_IN_TIME", "key": "tracked_stats", "value": {"train_loss": 1.308038592338562}, "metadata": {"file": "/workspace/ft-llm/custom_callbacks.py", "lineno": 273, "samples_count": 480, "lr": 0.0005424017281093611, "step": 60}}
+0: :::MLLOG {"namespace": "", "time_ms": 1759980341405, "event_type": "POINT_IN_TIME", "key": "tracked_stats", "value": {"train_loss": 1.396370768547058}, "metadata": {"file": "/workspace/ft-llm/custom_callbacks.py", "lineno": 273, "samples_count": 560, "lr": 0.000539675190024753, "step": 70}}
+0: :::MLLOG {"namespace": "", "time_ms": 1759980350546, "event_type": "POINT_IN_TIME", "key": "tracked_stats", "value": {"train_loss": 1.4528579711914062}, "metadata": {"file": "/workspace/ft-llm/custom_callbacks.py", "lineno": 273, "samples_count": 640, "lr": 0.0005365405419811673, "step": 80}}
+0: :::MLLOG {"namespace": "", "time_ms": 1759980359724, "event_type": "POINT_IN_TIME", "key": "tracked_stats", "value": {"train_loss": 1.34685480594635}, "metadata": {"file": "/workspace/ft-llm/custom_callbacks.py", "lineno": 273, "samples_count": 720, "lr": 0.0005330026173786832, "step": 90}}
+0: :::MLLOG {"namespace": "", "time_ms": 1759980369020, "event_type": "POINT_IN_TIME", "key": "tracked_stats", "value": {"train_loss": 1.428855299949646}, "metadata": {"file": "/workspace/ft-llm/custom_callbacks.py", "lineno": 273, "samples_count": 800, "lr": 0.0005290668714406038, "step": 100}}
+0: :::MLLOG {"namespace": "", "time_ms": 1759980378113, "event_type": "POINT_IN_TIME", "key": "tracked_stats", "value": {"train_loss": 1.4294153451919556}, "metadata": {"file": "/workspace/ft-llm/custom_callbacks.py", "lineno": 273, "samples_count": 880, "lr": 0.0005247393728018974, "step": 110}}
+0: :::MLLOG {"namespace": "", "time_ms": 1759980387206, "event_type": "POINT_IN_TIME", "key": "tracked_stats", "value": {"train_loss": 1.544935703277588}, "metadata": {"file": "/workspace/ft-llm/custom_callbacks.py", "lineno": 273, "samples_count": 960, "lr": 0.0005200267941518012, "step": 120}}
+0: :::MLLOG {"namespace": "", "time_ms": 1759980396325, "event_type": "POINT_IN_TIME", "key": "tracked_stats", "value": {"train_loss": 1.4119441509246826}, "metadata": {"file": "/workspace/ft-llm/custom_callbacks.py", "lineno": 273, "samples_count": 1040, "lr": 0.0005149364019450193, "step": 130}}
+0: :::MLLOG {"namespace": "", "time_ms": 1759980405636, "event_type": "POINT_IN_TIME", "key": "tracked_stats", "value": {"train_loss": 1.2012546062469482}, "metadata": {"file": "/workspace/ft-llm/custom_callbacks.py", "lineno": 273, "samples_count": 1120, "lr": 0.0005094760451973754, "step": 140}}
+0: :::MLLOG {"namespace": "", "time_ms": 1759980414823, "event_type": "POINT_IN_TIME", "key": "tracked_stats", "value": {"train_loss": 1.357597827911377}, "metadata": {"file": "/workspace/ft-llm/custom_callbacks.py", "lineno": 273, "samples_count": 1200, "lr": 0.0005036541433832, "step": 150}}
+0: :::MLLOG {"namespace": "", "time_ms": 1759980423933, "event_type": "POINT_IN_TIME", "key": "tracked_stats", "value": {"train_loss": 1.2259838581085205}, "metadata": {"file": "/workspace/ft-llm/custom_callbacks.py", "lineno": 273, "samples_count": 1280, "lr": 0.0004974796734531106, "step": 160}}
+0: :::MLLOG {"namespace": "", "time_ms": 1759980433131, "event_type": "POINT_IN_TIME", "key": "tracked_stats", "value": {"train_loss": 1.2312049865722656}, "metadata": {"file": "/workspace/ft-llm/custom_callbacks.py", "lineno": 273, "samples_count": 1360, "lr": 0.0004909621559922049, "step": 170}}
+0: :::MLLOG {"namespace": "", "time_ms": 1759980442228, "event_type": "POINT_IN_TIME", "key": "tracked_stats", "value": {"train_loss": 1.3181421756744385}, "metadata": {"file": "/workspace/ft-llm/custom_callbacks.py", "lineno": 273, "samples_count": 1440, "lr": 0.0004841116405400086, "step": 180}}
+0: :::MLLOG {"namespace": "", "time_ms": 1759980451328, "event_type": "POINT_IN_TIME", "key": "tracked_stats", "value": {"train_loss": 1.444408893585205}, "metadata": {"file": "/workspace/ft-llm/custom_callbacks.py", "lineno": 273, "samples_count": 1520, "lr": 0.00047693869009481353, "step": 190}}
+0: :::MLLOG {"namespace": "", "time_ms": 1759980459124, "event_type": "POINT_IN_TIME", "key": "tracked_stats", "value": {"train_step_time": 0.9467511864531843}, "metadata": {"file": "/usr/local/lib/python3.12/dist-packages/mlperf_common/callbacks/logging.py", "lineno": 210, "samples_count": 1536}}
+0: :::MLLOG {"namespace": "", "time_ms": 1759980459125, "event_type": "INTERVAL_END", "key": "block_stop", "value": null, "metadata": {"file": "/usr/local/lib/python3.12/dist-packages/mlperf_common/callbacks/logging.py", "lineno": 194, "samples_count": 1536, "step": 192}}
+0: :::MLLOG {"namespace": "", "time_ms": 1759980459125, "event_type": "INTERVAL_START", "key": "eval_start", "value": null, "metadata": {"file": "/usr/local/lib/python3.12/dist-packages/mlperf_common/callbacks/logging.py", "lineno": 131, "samples_count": 1536, "step": 192}}
+0: [NeMo I 2025-10-09 03:27:39 num_microbatches_calculator:228] setting number of microbatches to constant 1
+0: :::MLLOG {"namespace": "", "time_ms": 1759980469924, "event_type": "POINT_IN_TIME", "key": "eval_accuracy", "value": 0.954293929083499, "metadata": {"file": "/usr/local/lib/python3.12/dist-packages/mlperf_common/callbacks/logging.py", "lineno": 272, "samples_count": 1536}}
+0: [NeMo I 2025-10-09 03:27:49 num_microbatches_calculator:228] setting number of microbatches to constant 1
+0: :::MLLOG {"namespace": "", "time_ms": 1759980469925, "event_type": "POINT_IN_TIME", "key": "tracked_stats", "value": {"validation_time": 10.800997890997678}, "metadata": {"file": "/usr/local/lib/python3.12/dist-packages/mlperf_common/callbacks/logging.py", "lineno": 163, "step": 192}}
+0: :::MLLOG {"namespace": "", "time_ms": 1759980469925, "event_type": "INTERVAL_END", "key": "eval_stop", "value": null, "metadata": {"file": "/usr/local/lib/python3.12/dist-packages/mlperf_common/callbacks/logging.py", "lineno": 148, "samples_count": 1536, "step": 192}}
+0: :::MLLOG {"namespace": "", "time_ms": 1759980469925, "event_type": "INTERVAL_START", "key": "block_start", "value": null, "metadata": {"file": "/usr/local/lib/python3.12/dist-packages/mlperf_common/callbacks/logging.py", "lineno": 185, "samples_count": 384, "step": 192}}
+0: :::MLLOG {"namespace": "", "time_ms": 1759980477879, "event_type": "POINT_IN_TIME", "key": "tracked_stats", "value": {"train_loss": 1.339977502822876}, "metadata": {"file": "/workspace/ft-llm/custom_callbacks.py", "lineno": 273, "samples_count": 1600, "lr": 0.0004694543648263006, "step": 200}}
+0: :::MLLOG {"namespace": "", "time_ms": 1759980487337, "event_type": "POINT_IN_TIME", "key": "tracked_stats", "value": {"train_loss": 1.3541842699050903}, "metadata": {"file": "/workspace/ft-llm/custom_callbacks.py", "lineno": 273, "samples_count": 1680, "lr": 0.00046167020502155905, "step": 210}}
+0: :::MLLOG {"namespace": "", "time_ms": 1759980496821, "event_type": "POINT_IN_TIME", "key": "tracked_stats", "value": {"train_loss": 1.3995652198791504}, "metadata": {"file": "/workspace/ft-llm/custom_callbacks.py", "lineno": 273, "samples_count": 1760, "lr": 0.00045359821329080054, "step": 220}}
+0: :::MLLOG {"namespace": "", "time_ms": 1759980506270, "event_type": "POINT_IN_TIME", "key": "tracked_stats", "value": {"train_loss": 1.3391202688217163}, "metadata": {"file": "/workspace/ft-llm/custom_callbacks.py", "lineno": 273, "samples_count": 1840, "lr": 0.00044525083606020437, "step": 230}}
+0: :::MLLOG {"namespace": "", "time_ms": 1759980515905, "event_type": "POINT_IN_TIME", "key": "tracked_stats", "value": {"train_loss": 1.1957275867462158}, "metadata": {"file": "/workspace/ft-llm/custom_callbacks.py", "lineno": 273, "samples_count": 1920, "lr": 0.0004366409443804302, "step": 240}}
+0: :::MLLOG {"namespace": "", "time_ms": 1759980515931, "event_type": "POINT_IN_TIME", "key": "tracked_stats", "value": {"train_step_time": 0.9584491638767455}, "metadata": {"file": "/usr/local/lib/python3.12/dist-packages/mlperf_common/callbacks/logging.py", "lineno": 210, "samples_count": 384}}
+0: :::MLLOG {"namespace": "", "time_ms": 1759980515931, "event_type": "INTERVAL_END", "key": "block_stop", "value": null, "metadata": {"file": "/usr/local/lib/python3.12/dist-packages/mlperf_common/callbacks/logging.py", "lineno": 194, "samples_count": 384, "step": 240}}
+0: :::MLLOG {"namespace": "", "time_ms": 1759980515932, "event_type": "INTERVAL_START", "key": "eval_start", "value": null, "metadata": {"file": "/usr/local/lib/python3.12/dist-packages/mlperf_common/callbacks/logging.py", "lineno": 131, "samples_count": 1920, "step": 240}}
+0: [NeMo I 2025-10-09 03:28:35 num_microbatches_calculator:228] setting number of microbatches to constant 1
+0: :::MLLOG {"namespace": "", "time_ms": 1759980524946, "event_type": "POINT_IN_TIME", "key": "eval_accuracy", "value": 0.9524915397511742, "metadata": {"file": "/usr/local/lib/python3.12/dist-packages/mlperf_common/callbacks/logging.py", "lineno": 272, "samples_count": 1920}}
+0: [NeMo I 2025-10-09 03:28:44 num_microbatches_calculator:228] setting number of microbatches to constant 1
+0: :::MLLOG {"namespace": "", "time_ms": 1759980524947, "event_type": "POINT_IN_TIME", "key": "tracked_stats", "value": {"validation_time": 9.016698737861589}, "metadata": {"file": "/usr/local/lib/python3.12/dist-packages/mlperf_common/callbacks/logging.py", "lineno": 163, "step": 240}}
+0: :::MLLOG {"namespace": "", "time_ms": 1759980524948, "event_type": "INTERVAL_END", "key": "eval_stop", "value": null, "metadata": {"file": "/usr/local/lib/python3.12/dist-packages/mlperf_common/callbacks/logging.py", "lineno": 148, "samples_count": 1920, "step": 240}}
+0: :::MLLOG {"namespace": "", "time_ms": 1759980524948, "event_type": "INTERVAL_START", "key": "block_start", "value": null, "metadata": {"file": "/usr/local/lib/python3.12/dist-packages/mlperf_common/callbacks/logging.py", "lineno": 185, "samples_count": 384, "step": 240}}
+0: :::MLLOG {"namespace": "", "time_ms": 1759980534391, "event_type": "POINT_IN_TIME", "key": "tracked_stats", "value": {"train_loss": 1.3726048469543457}, "metadata": {"file": "/workspace/ft-llm/custom_callbacks.py", "lineno": 273, "samples_count": 2000, "lr": 0.0004277818140803907, "step": 250}}
+0: :::MLLOG {"namespace": "", "time_ms": 1759980543608, "event_type": "POINT_IN_TIME", "key": "tracked_stats", "value": {"train_loss": 1.38492751121521}, "metadata": {"file": "/workspace/ft-llm/custom_callbacks.py", "lineno": 273, "samples_count": 2080, "lr": 0.00041868710529688595, "step": 260}}
+0: :::MLLOG {"namespace": "", "time_ms": 1759980553053, "event_type": "POINT_IN_TIME", "key": "tracked_stats", "value": {"train_loss": 1.322446584701538}, "metadata": {"file": "/workspace/ft-llm/custom_callbacks.py", "lineno": 273, "samples_count": 2160, "lr": 0.00040937084141166267, "step": 270}}
+0: :::MLLOG {"namespace": "", "time_ms": 1759980562594, "event_type": "POINT_IN_TIME", "key": "tracked_stats", "value": {"train_loss": 1.017181396484375}, "metadata": {"file": "/workspace/ft-llm/custom_callbacks.py", "lineno": 273, "samples_count": 2240, "lr": 0.0003998473874283754, "step": 280}}
+0: :::MLLOG {"namespace": "", "time_ms": 1759980570252, "event_type": "POINT_IN_TIME", "key": "tracked_stats", "value": {"train_step_time": 0.943836665833563}, "metadata": {"file": "/usr/local/lib/python3.12/dist-packages/mlperf_common/callbacks/logging.py", "lineno": 210, "samples_count": 384}}
+0: :::MLLOG {"namespace": "", "time_ms": 1759980570252, "event_type": "INTERVAL_END", "key": "block_stop", "value": null, "metadata": {"file": "/usr/local/lib/python3.12/dist-packages/mlperf_common/callbacks/logging.py", "lineno": 194, "samples_count": 384, "step": 288}}
+0: :::MLLOG {"namespace": "", "time_ms": 1759980570252, "event_type": "INTERVAL_START", "key": "eval_start", "value": null, "metadata": {"file": "/usr/local/lib/python3.12/dist-packages/mlperf_common/callbacks/logging.py", "lineno": 131, "samples_count": 2304, "step": 288}}
+0: [NeMo I 2025-10-09 03:29:30 num_microbatches_calculator:228] setting number of microbatches to constant 1
+0: :::MLLOG {"namespace": "", "time_ms": 1759980579223, "event_type": "POINT_IN_TIME", "key": "eval_accuracy", "value": 0.9454655288960893, "metadata": {"file": "/usr/local/lib/python3.12/dist-packages/mlperf_common/callbacks/logging.py", "lineno": 272, "samples_count": 2304}}
+0: [NeMo I 2025-10-09 03:29:39 num_microbatches_calculator:228] setting number of microbatches to constant 1
+0: :::MLLOG {"namespace": "", "time_ms": 1759980579224, "event_type": "POINT_IN_TIME", "key": "tracked_stats", "value": {"validation_time": 8.972457739058882}, "metadata": {"file": "/usr/local/lib/python3.12/dist-packages/mlperf_common/callbacks/logging.py", "lineno": 163, "step": 288}}
+0: :::MLLOG {"namespace": "", "time_ms": 1759980579224, "event_type": "INTERVAL_END", "key": "eval_stop", "value": null, "metadata": {"file": "/usr/local/lib/python3.12/dist-packages/mlperf_common/callbacks/logging.py", "lineno": 148, "samples_count": 2304, "step": 288}}
+0: :::MLLOG {"namespace": "", "time_ms": 1759980579224, "event_type": "INTERVAL_START", "key": "block_start", "value": null, "metadata": {"file": "/usr/local/lib/python3.12/dist-packages/mlperf_common/callbacks/logging.py", "lineno": 185, "samples_count": 384, "step": 288}}
+0: :::MLLOG {"namespace": "", "time_ms": 1759980581307, "event_type": "POINT_IN_TIME", "key": "tracked_stats", "value": {"train_loss": 1.500380277633667}, "metadata": {"file": "/workspace/ft-llm/custom_callbacks.py", "lineno": 273, "samples_count": 2320, "lr": 0.00039013142782279276, "step": 290}}
+0: :::MLLOG {"namespace": "", "time_ms": 1759980590809, "event_type": "POINT_IN_TIME", "key": "tracked_stats", "value": {"train_loss": 1.3295427560806274}, "metadata": {"file": "/workspace/ft-llm/custom_callbacks.py", "lineno": 273, "samples_count": 2400, "lr": 0.00038023794390039975, "step": 300}}
+0: :::MLLOG {"namespace": "", "time_ms": 1759980600304, "event_type": "POINT_IN_TIME", "key": "tracked_stats", "value": {"train_loss": 1.4955695867538452}, "metadata": {"file": "/workspace/ft-llm/custom_callbacks.py", "lineno": 273, "samples_count": 2480, "lr": 0.00037018219069631056, "step": 310}}
+0: :::MLLOG {"namespace": "", "time_ms": 1759980609516, "event_type": "POINT_IN_TIME", "key": "tracked_stats", "value": {"train_loss": 1.2025266885757446}, "metadata": {"file": "/workspace/ft-llm/custom_callbacks.py", "lineno": 273, "samples_count": 2560, "lr": 0.00035997967345311057, "step": 320}}
+0: :::MLLOG {"namespace": "", "time_ms": 1759980618845, "event_type": "POINT_IN_TIME", "key": "tracked_stats", "value": {"train_loss": 1.4146184921264648}, "metadata": {"file": "/workspace/ft-llm/custom_callbacks.py", "lineno": 273, "samples_count": 2640, "lr": 0.00034964612371289557, "step": 330}}
+0: :::MLLOG {"namespace": "", "time_ms": 1759980624518, "event_type": "POINT_IN_TIME", "key": "tracked_stats", "value": {"train_step_time": 0.9436245226243045}, "metadata": {"file": "/usr/local/lib/python3.12/dist-packages/mlperf_common/callbacks/logging.py", "lineno": 210, "samples_count": 384}}
+0: :::MLLOG {"namespace": "", "time_ms": 1759980624518, "event_type": "INTERVAL_END", "key": "block_stop", "value": null, "metadata": {"file": "/usr/local/lib/python3.12/dist-packages/mlperf_common/callbacks/logging.py", "lineno": 194, "samples_count": 384, "step": 336}}
+0: :::MLLOG {"namespace": "", "time_ms": 1759980624519, "event_type": "INTERVAL_START", "key": "eval_start", "value": null, "metadata": {"file": "/usr/local/lib/python3.12/dist-packages/mlperf_common/callbacks/logging.py", "lineno": 131, "samples_count": 2688, "step": 336}}
+0: [NeMo I 2025-10-09 03:30:24 num_microbatches_calculator:228] setting number of microbatches to constant 1
+0: :::MLLOG {"namespace": "", "time_ms": 1759980633481, "event_type": "POINT_IN_TIME", "key": "eval_accuracy", "value": 0.9443188264879877, "metadata": {"file": "/usr/local/lib/python3.12/dist-packages/mlperf_common/callbacks/logging.py", "lineno": 272, "samples_count": 2688}}
+0: [NeMo I 2025-10-09 03:30:33 num_microbatches_calculator:228] setting number of microbatches to constant 1
+0: :::MLLOG {"namespace": "", "time_ms": 1759980633482, "event_type": "POINT_IN_TIME", "key": "tracked_stats", "value": {"validation_time": 8.963761402061209}, "metadata": {"file": "/usr/local/lib/python3.12/dist-packages/mlperf_common/callbacks/logging.py", "lineno": 163, "step": 336}}
+0: :::MLLOG {"namespace": "", "time_ms": 1759980633482, "event_type": "INTERVAL_END", "key": "eval_stop", "value": null, "metadata": {"file": "/usr/local/lib/python3.12/dist-packages/mlperf_common/callbacks/logging.py", "lineno": 148, "samples_count": 2688, "step": 336}}
+0: :::MLLOG {"namespace": "", "time_ms": 1759980633482, "event_type": "INTERVAL_START", "key": "block_start", "value": null, "metadata": {"file": "/usr/local/lib/python3.12/dist-packages/mlperf_common/callbacks/logging.py", "lineno": 185, "samples_count": 384, "step": 336}}
+0: :::MLLOG {"namespace": "", "time_ms": 1759980637369, "event_type": "POINT_IN_TIME", "key": "tracked_stats", "value": {"train_loss": 1.126966953277588}, "metadata": {"file": "/workspace/ft-llm/custom_callbacks.py", "lineno": 273, "samples_count": 2720, "lr": 0.000339197475060374, "step": 340}}
+0: FP8 Healing starting...
+0: :::MLLOG {"namespace": "", "time_ms": 1759980677397, "event_type": "POINT_IN_TIME", "key": "tracked_stats", "value": {"train_loss": 1.1063324213027954}, "metadata": {"file": "/workspace/ft-llm/custom_callbacks.py", "lineno": 273, "samples_count": 2800, "lr": 0.00032864983855443534, "step": 350}}
+0: :::MLLOG {"namespace": "", "time_ms": 1759980689829, "event_type": "POINT_IN_TIME", "key": "tracked_stats", "value": {"train_loss": 1.2623471021652222}, "metadata": {"file": "/workspace/ft-llm/custom_callbacks.py", "lineno": 273, "samples_count": 2880, "lr": 0.0003180194778860635, "step": 360}}
+0: :::MLLOG {"namespace": "", "time_ms": 1759980702296, "event_type": "POINT_IN_TIME", "key": "tracked_stats", "value": {"train_loss": 1.3633601665496826}, "metadata": {"file": "/workspace/ft-llm/custom_callbacks.py", "lineno": 273, "samples_count": 2960, "lr": 0.0003073227843009054, "step": 370}}
+0: :::MLLOG {"namespace": "", "time_ms": 1759980714747, "event_type": "POINT_IN_TIME", "key": "tracked_stats", "value": {"train_loss": 1.2509928941726685}, "metadata": {"file": "/workspace/ft-llm/custom_callbacks.py", "lineno": 273, "samples_count": 3040, "lr": 0.0002965762513251574, "step": 380}}
+0: :::MLLOG {"namespace": "", "time_ms": 1759980719763, "event_type": "POINT_IN_TIME", "key": "tracked_stats", "value": {"train_step_time": 1.7975264983348704}, "metadata": {"file": "/usr/local/lib/python3.12/dist-packages/mlperf_common/callbacks/logging.py", "lineno": 210, "samples_count": 384}}
+0: :::MLLOG {"namespace": "", "time_ms": 1759980719763, "event_type": "INTERVAL_END", "key": "block_stop", "value": null, "metadata": {"file": "/usr/local/lib/python3.12/dist-packages/mlperf_common/callbacks/logging.py", "lineno": 194, "samples_count": 384, "step": 384}}
+0: :::MLLOG {"namespace": "", "time_ms": 1759980719763, "event_type": "INTERVAL_START", "key": "eval_start", "value": null, "metadata": {"file": "/usr/local/lib/python3.12/dist-packages/mlperf_common/callbacks/logging.py", "lineno": 131, "samples_count": 3072, "step": 384}}
+0: [NeMo I 2025-10-09 03:31:59 num_microbatches_calculator:228] setting number of microbatches to constant 1
+0: :::MLLOG {"namespace": "", "time_ms": 1759980732802, "event_type": "POINT_IN_TIME", "key": "eval_accuracy", "value": 0.9271778261041366, "metadata": {"file": "/usr/local/lib/python3.12/dist-packages/mlperf_common/callbacks/logging.py", "lineno": 272, "samples_count": 3072}}
+0: [NeMo I 2025-10-09 03:32:12 num_microbatches_calculator:228] setting number of microbatches to constant 1
+0: :::MLLOG {"namespace": "", "time_ms": 1759980732803, "event_type": "POINT_IN_TIME", "key": "tracked_stats", "value": {"validation_time": 13.039950182894245}, "metadata": {"file": "/usr/local/lib/python3.12/dist-packages/mlperf_common/callbacks/logging.py", "lineno": 163, "step": 384}}
+0: :::MLLOG {"namespace": "", "time_ms": 1759980732803, "event_type": "INTERVAL_END", "key": "eval_stop", "value": null, "metadata": {"file": "/usr/local/lib/python3.12/dist-packages/mlperf_common/callbacks/logging.py", "lineno": 148, "samples_count": 3072, "step": 384}}
+0: :::MLLOG {"namespace": "", "time_ms": 1759980732803, "event_type": "INTERVAL_START", "key": "block_start", "value": null, "metadata": {"file": "/usr/local/lib/python3.12/dist-packages/mlperf_common/callbacks/logging.py", "lineno": 185, "samples_count": 384, "step": 384}}
+0: :::MLLOG {"namespace": "", "time_ms": 1759980740384, "event_type": "POINT_IN_TIME", "key": "tracked_stats", "value": {"train_loss": 1.192306637763977}, "metadata": {"file": "/workspace/ft-llm/custom_callbacks.py", "lineno": 273, "samples_count": 3120, "lr": 0.0002857964493337439, "step": 390}}
+0: :::MLLOG {"namespace": "", "time_ms": 1759980752850, "event_type": "POINT_IN_TIME", "key": "tracked_stats", "value": {"train_loss": 1.4217827320098877}, "metadata": {"file": "/workspace/ft-llm/custom_callbacks.py", "lineno": 273, "samples_count": 3200, "lr": 0.000275, "step": 400}}
+0: :::MLLOG {"namespace": "", "time_ms": 1759980765324, "event_type": "POINT_IN_TIME", "key": "tracked_stats", "value": {"train_loss": 1.0629713535308838}, "metadata": {"file": "/workspace/ft-llm/custom_callbacks.py", "lineno": 273, "samples_count": 3280, "lr": 0.00026420355066625616, "step": 410}}
+0: :::MLLOG {"namespace": "", "time_ms": 1759980777800, "event_type": "POINT_IN_TIME", "key": "tracked_stats", "value": {"train_loss": 1.4604164361953735}, "metadata": {"file": "/workspace/ft-llm/custom_callbacks.py", "lineno": 273, "samples_count": 3360, "lr": 0.0002534237486748427, "step": 420}}
+0: :::MLLOG {"namespace": "", "time_ms": 1759980790296, "event_type": "POINT_IN_TIME", "key": "tracked_stats", "value": {"train_loss": 1.2041302919387817}, "metadata": {"file": "/workspace/ft-llm/custom_callbacks.py", "lineno": 273, "samples_count": 3440, "lr": 0.0002426772156990947, "step": 430}}
+0: :::MLLOG {"namespace": "", "time_ms": 1759980792816, "event_type": "POINT_IN_TIME", "key": "tracked_stats", "value": {"train_step_time": 1.2502643535844982}, "metadata": {"file": "/usr/local/lib/python3.12/dist-packages/mlperf_common/callbacks/logging.py", "lineno": 210, "samples_count": 384}}
+0: :::MLLOG {"namespace": "", "time_ms": 1759980792816, "event_type": "INTERVAL_END", "key": "block_stop", "value": null, "metadata": {"file": "/usr/local/lib/python3.12/dist-packages/mlperf_common/callbacks/logging.py", "lineno": 194, "samples_count": 384, "step": 432}}
+0: :::MLLOG {"namespace": "", "time_ms": 1759980792816, "event_type": "INTERVAL_START", "key": "eval_start", "value": null, "metadata": {"file": "/usr/local/lib/python3.12/dist-packages/mlperf_common/callbacks/logging.py", "lineno": 131, "samples_count": 3456, "step": 432}}
+0: [NeMo I 2025-10-09 03:33:12 num_microbatches_calculator:228] setting number of microbatches to constant 1
+0: :::MLLOG {"namespace": "", "time_ms": 1759980805958, "event_type": "POINT_IN_TIME", "key": "eval_accuracy", "value": 0.9237978720251535, "metadata": {"file": "/usr/local/lib/python3.12/dist-packages/mlperf_common/callbacks/logging.py", "lineno": 272, "samples_count": 3456}}
+0: [NeMo I 2025-10-09 03:33:25 num_microbatches_calculator:228] setting number of microbatches to constant 1
+0: :::MLLOG {"namespace": "", "time_ms": 1759980805958, "event_type": "POINT_IN_TIME", "key": "tracked_stats", "value": {"validation_time": 13.142826606985182}, "metadata": {"file": "/usr/local/lib/python3.12/dist-packages/mlperf_common/callbacks/logging.py", "lineno": 163, "step": 432}}
+0: :::MLLOG {"namespace": "", "time_ms": 1759980805959, "event_type": "INTERVAL_END", "key": "eval_stop", "value": null, "metadata": {"file": "/usr/local/lib/python3.12/dist-packages/mlperf_common/callbacks/logging.py", "lineno": 148, "samples_count": 3456, "step": 432}}
+0: :::MLLOG {"namespace": "", "time_ms": 1759980805976, "event_type": "INTERVAL_END", "key": "run_stop", "value": null, "metadata": {"file": "/usr/local/lib/python3.12/dist-packages/mlperf_common/callbacks/logging.py", "lineno": 106, "step": 432, "samples_count": 3456, "status": "success"}}
+++ date +%s
++ echo 'RUNANDTIME_STOP 1759980821'
+RUNANDTIME_STOP 1759980821
++ set -e

@@ -1,0 +1,319 @@
+#!/bin/bash
+#SBATCH --nodes=1
+#SBATCH --gres=gpu:b200:8
+#SBATCH --ntasks-per-node=8
+#SBATCH --cpus-per-task=14
+#SBATCH --mem=0
+#SBATCH --time=6:00:00
+#SBATCH --exclusive
+
+set -euxo pipefail
+echo "PROLOG_START $(date +%s)"
+
+export CONT=./rgat-amd.sif
+export DATA_DIR=./converted/full
+export GRAPH_DIR=./graph/full
+export LOGDIR=$PWD/results
+export NCCL_NET_MERGE_LEVEL=LOC
+export PYTHONNOUSERSITE=1
+export DEBUG_IN_CWD=1
+
+export MLPERF_SUBMITTER="University of Florida"
+export MLPERF_SYSTEM_NAME="HiPerGator NVIDIA DGX B200"
+
+export TRITON_LIBCUDA_PATH=/usr/local/cuda/compat/lib/libcuda.so.1
+export LD_LIBRARY_PATH=/usr/local/cuda/compat/lib:${LD_LIBRARY_PATH}
+
+source config_DGXB200_1x8x4096.sh
+
+########################
+# User-set env (override here or export before sbatch)
+########################
+: "${CONT:?CONT not set}"                            # /path/to/container.sif
+: "${DATA_DIR:?DATA_DIR not set}"                    # host dataset root
+: "${GRAPH_DIR:?GRAPH_DIR not set}"                  # host graph dir
+: "${LOGDIR:=${PWD}/results}"
+
+# Required by your workflow
+: "${DGXSYSTEM:?DGXSYSTEM not set}"
+: "${WALLTIME_RUNANDTIME:?WALLTIME_RUNANDTIME not set}"
+
+# Optional extras you used
+: "${MLPERF_SUBMITTER:=University of Florida}"
+: "${MLPERF_SYSTEM_NAME:=HiPerGator NVIDIA DGX B200}"
+: "${NCCL_NET_MERGE_LEVEL:=LOC}" ; export NCCL_NET_MERGE_LEVEL
+: "${PYTHONNOUSERSITE:=1}"       ; export PYTHONNOUSERSITE
+: "${DEBUG_IN_CWD:=1}"           ; export DEBUG_IN_CWD
+: "${FP8_EMBEDDING:=1}"          ; export FP8_EMBEDDING
+
+########################
+# Defaults (override-friendly)
+########################
+: "${MLPERF_RULESET:=5.1.0}"
+: "${CHECK_COMPLIANCE:=1}"
+: "${MLPERF_SCALE:=unknown}"
+: "${MLPERF_CLUSTER_NAME:=unknown}"
+: "${MILESTONE_YML:=unknown}"
+: "${NEXP:=1}"
+: "${DATESTAMP:=$(date +'%y%m%d%H%M%S%N')}"
+: "${WORK_DIR:=/workspace/gnn}"                  # container workdir
+: "${SCRATCH_SPACE:=/raid/scratch}"
+: "${CONTAINER_DATA_DIR:=/data}"
+: "${CONTAINER_GRAPH_DIR:=/graph}"
+: "${EXTRA_ASSETS:=}"
+: "${TIME_TAGS:=0}"
+: "${DROPCACHE_CMD:=sudo /sbin/sysctl vm.drop_caches=3}"
+: "${SLURM_MPI_TYPE:=pmix}"
+: "${POWERCMDDIR:= }"    # path to power monitor scripts (optional)
+: "${POWERLOGDIR:= }"
+: "${SEED_BASE:=${SEED-$RANDOM}}"
+
+# NCCL/UCX/PyTorch safe baselines (can be overridden)
+: "${NCCL_DEBUG:=WARN}"                         ; export NCCL_DEBUG
+: "${NCCL_IB_GID_INDEX:=3}"                     ; export NCCL_IB_GID_INDEX
+: "${NCCL_IB_QPS_PER_CONNECTION:=1}"            ; export NCCL_IB_QPS_PER_CONNECTION
+: "${NCCL_SOCKET_IFNAME:=^lo,docker,virbr,vmnet}"; export NCCL_SOCKET_IFNAME
+: "${NCCL_NSOCKS_PERTHREAD:=2}"                 ; export NCCL_NSOCKS_PERTHREAD
+: "${NCCL_SOCKET_NTHREADS:=2}"                  ; export NCCL_SOCKET_NTHREADS
+: "${UCX_TLS:=tcp,cuda,cuda_copy,cuda_ipc,rc,sm,self}" ; export UCX_TLS
+: "${UCX_NET_DEVICES:=all}"                     ; export UCX_NET_DEVICES
+: "${PYTORCH_CUDA_ALLOC_CONF:=expandable_segments:True}" ; export PYTORCH_CUDA_ALLOC_CONF
+: "${OMP_NUM_THREADS:=${SLURM_CPUS_PER_TASK:-8}}" ; export OMP_NUM_THREADS
+
+# MPI passthrough for Apptainer
+APPT_MPI_FLAG="--mpi"
+
+# Tests/flags
+NCCL_TEST=${NCCL_TEST:-1}
+NCCL_TEST_WALLTIME=${NCCL_TEST_WALLTIME:-10}
+CLEAR_CACHES=${CLEAR_CACHES:-1}
+
+########################
+# Script location
+########################
+if [[ -n "${SLURM_JOB_ID:-}" ]]; then
+  export RUNSUB_DIR="$(dirname "$(scontrol show job "${SLURM_JOB_ID}" | awk -F= '/Command=/{print $2}')" )"
+else
+  export RUNSUB_DIR="$(dirname "${BASH_SOURCE[0]}")"
+fi
+
+########################
+# Master addr/port
+########################
+: "${MASTER_PORT:=29500}" ; export MASTER_PORT
+export MASTER_ADDR="$(scontrol show hostnames "${SLURM_JOB_NODELIST-}" | head -n1)"
+echo "using MASTER_ADDR \"${MASTER_ADDR}\" of list \"${SLURM_JOB_NODELIST}\""
+
+########################
+# Names/logging
+########################
+: "${DGXNNODES:=${SLURM_JOB_NUM_NODES:-1}}"
+: "${DGXNGPU:=${SLURM_GPUS_ON_NODE:-8}}"
+: "${BATCHSIZE:=unknown}"
+
+export MODEL_NAME="graph_neural_network"
+export MODEL_FRAMEWORK="pytorch"
+LOGBASE="${DATESTAMP}"
+export SPREFIX="${MODEL_NAME}_${MODEL_FRAMEWORK}_${DGXNNODES}x${DGXNGPU}x${BATCHSIZE}_${DATESTAMP}"
+if (( TIME_TAGS > 0 )); then
+  LOGBASE="${SPREFIX}_mllog"
+fi
+readonly LOG_FILE_BASE="${LOGDIR}/${LOGBASE}"
+mkdir -p "${LOGDIR}"
+
+########################
+# Mounts (config + auto-binds)
+########################
+# If you maintain a mounts file, source it (it may define _cont_mounts or BIND_STR)
+if [[ -f "${RUNSUB_DIR}/config_mounts.sh" ]]; then
+  # shellcheck source=/dev/null
+  source "${RUNSUB_DIR}/config_mounts.sh" || true
+fi
+
+# Build BIND_STR from _cont_mounts if not provided
+if [[ -z "${BIND_STR:-}" ]]; then
+  if [[ -n "${_cont_mounts:-}" ]]; then
+    BIND_STR="$(echo "${_cont_mounts}" | awk -v RS=, '{printf "%s-B %s ", (NR>1?" ":""), $0}')"
+  else
+    BIND_STR=""
+  fi
+fi
+
+# Always bind host results to /results
+if [[ "${BIND_STR}" != *"/results"* ]]; then
+  BIND_STR="${BIND_STR} -B $(realpath "${LOGDIR}"):/results"
+fi
+
+# Bind DATA_DIR and GRAPH_DIR to container
+if [[ -n "${DATA_DIR:-}" && "${BIND_STR}" != *"${CONTAINER_DATA_DIR}"* ]]; then
+  BIND_STR="${BIND_STR} -B $(realpath "${DATA_DIR}"):${CONTAINER_DATA_DIR}"
+fi
+if [[ -n "${GRAPH_DIR:-}" && "${BIND_STR}" != *"${CONTAINER_GRAPH_DIR}"* ]]; then
+  BIND_STR="${BIND_STR} -B $(realpath "${GRAPH_DIR}"):${CONTAINER_GRAPH_DIR}"
+fi
+
+# Bind a host code dir to container WORK_DIR (prevents --pwd chdir errors)
+: "${WORK_DIR_HOST:=${RUNSUB_DIR}}"
+mkdir -p "${WORK_DIR_HOST}"
+BIND_STR="${BIND_STR} -B ${WORK_DIR_HOST}:${WORK_DIR}"
+
+mounts_to_verify="DATA_DIR_FLOAT8:${CONTAINER_DATA_DIR}/float8 GRAPH_DIR:${CONTAINER_GRAPH_DIR}"
+
+########################
+# Helper: run inside container with srun
+########################
+APPT_MPI_FLAG=""
+if apptainer exec -h 2>&1 | grep -q -- '--mpi'; then
+  APPT_MPI_FLAG="--mpi"
+else
+  echo "[WARN] apptainer exec: --mpi not supported on this system; continuing without it."
+fi
+
+run_srun_ctr() {
+  # usage: run_srun_ctr [srun args ...] -- <cmd ...>
+  local srun_args=() cmd=() seen=0
+  for a in "$@"; do
+    if [[ $seen -eq 0 ]]; then
+      [[ "$a" == "--" ]] && seen=1 || srun_args+=("$a")
+    else
+      cmd+=("$a")
+    fi
+  done
+  srun "${srun_args[@]}" apptainer exec --nv ${APPT_MPI_FLAG} \
+    ${BIND_STR} \
+    --pwd "${WORK_DIR}" \
+    --env MASTER_ADDR="${MASTER_ADDR}",MASTER_PORT="${MASTER_PORT}" \
+    "${CONT}" "${cmd[@]}"
+}
+
+########################
+# libcuda.so compat fix (once per node)
+########################
+run_srun_ctr -N1 -n1 -- bash -lc '
+set -e
+if [ -f /usr/local/cuda/compat/lib/libcuda.so.1 ] && [ ! -e /usr/lib/x86_64-linux-gnu/libcuda.so ]; then
+  mkdir -p /usr/lib/x86_64-linux-gnu
+  ln -sf /usr/local/cuda/compat/lib/libcuda.so.1 /usr/lib/x86_64-linux-gnu/libcuda.so
+fi
+'
+
+########################
+# Quick fabric / GPU info (host)
+########################
+set +e
+srun --ntasks-per-node=1 nvidia-smi --query-gpu=gpu_name,gpu_bus_id,vbios_version --format=csv
+srun -l --ntasks-per-node=1 bash -lc "nvidia-smi -q | grep Fabric -A 4 | grep CliqueId"
+set -e
+
+# Optional: IB and topology (host)
+srun -N1 -n1 ibv_devinfo --list || true
+srun -N1 -n1 nvidia-smi topo -m || true
+
+########################
+# Optional: on-the-fly graph copy (host)
+########################
+if [[ -n "${GRAPH_COPY_SOURCE:-}" ]]; then
+  if [[ "${GRAPH_COPY_SOURCE}" == "${GRAPH_DIR}" ]]; then
+    echo "Graph copy source path ${GRAPH_COPY_SOURCE} should differ from GRAPH_DIR ${GRAPH_DIR}"
+    exit 1
+  fi
+  srun --ntasks-per-node=1 mkdir -p "${GRAPH_DIR}"
+  srun --ntasks-per-node=1 rsync -Wa "${GRAPH_COPY_SOURCE}/" "${GRAPH_DIR}/"
+fi
+
+########################
+# Mount verification (inside container)
+########################
+if [[ "${INIT_EXPECTED_MOUNTS:-0}" -eq 1 ]]; then
+  run_srun_ctr -N1 -n1 -- \
+    python3 -m mlperf_common.mountcheck \
+      --expected_mounts_csv "/results/${SPREFIX}_expected-mounts.csv" \
+      --mounts_to_verify ${mounts_to_verify} --initialize
+fi
+
+if [[ "${VERIFY_MOUNTS:-0}" -eq 1 ]]; then
+  run_srun_ctr --ntasks-per-node=1 -- \
+    python3 -m mlperf_common.mountcheck \
+      --expected_mounts_csv "/results/expected-mounts.csv" \
+      --mounts_to_verify ${mounts_to_verify} \
+    |& tee "${LOGDIR}/${SPREFIX}_mountcheck.log"
+fi
+
+########################
+# GPU power monitoring (host)
+########################
+if [[ -f "${POWERCMDDIR}/power_monitor.sh" ]]; then
+  ( umask 0002; mkdir -p "${POWERLOGDIR}" )
+  if (( SLURM_JOB_NUM_NODES > 64 )); then
+    ( srun --overlap --ntasks=64 bash "${POWERCMDDIR}/power_monitor.sh" ) &
+  else
+    ( srun --overlap --ntasks-per-node=1 bash "${POWERCMDDIR}/power_monitor.sh" ) &
+  fi
+fi
+
+########################
+# Telemetry (host)
+########################
+if [[ -f "${TELEMETRY_SCRIPT:-}" ]]; then
+  NODENAME="$(hostname | sed 's/\..*//')"
+  ( srun -N1 --overlap bash "${TELEMETRY_SCRIPT}" "${LOGDIR}/${SLURM_JOB_ID}_${NODENAME}_telemetry.log" ) &
+  EXTRA_ASSETS="${EXTRA_ASSETS} --asset /results/${SLURM_JOB_ID}_${NODENAME}_telemetry.log"
+fi
+
+echo "DGXNNODES=${DGXNNODES} DGXNGPU=${DGXNGPU} BATCHSIZE=${BATCHSIZE}"
+echo "WORK_DIR_HOST=${WORK_DIR_HOST} -> WORK_DIR=${WORK_DIR}"
+echo "BIND_STR=${BIND_STR}"
+echo "PROLOG_STOP $(date +%s)"
+
+########################
+# Experiments
+########################
+for _experiment_index in $(seq -w 1 "${NEXP}"); do
+  echo "EXPERIMENT_START $(date +%s)"
+  (
+    echo "Beginning trial ${_experiment_index} of ${NEXP}"
+    echo ":::DLPAL ${CONT} ${SLURM_JOB_ID} ${SLURM_JOB_NUM_NODES} ${SLURM_JOB_NODELIST} ${MLPERF_CLUSTER_NAME} ${DGXSYSTEM}"
+
+    # System JSON (inside container)
+    run_srun_ctr -N1 -n1 -- mlperf-sysjson.sh | sed 's/^/:::SYSJSON /'
+
+    # Git commit IDs (host->log)
+    srun -N1 -n1 bash -lc 'echo ":::GITCOMMITID ${GIT_COMMIT_ID:-NA} ${LAUNCHER_GIT_COMMIT_ID:-NA}"'
+    
+    export SEED=$(( SEED_BASE - 1 + 10#$_experiment_index ))
+
+    # Clear caches (host + log mllog event)
+    if (( CLEAR_CACHES == 1 )); then
+      srun --ntasks-per-node=1 bash -lc 'echo -n "Clearing cache on "; hostname; sync; '"${DROPCACHE_CMD}"
+      run_srun_ctr --ntasks-per-node=1 -- python - <<'PY'
+from utility.logger import mllogger
+mllogger.event(key=mllogger.constants.CACHE_CLEAR, value=True)
+PY
+    fi
+
+    sleep 30
+
+    # Main run (inside container, MPI-enabled)
+    set +e
+    echo "RUNANDTIME_START $(date +%s)"
+    run_srun_ctr -l --mpi="${SLURM_MPI_TYPE}" \
+      --kill-on-bad-exit=1 \
+      --ntasks-per-node="${DGXNGPU}" \
+      --time="${WALLTIME_RUNANDTIME}" -- \
+      slurm2pytorch ./run_and_time.sh
+    echo "RUNANDTIME_STOP $(date +%s)"
+    set -e
+  ) |& tee "${LOG_FILE_BASE}_${_experiment_index}.log"
+
+  # Compliance checker (inside container)
+  if (( CHECK_COMPLIANCE == 1 )); then
+    run_srun_ctr -N1 -n1 -- python3 -m mlperf_logging.compliance_checker \
+      --usage training \
+      --ruleset "${MLPERF_RULESET}" \
+      --log_output "/results/compliance_${DATESTAMP}.out" \
+      "/results/${LOGBASE}_${_experiment_index}.log" || true
+    EXTRA_ASSETS="${EXTRA_ASSETS} --asset /results/compliance_${DATESTAMP}.out"
+  fi
+
+  echo "EXPERIMENT_STOP $(date +%s)"
+done

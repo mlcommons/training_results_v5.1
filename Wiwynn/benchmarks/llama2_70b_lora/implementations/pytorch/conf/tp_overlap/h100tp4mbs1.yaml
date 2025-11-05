@@ -1,0 +1,51 @@
+## TP4 MBS1
+
+## Allgather
+qkv_fprop:
+  method: ring_exchange
+  aggregate: 0
+
+fc1_fprop:
+  method: ring_exchange
+  aggregate: 0
+
+proj_dgrad:
+  method: ring_exchange
+  aggregate: 0
+
+fc2_dgrad:
+  method: ring_exchange
+  aggregate: 0
+
+## ReduceScatter
+proj_fprop:
+  method: pipeline
+  num_sm: 32
+  cga_size: 2
+  num_splits: 4
+  set_sm_margin: 1
+  atomic_gemm: ${oc.decode:${oc.env:NVTE_UB_ATOMIC_GEMM_RS_PROJ,1}}
+  fp8_buf: 1
+
+fc2_fprop:
+  method: pipeline
+  num_sm: 16
+  cga_size: 2
+  num_splits: 4
+  set_sm_margin: 1
+  atomic_gemm: ${oc.decode:${oc.env:NVTE_UB_ATOMIC_GEMM_RS_FC2,1}}
+  fp8_buf: 0 # FP8 does not improve perf
+
+qkv_dgrad: # DGRAD-RS OVERLAP NOT ENABLED
+  method: bulk
+  num_sm: 4
+  cga_size: 2
+  set_sm_margin: 0
+
+fc1_dgrad:
+  method: ring_exchange
+  num_sm: 1
+  cga_size: 2
+  set_sm_margin: 1
+  atomic_gemm: 0
+  fp8_buf: 0

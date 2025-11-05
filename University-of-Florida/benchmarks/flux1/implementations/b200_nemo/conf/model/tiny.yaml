@@ -1,0 +1,17 @@
+flux_params:
+  _target_: nemo.collections.diffusion.models.flux.model.FluxModelParams
+  flux_config:
+    _target_: custom_flux.CustomFluxConfig
+    num_joint_layers: 1
+    num_single_layers: 1
+    calculate_per_token_loss: False
+    gradient_accumulation_fusion: False
+    guidance_embed: False
+  vae_config: null
+  t5_params: null
+  clip_params: null
+  device: cuda
+empty_encodings_path: /dataset/energon/empty_encodings
+classifier_free_guidance_prob: 0.1
+always_zero_timestep: False # for debugging, makes model more deterministic by not adding noise to samples.
+generate_random_empty_encodings: False # Used when no data is mounted

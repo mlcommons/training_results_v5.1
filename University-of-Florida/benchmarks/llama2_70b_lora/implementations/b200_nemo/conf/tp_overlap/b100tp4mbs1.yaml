@@ -1,0 +1,36 @@
+qkv_fprop:
+  method: ring_exchange
+  aggregate: 0
+
+fc1_fprop:
+  method: ring_exchange
+  aggregate: 0
+
+proj_dgrad:
+  method: ring_exchange
+  aggregate: 0
+
+fc2_dgrad:
+  method: ring_exchange
+  aggregate: 0
+
+## ReduceScatter
+proj_fprop:
+  method: ring_exchange
+  fp8_buf: 1
+
+fc2_fprop:
+  method: ring_exchange
+  fp8_buf: 1 # FP8 does not improve perf
+
+# qkv_dgrad: # DGRAD-RS OVERLAP NOT ENABLED
+#   method: pipeline
+#   num_sm: 16
+#   cga_size: 2
+#   num_splits: 2
+#   set_sm_margin: 0
+#   atomic_gemm: 0
+
+fc1_dgrad:
+  method: ring_exchange
+  fp8_buf: 1

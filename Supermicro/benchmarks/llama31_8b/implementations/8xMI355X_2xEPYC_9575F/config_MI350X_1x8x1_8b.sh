@@ -1,0 +1,89 @@
+export NNODES=1
+export GPUS_PER_NODE=8
+export DEPENDENCIES=""
+export REMOTE=0
+
+export CONTINUAL_CKPT="${CONTINUAL_CKPT:-/data/model/saved_ckpts}"
+export USE_CKPT=0
+export FROM_HF=1
+export SAVE_CKPT=0
+export SIZE="8b"
+export GBS=32
+export MBS=2
+export MAX_LR="1e-3"
+
+export MAX_STEPS=1200000
+export WARMUP_STEPS=128
+export EVAL_EVERY=12288
+export START_EVAL_AT=0
+
+export TP=1
+export PP=1
+export CP=1
+export START_STEPS="0"
+export NPAR=1
+export TAG=""
+
+export TARGET="3.3"
+export STEP_TIME_ATOL="18000" # maximum tolerable step time, setting to 5hr by default
+export DGXSYSTEM=$(basename $(readlink -f ${BASH_SOURCE[0]}) | sed 's/^config_//' | sed 's/\.sh$//' )
+# Set environment variables for distributed training
+export TRANSFORMERS_OFFLINE=1
+export NCCL_NVLS_ENABLE=0
+export NVTE_DP_AMAX_REDUCE_INTERVAL=0
+export NVTE_ASYNC_AMAX_REDUCTION=1
+export TOKENIZERS_PARALLELISM=false
+
+export NCCL_MIN_P2P_NCHANNELS=32;
+export NCCL_MIN_CTAS=32;
+export NCCL_NCHANNELS_PER_NET_PEER=32;
+export NCCL_NVLS_ENABLE=0
+
+export TP_COMM_OVERLAP=False 
+export MC_TP_OVERLAP_AG=False
+export MC_TP_OVERLAP_RS=False
+export MC_TP_OVERLAP_RS_DGRAD=False
+
+export CUBLAS_FORCE_XMMA_KERNEL_INIT=DEVICE
+
+export NVTE_RS_STRIDED_ATOMIC=2
+export NVTE_FP8_DPA_BWD=1
+export NVTE_FUSED_ATTN=1
+export NVTE_FUSED_ATTN_CK=1
+export NVTE_FUSED_ATTN_AOTRITON=1
+export NVTE_DEBUG=0
+export NVTE_DEBUG_LEVEL=0
+export NVTE_USE_HIPBLASLT=1
+export NVTE_USE_CAST_TRANSPOSE_TRITON=1
+export NVTE_USE_OPTIMIZED_HIPIFIED_CAST_TRANSPOSE=0
+export USE_TE_SWIGLU=1
+
+
+export NVTE_CK_USES_BWD_V3=1       
+export NVTE_CK_USES_FWD_V3=1
+export NVTE_CK_IS_V3_ATOMIC_FP32=0  
+
+export CUDNN_FRONTEND_ATTN_DP_WORKSPACE_LIMIT=0
+export CUDA_DEVICE_MAX_CONNECTIONS=1
+
+export FUSED_SOFTMAX=0
+export RMSNORM_CAST=0
+
+export PT_TENSOR_VALIDATION=0
+export PROFILE_RPD=0
+
+export USE_HIPBLASLT=1
+export TORCH_BLAS_PREFER_HIPBLASLT=1
+
+export NVTE_USE_RMSNORM_TRITON=0
+export ENABLE_TRANSPOSE_CACHE=0
+export FP8_PARAMS=1
+
+export MLPERF_SUBMISSION_ORG="AMD"
+export MLPERF_SUBMISSION_PLATFORM="MI350X"
+export OMP_NUM_THREADS=1
+
+export CK_FUSED_ATTN_LOG_CONFIG=0
+export NVTE_LOG_CK_CONFIG=0
+export NVTE_LOG_FUSED_ATTN_CONFIG=0
+export CHECK_FOR_NAN_IN_GRAD=0

@@ -1,0 +1,1593 @@
++ echo 'Beginning trial 7 of 10'
+Beginning trial 7 of 10
++ echo ':::DLPAL nvcr.io/nvdlfwea/mlperftv51/llama2_70b_lora-arm:20250930 174 18 node[01-18] '\''unknown'\'' dj_config'
+:::DLPAL nvcr.io/nvdlfwea/mlperftv51/llama2_70b_lora-arm:20250930 174 18 node[01-18] 'unknown' dj_config
+++ srun -N1 -n1 --container-name=llama2_70b_lora_174 --no-container-mount-home --container-remap-root --container-writable mlperf-sysjson.sh
++ echo ':::SYSJSON {"submitter":"UNKNOWN_MLPERF_SUBMITTER","division":"closed","status":"Available on-premise","system_name":"UNKNOWN_MLPERF_SYSTEM_NAME","number_of_nodes":"18","host_processors_per_node":"2","host_processor_model_name":"Neoverse-V2","host_processor_core_count":"72","host_processor_vcpu_count":"","host_processor_frequency":"","host_processor_caches":"","host_processor_interconnect":"","host_memory_capacity":"2.0 TB","host_storage_type":"","host_storage_capacity":"","host_networking":"","host_networking_topology":"","host_memory_configuration":"","accelerators_per_node":"4","accelerator_model_name":"NVIDIA GB300","accelerator_host_interconnect":"","accelerator_frequency":"","accelerator_on-chip_memories":"","accelerator_memory_configuration":"","accelerator_memory_capacity":"284208 MiB","accelerator_interconnect":"","accelerator_interconnect_topology":"","cooling":"","hw_notes":"","framework":"PyTorch NVIDIA Release 25.09","framework_name":"","other_software_stack":{"cuda_version":"13.0.1.012","cuda_driver_version":"580.82.07","nccl_version":"v2.28.3-1","cublas_version":"13.0.2.14","cudnn_version":"9.13.1.26","trt_version":"10.13.3.9","dali_version":"1.51.2","mofed_version":"5.4-rdmacore56.0","openmpi_version":"4.1.7","kernel_version":"Linux 6.11.0-1013-nvidia-64k","nvidia_kernel_driver":"580.95.05"},"operating_system":"Ubuntu 24.04.3 LTS","sw_notes":""}'
+:::SYSJSON {"submitter":"UNKNOWN_MLPERF_SUBMITTER","division":"closed","status":"Available on-premise","system_name":"UNKNOWN_MLPERF_SYSTEM_NAME","number_of_nodes":"18","host_processors_per_node":"2","host_processor_model_name":"Neoverse-V2","host_processor_core_count":"72","host_processor_vcpu_count":"","host_processor_frequency":"","host_processor_caches":"","host_processor_interconnect":"","host_memory_capacity":"2.0 TB","host_storage_type":"","host_storage_capacity":"","host_networking":"","host_networking_topology":"","host_memory_configuration":"","accelerators_per_node":"4","accelerator_model_name":"NVIDIA GB300","accelerator_host_interconnect":"","accelerator_frequency":"","accelerator_on-chip_memories":"","accelerator_memory_configuration":"","accelerator_memory_capacity":"284208 MiB","accelerator_interconnect":"","accelerator_interconnect_topology":"","cooling":"","hw_notes":"","framework":"PyTorch NVIDIA Release 25.09","framework_name":"","other_software_stack":{"cuda_version":"13.0.1.012","cuda_driver_version":"580.82.07","nccl_version":"v2.28.3-1","cublas_version":"13.0.2.14","cudnn_version":"9.13.1.26","trt_version":"10.13.3.9","dali_version":"1.51.2","mofed_version":"5.4-rdmacore56.0","openmpi_version":"4.1.7","kernel_version":"Linux 6.11.0-1013-nvidia-64k","nvidia_kernel_driver":"580.95.05"},"operating_system":"Ubuntu 24.04.3 LTS","sw_notes":""}
++ srun -N1 -n1 --container-name=llama2_70b_lora_174 --no-container-mount-home --container-remap-root --container-writable bash -c 'echo ":::GITCOMMITID ${GIT_COMMIT_ID} ${LAUNCHER_GIT_COMMIT_ID}"'
+:::GITCOMMITID 3116d722bd2124ba849d7aa0c136573855c3ecfd 
++ '[' 1 -eq 1 ']'
++ srun --ntasks-per-node=1 --mpi=pmix bash -c 'echo -n '\''Clearing cache on '\'' && hostname && sync && sudo /sbin/sysctl vm.drop_caches=3'
+Clearing cache on node08
+Clearing cache on node04
+Clearing cache on node06
+Clearing cache on node07
+Clearing cache on node10
+Clearing cache on node13
+Clearing cache on node14
+Clearing cache on node01
+Clearing cache on node17
+Clearing cache on node11
+Clearing cache on node09
+Clearing cache on node02
+Clearing cache on node05
+Clearing cache on node03
+Clearing cache on node12
+Clearing cache on node15
+Clearing cache on node16
+Clearing cache on node18
+vm.drop_caches = 3
+vm.drop_caches = 3
+vm.drop_caches = 3
+vm.drop_caches = 3
+vm.drop_caches = 3
+vm.drop_caches = 3
+vm.drop_caches = 3
+vm.drop_caches = 3
+vm.drop_caches = 3
+vm.drop_caches = 3
+vm.drop_caches = 3
+vm.drop_caches = 3
+vm.drop_caches = 3
+vm.drop_caches = 3
+vm.drop_caches = 3
+vm.drop_caches = 3
+vm.drop_caches = 3
+vm.drop_caches = 3
++ srun --ntasks-per-node=1 --mpi=pmix --container-name=llama2_70b_lora_174 --no-container-mount-home --container-remap-root --container-writable python -c '
+from mlperf_common.callbacks import mllogger
+mllogger.event(key=mllogger.constants.CACHE_CLEAR, value=True)'
+/usr/local/lib/python3.12/dist-packages/torch/cuda/__init__.py:63: FutureWarning: The pynvml package is deprecated. Please install nvidia-ml-py instead. If you did not install pynvml directly, please report this to the maintainers of the package that installed pynvml for you.
+  import pynvml  # type: ignore[import]
+/usr/local/lib/python3.12/dist-packages/torch/cuda/__init__.py:63: FutureWarning: The pynvml package is deprecated. Please install nvidia-ml-py instead. If you did not install pynvml directly, please report this to the maintainers of the package that installed pynvml for you.
+  import pynvml  # type: ignore[import]
+/usr/local/lib/python3.12/dist-packages/torch/cuda/__init__.py:63: FutureWarning: The pynvml package is deprecated. Please install nvidia-ml-py instead. If you did not install pynvml directly, please report this to the maintainers of the package that installed pynvml for you.
+  import pynvml  # type: ignore[import]
+/usr/local/lib/python3.12/dist-packages/torch/cuda/__init__.py:63: FutureWarning: The pynvml package is deprecated. Please install nvidia-ml-py instead. If you did not install pynvml directly, please report this to the maintainers of the package that installed pynvml for you.
+  import pynvml  # type: ignore[import]
+/usr/local/lib/python3.12/dist-packages/torch/cuda/__init__.py:63: FutureWarning: The pynvml package is deprecated. Please install nvidia-ml-py instead. If you did not install pynvml directly, please report this to the maintainers of the package that installed pynvml for you.
+  import pynvml  # type: ignore[import]
+/usr/local/lib/python3.12/dist-packages/torch/cuda/__init__.py:63: FutureWarning: The pynvml package is deprecated. Please install nvidia-ml-py instead. If you did not install pynvml directly, please report this to the maintainers of the package that installed pynvml for you.
+  import pynvml  # type: ignore[import]
+/usr/local/lib/python3.12/dist-packages/torch/cuda/__init__.py:63: FutureWarning: The pynvml package is deprecated. Please install nvidia-ml-py instead. If you did not install pynvml directly, please report this to the maintainers of the package that installed pynvml for you.
+  import pynvml  # type: ignore[import]
+/usr/local/lib/python3.12/dist-packages/torch/cuda/__init__.py:63: FutureWarning: The pynvml package is deprecated. Please install nvidia-ml-py instead. If you did not install pynvml directly, please report this to the maintainers of the package that installed pynvml for you.
+  import pynvml  # type: ignore[import]
+/usr/local/lib/python3.12/dist-packages/torch/cuda/__init__.py:63: FutureWarning: The pynvml package is deprecated. Please install nvidia-ml-py instead. If you did not install pynvml directly, please report this to the maintainers of the package that installed pynvml for you.
+  import pynvml  # type: ignore[import]
+/usr/local/lib/python3.12/dist-packages/torch/cuda/__init__.py:63: FutureWarning: The pynvml package is deprecated. Please install nvidia-ml-py instead. If you did not install pynvml directly, please report this to the maintainers of the package that installed pynvml for you.
+  import pynvml  # type: ignore[import]
+/usr/local/lib/python3.12/dist-packages/torch/cuda/__init__.py:63: FutureWarning: The pynvml package is deprecated. Please install nvidia-ml-py instead. If you did not install pynvml directly, please report this to the maintainers of the package that installed pynvml for you.
+  import pynvml  # type: ignore[import]
+/usr/local/lib/python3.12/dist-packages/torch/cuda/__init__.py:63: FutureWarning: The pynvml package is deprecated. Please install nvidia-ml-py instead. If you did not install pynvml directly, please report this to the maintainers of the package that installed pynvml for you.
+  import pynvml  # type: ignore[import]
+/usr/local/lib/python3.12/dist-packages/torch/cuda/__init__.py:63: FutureWarning: The pynvml package is deprecated. Please install nvidia-ml-py instead. If you did not install pynvml directly, please report this to the maintainers of the package that installed pynvml for you.
+  import pynvml  # type: ignore[import]
+/usr/local/lib/python3.12/dist-packages/torch/cuda/__init__.py:63: FutureWarning: The pynvml package is deprecated. Please install nvidia-ml-py instead. If you did not install pynvml directly, please report this to the maintainers of the package that installed pynvml for you.
+  import pynvml  # type: ignore[import]
+/usr/local/lib/python3.12/dist-packages/torch/cuda/__init__.py:63: FutureWarning: The pynvml package is deprecated. Please install nvidia-ml-py instead. If you did not install pynvml directly, please report this to the maintainers of the package that installed pynvml for you.
+  import pynvml  # type: ignore[import]
+/usr/local/lib/python3.12/dist-packages/torch/cuda/__init__.py:63: FutureWarning: The pynvml package is deprecated. Please install nvidia-ml-py instead. If you did not install pynvml directly, please report this to the maintainers of the package that installed pynvml for you.
+  import pynvml  # type: ignore[import]
+/usr/local/lib/python3.12/dist-packages/torch/cuda/__init__.py:63: FutureWarning: The pynvml package is deprecated. Please install nvidia-ml-py instead. If you did not install pynvml directly, please report this to the maintainers of the package that installed pynvml for you.
+  import pynvml  # type: ignore[import]
+/usr/local/lib/python3.12/dist-packages/torch/cuda/__init__.py:63: FutureWarning: The pynvml package is deprecated. Please install nvidia-ml-py instead. If you did not install pynvml directly, please report this to the maintainers of the package that installed pynvml for you.
+  import pynvml  # type: ignore[import]
+:::MLLOG {"namespace": "", "time_ms": 1759854374031, "event_type": "POINT_IN_TIME", "key": "cache_clear", "value": true, "metadata": {"file": "<string>", "lineno": 3}}
+:::MLLOG {"namespace": "", "time_ms": 1759854374045, "event_type": "POINT_IN_TIME", "key": "cache_clear", "value": true, "metadata": {"file": "<string>", "lineno": 3}}
+:::MLLOG {"namespace": "", "time_ms": 1759854374074, "event_type": "POINT_IN_TIME", "key": "cache_clear", "value": true, "metadata": {"file": "<string>", "lineno": 3}}
+:::MLLOG {"namespace": "", "time_ms": 1759854374089, "event_type": "POINT_IN_TIME", "key": "cache_clear", "value": true, "metadata": {"file": "<string>", "lineno": 3}}
+:::MLLOG {"namespace": "", "time_ms": 1759854374091, "event_type": "POINT_IN_TIME", "key": "cache_clear", "value": true, "metadata": {"file": "<string>", "lineno": 3}}
+:::MLLOG {"namespace": "", "time_ms": 1759854374094, "event_type": "POINT_IN_TIME", "key": "cache_clear", "value": true, "metadata": {"file": "<string>", "lineno": 3}}
+:::MLLOG {"namespace": "", "time_ms": 1759854374169, "event_type": "POINT_IN_TIME", "key": "cache_clear", "value": true, "metadata": {"file": "<string>", "lineno": 3}}
+:::MLLOG {"namespace": "", "time_ms": 1759854374186, "event_type": "POINT_IN_TIME", "key": "cache_clear", "value": true, "metadata": {"file": "<string>", "lineno": 3}}
+:::MLLOG {"namespace": "", "time_ms": 1759854374190, "event_type": "POINT_IN_TIME", "key": "cache_clear", "value": true, "metadata": {"file": "<string>", "lineno": 3}}
+:::MLLOG {"namespace": "", "time_ms": 1759854374217, "event_type": "POINT_IN_TIME", "key": "cache_clear", "value": true, "metadata": {"file": "<string>", "lineno": 3}}
+:::MLLOG {"namespace": "", "time_ms": 1759854374235, "event_type": "POINT_IN_TIME", "key": "cache_clear", "value": true, "metadata": {"file": "<string>", "lineno": 3}}
+:::MLLOG {"namespace": "", "time_ms": 1759854374285, "event_type": "POINT_IN_TIME", "key": "cache_clear", "value": true, "metadata": {"file": "<string>", "lineno": 3}}
+:::MLLOG {"namespace": "", "time_ms": 1759854374305, "event_type": "POINT_IN_TIME", "key": "cache_clear", "value": true, "metadata": {"file": "<string>", "lineno": 3}}
+:::MLLOG {"namespace": "", "time_ms": 1759854374604, "event_type": "POINT_IN_TIME", "key": "cache_clear", "value": true, "metadata": {"file": "<string>", "lineno": 3}}
+:::MLLOG {"namespace": "", "time_ms": 1759854374626, "event_type": "POINT_IN_TIME", "key": "cache_clear", "value": true, "metadata": {"file": "<string>", "lineno": 3}}
+:::MLLOG {"namespace": "", "time_ms": 1759854374649, "event_type": "POINT_IN_TIME", "key": "cache_clear", "value": true, "metadata": {"file": "<string>", "lineno": 3}}
+:::MLLOG {"namespace": "", "time_ms": 1759854374835, "event_type": "POINT_IN_TIME", "key": "cache_clear", "value": true, "metadata": {"file": "<string>", "lineno": 3}}
+:::MLLOG {"namespace": "", "time_ms": 1759854374848, "event_type": "POINT_IN_TIME", "key": "cache_clear", "value": true, "metadata": {"file": "<string>", "lineno": 3}}
++ export SEED=3249
++ SEED=3249
++ set +e
+++ date +%s
++ echo 'RUNANDTIME_START 1759854375'
+RUNANDTIME_START 1759854375
++ srun -l --mpi=pmix --ntasks-per-node=4 --time=10 --container-name=llama2_70b_lora_174 --no-container-mount-home --container-remap-root --container-writable --container-mounts=/mlperf/scratch/data/gov_report/:/data:ro,/mlperf/scratch/data/model/:/ckpt:ro,/mlperf/scratch/llama2_configs_and_logdir/:/results:rw --container-workdir=/workspace/ft-llm --container-env=MASTER_PORT,MASTER_ADDR slurm2pytorch ./run_and_time.sh
+13: [2025-10-07 16:26:28,324][nemo.lightning.pytorch.strategies.megatron_strategy][INFO] - Initializing distributed: GLOBAL_RANK: 13, MEMBER: 14/72
+15: [2025-10-07 16:26:28,324][nemo.lightning.pytorch.strategies.megatron_strategy][INFO] - Initializing distributed: GLOBAL_RANK: 15, MEMBER: 16/72
+12: [2025-10-07 16:26:28,324][nemo.lightning.pytorch.strategies.megatron_strategy][INFO] - Initializing distributed: GLOBAL_RANK: 12, MEMBER: 13/72
+14: [2025-10-07 16:26:28,324][nemo.lightning.pytorch.strategies.megatron_strategy][INFO] - Initializing distributed: GLOBAL_RANK: 14, MEMBER: 15/72
+25: [2025-10-07 16:26:28,326][nemo.lightning.pytorch.strategies.megatron_strategy][INFO] - Initializing distributed: GLOBAL_RANK: 25, MEMBER: 26/72
+24: [2025-10-07 16:26:28,326][nemo.lightning.pytorch.strategies.megatron_strategy][INFO] - Initializing distributed: GLOBAL_RANK: 24, MEMBER: 25/72
+26: [2025-10-07 16:26:28,326][nemo.lightning.pytorch.strategies.megatron_strategy][INFO] - Initializing distributed: GLOBAL_RANK: 26, MEMBER: 27/72
+27: [2025-10-07 16:26:28,326][nemo.lightning.pytorch.strategies.megatron_strategy][INFO] - Initializing distributed: GLOBAL_RANK: 27, MEMBER: 28/72
+28: [2025-10-07 16:26:28,416][nemo.lightning.pytorch.strategies.megatron_strategy][INFO] - Initializing distributed: GLOBAL_RANK: 28, MEMBER: 29/72
+30: [2025-10-07 16:26:28,416][nemo.lightning.pytorch.strategies.megatron_strategy][INFO] - Initializing distributed: GLOBAL_RANK: 30, MEMBER: 31/72
+31: [2025-10-07 16:26:28,416][nemo.lightning.pytorch.strategies.megatron_strategy][INFO] - Initializing distributed: GLOBAL_RANK: 31, MEMBER: 32/72
+29: [2025-10-07 16:26:28,423][nemo.lightning.pytorch.strategies.megatron_strategy][INFO] - Initializing distributed: GLOBAL_RANK: 29, MEMBER: 30/72
+20: [2025-10-07 16:26:28,450][nemo.lightning.pytorch.strategies.megatron_strategy][INFO] - Initializing distributed: GLOBAL_RANK: 20, MEMBER: 21/72
+21: [2025-10-07 16:26:28,450][nemo.lightning.pytorch.strategies.megatron_strategy][INFO] - Initializing distributed: GLOBAL_RANK: 21, MEMBER: 22/72
+22: [2025-10-07 16:26:28,450][nemo.lightning.pytorch.strategies.megatron_strategy][INFO] - Initializing distributed: GLOBAL_RANK: 22, MEMBER: 23/72
+23: [2025-10-07 16:26:28,450][nemo.lightning.pytorch.strategies.megatron_strategy][INFO] - Initializing distributed: GLOBAL_RANK: 23, MEMBER: 24/72
+71: [2025-10-07 16:26:28,539][nemo.lightning.pytorch.strategies.megatron_strategy][INFO] - Initializing distributed: GLOBAL_RANK: 71, MEMBER: 72/72
+68: [2025-10-07 16:26:28,539][nemo.lightning.pytorch.strategies.megatron_strategy][INFO] - Initializing distributed: GLOBAL_RANK: 68, MEMBER: 69/72
+69: [2025-10-07 16:26:28,539][nemo.lightning.pytorch.strategies.megatron_strategy][INFO] - Initializing distributed: GLOBAL_RANK: 69, MEMBER: 70/72
+70: [2025-10-07 16:26:28,539][nemo.lightning.pytorch.strategies.megatron_strategy][INFO] - Initializing distributed: GLOBAL_RANK: 70, MEMBER: 71/72
+ 7: [2025-10-07 16:26:28,539][nemo.lightning.pytorch.strategies.megatron_strategy][INFO] - Initializing distributed: GLOBAL_RANK: 7, MEMBER: 8/72
+ 4: [2025-10-07 16:26:28,539][nemo.lightning.pytorch.strategies.megatron_strategy][INFO] - Initializing distributed: GLOBAL_RANK: 4, MEMBER: 5/72
+ 5: [2025-10-07 16:26:28,539][nemo.lightning.pytorch.strategies.megatron_strategy][INFO] - Initializing distributed: GLOBAL_RANK: 5, MEMBER: 6/72
+ 6: [2025-10-07 16:26:28,539][nemo.lightning.pytorch.strategies.megatron_strategy][INFO] - Initializing distributed: GLOBAL_RANK: 6, MEMBER: 7/72
+53: [2025-10-07 16:26:28,655][nemo.lightning.pytorch.strategies.megatron_strategy][INFO] - Initializing distributed: GLOBAL_RANK: 53, MEMBER: 54/72
+54: [2025-10-07 16:26:28,655][nemo.lightning.pytorch.strategies.megatron_strategy][INFO] - Initializing distributed: GLOBAL_RANK: 54, MEMBER: 55/72
+55: [2025-10-07 16:26:28,655][nemo.lightning.pytorch.strategies.megatron_strategy][INFO] - Initializing distributed: GLOBAL_RANK: 55, MEMBER: 56/72
+52: [2025-10-07 16:26:28,655][nemo.lightning.pytorch.strategies.megatron_strategy][INFO] - Initializing distributed: GLOBAL_RANK: 52, MEMBER: 53/72
+17: [2025-10-07 16:26:28,713][nemo.lightning.pytorch.strategies.megatron_strategy][INFO] - Initializing distributed: GLOBAL_RANK: 17, MEMBER: 18/72
+18: [2025-10-07 16:26:28,713][nemo.lightning.pytorch.strategies.megatron_strategy][INFO] - Initializing distributed: GLOBAL_RANK: 18, MEMBER: 19/72
+19: [2025-10-07 16:26:28,713][nemo.lightning.pytorch.strategies.megatron_strategy][INFO] - Initializing distributed: GLOBAL_RANK: 19, MEMBER: 20/72
+16: [2025-10-07 16:26:28,714][nemo.lightning.pytorch.strategies.megatron_strategy][INFO] - Initializing distributed: GLOBAL_RANK: 16, MEMBER: 17/72
+36: [2025-10-07 16:26:28,792][nemo.lightning.pytorch.strategies.megatron_strategy][INFO] - Initializing distributed: GLOBAL_RANK: 36, MEMBER: 37/72
+37: [2025-10-07 16:26:28,792][nemo.lightning.pytorch.strategies.megatron_strategy][INFO] - Initializing distributed: GLOBAL_RANK: 37, MEMBER: 38/72
+38: [2025-10-07 16:26:28,792][nemo.lightning.pytorch.strategies.megatron_strategy][INFO] - Initializing distributed: GLOBAL_RANK: 38, MEMBER: 39/72
+39: [2025-10-07 16:26:28,792][nemo.lightning.pytorch.strategies.megatron_strategy][INFO] - Initializing distributed: GLOBAL_RANK: 39, MEMBER: 40/72
+48: [2025-10-07 16:26:28,881][nemo.lightning.pytorch.strategies.megatron_strategy][INFO] - Initializing distributed: GLOBAL_RANK: 48, MEMBER: 49/72
+49: [2025-10-07 16:26:28,881][nemo.lightning.pytorch.strategies.megatron_strategy][INFO] - Initializing distributed: GLOBAL_RANK: 49, MEMBER: 50/72
+50: [2025-10-07 16:26:28,881][nemo.lightning.pytorch.strategies.megatron_strategy][INFO] - Initializing distributed: GLOBAL_RANK: 50, MEMBER: 51/72
+51: [2025-10-07 16:26:28,881][nemo.lightning.pytorch.strategies.megatron_strategy][INFO] - Initializing distributed: GLOBAL_RANK: 51, MEMBER: 52/72
+45: [2025-10-07 16:26:28,915][nemo.lightning.pytorch.strategies.megatron_strategy][INFO] - Initializing distributed: GLOBAL_RANK: 45, MEMBER: 46/72
+47: [2025-10-07 16:26:28,915][nemo.lightning.pytorch.strategies.megatron_strategy][INFO] - Initializing distributed: GLOBAL_RANK: 47, MEMBER: 48/72
+44: [2025-10-07 16:26:28,915][nemo.lightning.pytorch.strategies.megatron_strategy][INFO] - Initializing distributed: GLOBAL_RANK: 44, MEMBER: 45/72
+46: [2025-10-07 16:26:28,915][nemo.lightning.pytorch.strategies.megatron_strategy][INFO] - Initializing distributed: GLOBAL_RANK: 46, MEMBER: 47/72
+ 0: :::MLLOG {"namespace": "", "time_ms": 1759854388927, "event_type": "INTERVAL_START", "key": "init_start", "value": null, "metadata": {"file": "/workspace/ft-llm/train.py", "lineno": 490}}
+ 0: :::MLLOG {"namespace": "", "time_ms": 1759854388927, "event_type": "POINT_IN_TIME", "key": "submission_benchmark", "value": "llama2_70b_lora", "metadata": {"file": "/workspace/ft-llm/train.py", "lineno": 491}}
+ 0: :::MLLOG {"namespace": "", "time_ms": 1759854388927, "event_type": "POINT_IN_TIME", "key": "submission_org", "value": "SUBMISSION_ORG_PLACEHOLDER", "metadata": {"file": "/workspace/ft-llm/train.py", "lineno": 491}}
+ 0: :::MLLOG {"namespace": "", "time_ms": 1759854388927, "event_type": "POINT_IN_TIME", "key": "submission_division", "value": "closed", "metadata": {"file": "/workspace/ft-llm/train.py", "lineno": 491}}
+ 0: :::MLLOG {"namespace": "", "time_ms": 1759854388927, "event_type": "POINT_IN_TIME", "key": "submission_status", "value": "onprem", "metadata": {"file": "/workspace/ft-llm/train.py", "lineno": 491}}
+ 0: :::MLLOG {"namespace": "", "time_ms": 1759854388927, "event_type": "POINT_IN_TIME", "key": "submission_platform", "value": "18xSUBMISSION_PLATFORM_PLACEHOLDER", "metadata": {"file": "/workspace/ft-llm/train.py", "lineno": 491}}
+ 0: :::MLLOG {"namespace": "", "time_ms": 1759854388927, "event_type": "POINT_IN_TIME", "key": "target_accuracy", "value": 0.925, "metadata": {"file": "/workspace/ft-llm/train.py", "lineno": 494}}
+64: [2025-10-07 16:26:28,967][nemo.lightning.pytorch.strategies.megatron_strategy][INFO] - Initializing distributed: GLOBAL_RANK: 64, MEMBER: 65/72
+65: [2025-10-07 16:26:28,967][nemo.lightning.pytorch.strategies.megatron_strategy][INFO] - Initializing distributed: GLOBAL_RANK: 65, MEMBER: 66/72
+67: [2025-10-07 16:26:28,967][nemo.lightning.pytorch.strategies.megatron_strategy][INFO] - Initializing distributed: GLOBAL_RANK: 67, MEMBER: 68/72
+ 8: [2025-10-07 16:26:28,978][nemo.lightning.pytorch.strategies.megatron_strategy][INFO] - Initializing distributed: GLOBAL_RANK: 8, MEMBER: 9/72
+11: [2025-10-07 16:26:28,978][nemo.lightning.pytorch.strategies.megatron_strategy][INFO] - Initializing distributed: GLOBAL_RANK: 11, MEMBER: 12/72
+ 0: :::MLLOG {"namespace": "", "time_ms": 1759854389016, "event_type": "POINT_IN_TIME", "key": "opt_base_learning_rate", "value": 0.0005, "metadata": {"file": "/workspace/ft-llm/train.py", "lineno": 276}}
+ 0: :::MLLOG {"namespace": "", "time_ms": 1759854389016, "event_type": "POINT_IN_TIME", "key": "opt_adamw_weight_decay", "value": 0.0001, "metadata": {"file": "/workspace/ft-llm/train.py", "lineno": 277}}
+ 0: :::MLLOG {"namespace": "", "time_ms": 1759854389016, "event_type": "POINT_IN_TIME", "key": "opt_gradient_clip_norm", "value": 0.3, "metadata": {"file": "/workspace/ft-llm/train.py", "lineno": 278}}
+ 0: :::MLLOG {"namespace": "", "time_ms": 1759854389017, "event_type": "POINT_IN_TIME", "key": "opt_learning_rate_warmup_factor", "value": 0.0, "metadata": {"file": "/workspace/ft-llm/train.py", "lineno": 303}}
+ 0: :::MLLOG {"namespace": "", "time_ms": 1759854389018, "event_type": "POINT_IN_TIME", "key": "lora_rank", "value": 16, "metadata": {"file": "/workspace/ft-llm/train.py", "lineno": 312}}
+ 0: :::MLLOG {"namespace": "", "time_ms": 1759854389018, "event_type": "POINT_IN_TIME", "key": "lora_alpha", "value": 32, "metadata": {"file": "/workspace/ft-llm/train.py", "lineno": 313}}
+ 0: :::MLLOG {"namespace": "", "time_ms": 1759854389023, "event_type": "POINT_IN_TIME", "key": "opt_learning_rate_training_steps", "value": 800, "metadata": {"file": "/workspace/ft-llm/train.py", "lineno": 514}}
+ 0: GPU available: True (cuda), used: True
+ 0: TPU available: False, using: 0 TPU cores
+ 0: HPU available: False, using: 0 HPUs
+ 0: `Trainer(limit_val_batches=1.0)` was configured so 100% of the batches will be used..
+66: [2025-10-07 16:26:29,036][nemo.lightning.pytorch.strategies.megatron_strategy][INFO] - Initializing distributed: GLOBAL_RANK: 66, MEMBER: 67/72
+ 1: [2025-10-07 16:26:29,048][nemo.lightning.pytorch.strategies.megatron_strategy][INFO] - Initializing distributed: GLOBAL_RANK: 1, MEMBER: 2/72
+ 3: [2025-10-07 16:26:29,053][nemo.lightning.pytorch.strategies.megatron_strategy][INFO] - Initializing distributed: GLOBAL_RANK: 3, MEMBER: 4/72
+ 9: [2025-10-07 16:26:29,098][nemo.lightning.pytorch.strategies.megatron_strategy][INFO] - Initializing distributed: GLOBAL_RANK: 9, MEMBER: 10/72
+32: [2025-10-07 16:26:29,166][nemo.lightning.pytorch.strategies.megatron_strategy][INFO] - Initializing distributed: GLOBAL_RANK: 32, MEMBER: 33/72
+35: [2025-10-07 16:26:29,166][nemo.lightning.pytorch.strategies.megatron_strategy][INFO] - Initializing distributed: GLOBAL_RANK: 35, MEMBER: 36/72
+33: [2025-10-07 16:26:29,166][nemo.lightning.pytorch.strategies.megatron_strategy][INFO] - Initializing distributed: GLOBAL_RANK: 33, MEMBER: 34/72
+60: [2025-10-07 16:26:29,184][nemo.lightning.pytorch.strategies.megatron_strategy][INFO] - Initializing distributed: GLOBAL_RANK: 60, MEMBER: 61/72
+61: [2025-10-07 16:26:29,184][nemo.lightning.pytorch.strategies.megatron_strategy][INFO] - Initializing distributed: GLOBAL_RANK: 61, MEMBER: 62/72
+63: [2025-10-07 16:26:29,184][nemo.lightning.pytorch.strategies.megatron_strategy][INFO] - Initializing distributed: GLOBAL_RANK: 63, MEMBER: 64/72
+56: [2025-10-07 16:26:29,265][nemo.lightning.pytorch.strategies.megatron_strategy][INFO] - Initializing distributed: GLOBAL_RANK: 56, MEMBER: 57/72
+57: [2025-10-07 16:26:29,265][nemo.lightning.pytorch.strategies.megatron_strategy][INFO] - Initializing distributed: GLOBAL_RANK: 57, MEMBER: 58/72
+58: [2025-10-07 16:26:29,265][nemo.lightning.pytorch.strategies.megatron_strategy][INFO] - Initializing distributed: GLOBAL_RANK: 58, MEMBER: 59/72
+59: [2025-10-07 16:26:29,265][nemo.lightning.pytorch.strategies.megatron_strategy][INFO] - Initializing distributed: GLOBAL_RANK: 59, MEMBER: 60/72
+62: [2025-10-07 16:26:29,324][nemo.lightning.pytorch.strategies.megatron_strategy][INFO] - Initializing distributed: GLOBAL_RANK: 62, MEMBER: 63/72
+42: [2025-10-07 16:26:29,384][nemo.lightning.pytorch.strategies.megatron_strategy][INFO] - Initializing distributed: GLOBAL_RANK: 42, MEMBER: 43/72
+41: [2025-10-07 16:26:29,388][nemo.lightning.pytorch.strategies.megatron_strategy][INFO] - Initializing distributed: GLOBAL_RANK: 41, MEMBER: 42/72
+43: [2025-10-07 16:26:29,393][nemo.lightning.pytorch.strategies.megatron_strategy][INFO] - Initializing distributed: GLOBAL_RANK: 43, MEMBER: 44/72
+34: [2025-10-07 16:26:29,500][nemo.lightning.pytorch.strategies.megatron_strategy][INFO] - Initializing distributed: GLOBAL_RANK: 34, MEMBER: 35/72
+ 0: :::MLLOG {"namespace": "", "time_ms": 1759854389506, "event_type": "POINT_IN_TIME", "key": "global_batch_size", "value": 9, "metadata": {"file": "/usr/local/lib/python3.12/dist-packages/mlperf_common/callbacks/logging.py", "lineno": 297}}
+ 0: :::MLLOG {"namespace": "", "time_ms": 1759854389529, "event_type": "POINT_IN_TIME", "key": "train_samples", "value": 3901, "metadata": {"file": "/usr/local/lib/python3.12/dist-packages/mlperf_common/callbacks/logging.py", "lineno": 297}}
+ 0: :::MLLOG {"namespace": "", "time_ms": 1759854389530, "event_type": "POINT_IN_TIME", "key": "eval_samples", "value": 173, "metadata": {"file": "/usr/local/lib/python3.12/dist-packages/mlperf_common/callbacks/logging.py", "lineno": 297}}
+ 0: :::MLLOG {"namespace": "", "time_ms": 1759854389530, "event_type": "POINT_IN_TIME", "key": "gradient_accumulation_steps", "value": 1, "metadata": {"file": "/usr/local/lib/python3.12/dist-packages/mlperf_common/callbacks/logging.py", "lineno": 297}}
+ 0: [NeMo I 2025-10-07 16:26:29 nemo_logging:393] Experiments will be logged at /workspace/ft-llm/nemo_experiments/default/2025-10-07_16-26-29
+ 0: :::MLLOG {"namespace": "", "time_ms": 1759854389532, "event_type": "POINT_IN_TIME", "key": "seed", "value": 3249, "metadata": {"file": "/workspace/ft-llm/train.py", "lineno": 563}}
+ 0: [NeMo I 2025-10-07 16:26:29 nemo_logging:393] Rank 0 has data parallel group : [0, 8, 16, 24, 32, 40, 48, 56, 64]
+ 0: [NeMo I 2025-10-07 16:26:29 nemo_logging:393] Rank 0 has combined group of data parallel and context parallel : [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71]
+ 0: [NeMo I 2025-10-07 16:26:29 nemo_logging:393] All data parallel group ranks with context parallel combined: [[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71]]
+ 0: [NeMo I 2025-10-07 16:26:29 nemo_logging:393] Ranks 0 has data parallel rank: 0
+ 0: [NeMo I 2025-10-07 16:26:29 nemo_logging:393] Rank 0 has context parallel group: [0, 1, 2, 3, 4, 5, 6, 7]
+ 0: [NeMo I 2025-10-07 16:26:29 nemo_logging:393] All context parallel group ranks: [[0, 1, 2, 3, 4, 5, 6, 7], [8, 9, 10, 11, 12, 13, 14, 15], [16, 17, 18, 19, 20, 21, 22, 23], [24, 25, 26, 27, 28, 29, 30, 31], [32, 33, 34, 35, 36, 37, 38, 39], [40, 41, 42, 43, 44, 45, 46, 47], [48, 49, 50, 51, 52, 53, 54, 55], [56, 57, 58, 59, 60, 61, 62, 63], [64, 65, 66, 67, 68, 69, 70, 71]]
+ 0: [NeMo I 2025-10-07 16:26:29 nemo_logging:393] Ranks 0 has context parallel rank: 0
+ 0: [NeMo I 2025-10-07 16:26:29 nemo_logging:393] Rank 0 has model parallel group: [0]
+ 0: [NeMo I 2025-10-07 16:26:29 nemo_logging:393] All model parallel group ranks: [[0], [1], [2], [3], [4], [5], [6], [7], [8], [9], [10], [11], [12], [13], [14], [15], [16], [17], [18], [19], [20], [21], [22], [23], [24], [25], [26], [27], [28], [29], [30], [31], [32], [33], [34], [35], [36], [37], [38], [39], [40], [41], [42], [43], [44], [45], [46], [47], [48], [49], [50], [51], [52], [53], [54], [55], [56], [57], [58], [59], [60], [61], [62], [63], [64], [65], [66], [67], [68], [69], [70], [71]]
+ 0: [NeMo I 2025-10-07 16:26:29 nemo_logging:393] Rank 0 has tensor model parallel group: [0]
+ 0: [NeMo I 2025-10-07 16:26:29 nemo_logging:393] All tensor model parallel group ranks: [[0], [1], [2], [3], [4], [5], [6], [7], [8], [9], [10], [11], [12], [13], [14], [15], [16], [17], [18], [19], [20], [21], [22], [23], [24], [25], [26], [27], [28], [29], [30], [31], [32], [33], [34], [35], [36], [37], [38], [39], [40], [41], [42], [43], [44], [45], [46], [47], [48], [49], [50], [51], [52], [53], [54], [55], [56], [57], [58], [59], [60], [61], [62], [63], [64], [65], [66], [67], [68], [69], [70], [71]]
+ 0: [NeMo I 2025-10-07 16:26:29 nemo_logging:393] Rank 0 has tensor model parallel rank: 0
+ 0: [NeMo I 2025-10-07 16:26:29 nemo_logging:393] Rank 0 has pipeline model parallel group: [0]
+ 0: [NeMo I 2025-10-07 16:26:29 nemo_logging:393] Rank 0 has embedding group: [0]
+ 0: [NeMo I 2025-10-07 16:26:29 nemo_logging:393] All pipeline model parallel group ranks: [[0], [1], [2], [3], [4], [5], [6], [7], [8], [9], [10], [11], [12], [13], [14], [15], [16], [17], [18], [19], [20], [21], [22], [23], [24], [25], [26], [27], [28], [29], [30], [31], [32], [33], [34], [35], [36], [37], [38], [39], [40], [41], [42], [43], [44], [45], [46], [47], [48], [49], [50], [51], [52], [53], [54], [55], [56], [57], [58], [59], [60], [61], [62], [63], [64], [65], [66], [67], [68], [69], [70], [71]]
+ 0: [NeMo I 2025-10-07 16:26:29 nemo_logging:393] Rank 0 has pipeline model parallel rank 0
+ 0: [NeMo I 2025-10-07 16:26:29 nemo_logging:393] All embedding group ranks: [[0], [1], [2], [3], [4], [5], [6], [7], [8], [9], [10], [11], [12], [13], [14], [15], [16], [17], [18], [19], [20], [21], [22], [23], [24], [25], [26], [27], [28], [29], [30], [31], [32], [33], [34], [35], [36], [37], [38], [39], [40], [41], [42], [43], [44], [45], [46], [47], [48], [49], [50], [51], [52], [53], [54], [55], [56], [57], [58], [59], [60], [61], [62], [63], [64], [65], [66], [67], [68], [69], [70], [71]]
+ 0: [NeMo I 2025-10-07 16:26:29 nemo_logging:393] Rank 0 has embedding rank: 0
+ 0: [2025-10-07 16:26:29,542][nemo.lightning.pytorch.strategies.megatron_strategy][INFO] - Initializing distributed: GLOBAL_RANK: 0, MEMBER: 1/72
+40: [2025-10-07 16:26:29,575][nemo.lightning.pytorch.strategies.megatron_strategy][INFO] - Initializing distributed: GLOBAL_RANK: 40, MEMBER: 41/72
+ 2: [2025-10-07 16:26:29,757][nemo.lightning.pytorch.strategies.megatron_strategy][INFO] - Initializing distributed: GLOBAL_RANK: 2, MEMBER: 3/72
+10: [2025-10-07 16:26:30,132][nemo.lightning.pytorch.strategies.megatron_strategy][INFO] - Initializing distributed: GLOBAL_RANK: 10, MEMBER: 11/72
+ 0: ----------------------------------------------------------------------------------------------------
+ 0: distributed_backend=nccl
+ 0: All distributed processes registered. Starting with 72 processes
+ 0: ----------------------------------------------------------------------------------------------------
+ 0: 
+ 0: [Gloo] Rank 0 is connected to 71 peer ranks. Expected number of connected peer ranks is : 71
+ 1: [Gloo] Rank 1 is connected to 71 peer ranks. Expected number of connected peer ranks is : 71
+ 2: [Gloo] Rank 2 is connected to 71 peer ranks. Expected number of connected peer ranks is : 71
+ 3: [Gloo] Rank 3 is connected to 71 peer ranks. Expected number of connected peer ranks is : 71
+ 4: [Gloo] Rank 4 is connected to 71 peer ranks. Expected number of connected peer ranks is : 71
+ 5: [Gloo] Rank 5 is connected to 71 peer ranks. Expected number of connected peer ranks is : 71
+ 6: [Gloo] Rank 6 is connected to 71 peer ranks. Expected number of connected peer ranks is : 71
+ 7: [Gloo] Rank 7 is connected to 71 peer ranks. Expected number of connected peer ranks is : 71
+ 8: [Gloo] Rank 8 is connected to 71 peer ranks. Expected number of connected peer ranks is : 71
+13: [Gloo] Rank 13 is connected to 71 peer ranks. Expected number of connected peer ranks is : 71
+ 9: [Gloo] Rank 9 is connected to 71 peer ranks. Expected number of connected peer ranks is : 71
+10: [Gloo] Rank 10 is connected to 71 peer ranks. Expected number of connected peer ranks is : 71
+12: [Gloo] Rank 12 is connected to 71 peer ranks. Expected number of connected peer ranks is : 71
+11: [Gloo] Rank 11 is connected to 71 peer ranks. Expected number of connected peer ranks is : 71
+14: [Gloo] Rank 14 is connected to 71 peer ranks. Expected number of connected peer ranks is : 71
+16: [Gloo] Rank 16 is connected to 71 peer ranks. Expected number of connected peer ranks is : 71
+28: [Gloo] Rank 28 is connected to 71 peer ranks. Expected number of connected peer ranks is : 71
+15: [Gloo] Rank 15 is connected to 71 peer ranks. Expected number of connected peer ranks is : 71
+17: [Gloo] Rank 17 is connected to 71 peer ranks. Expected number of connected peer ranks is : 71
+18: [Gloo] Rank 18 is connected to 71 peer ranks. Expected number of connected peer ranks is : 71
+19: [Gloo] Rank 19 is connected to 71 peer ranks. Expected number of connected peer ranks is : 71
+31: [Gloo] Rank 31 is connected to 71 peer ranks. Expected number of connected peer ranks is : 71
+32: [Gloo] Rank 32 is connected to 71 peer ranks. Expected number of connected peer ranks is : 71
+20: [Gloo] Rank 20 is connected to 71 peer ranks. Expected number of connected peer ranks is : 71
+33: [Gloo] Rank 33 is connected to 71 peer ranks. Expected number of connected peer ranks is : 71
+21: [Gloo] Rank 21 is connected to 71 peer ranks. Expected number of connected peer ranks is : 71
+34: [Gloo] Rank 34 is connected to 71 peer ranks. Expected number of connected peer ranks is : 71
+22: [Gloo] Rank 22 is connected to 71 peer ranks. Expected number of connected peer ranks is : 71
+35: [Gloo] Rank 35 is connected to 71 peer ranks. Expected number of connected peer ranks is : 71
+23: [Gloo] Rank 23 is connected to 71 peer ranks. Expected number of connected peer ranks is : 71
+24: [Gloo] Rank 24 is connected to 71 peer ranks. Expected number of connected peer ranks is : 71
+36: [Gloo] Rank 36 is connected to 71 peer ranks. Expected number of connected peer ranks is : 71
+25: [Gloo] Rank 25 is connected to 71 peer ranks. Expected number of connected peer ranks is : 71
+37: [Gloo] Rank 37 is connected to 71 peer ranks. Expected number of connected peer ranks is : 71
+26: [Gloo] Rank 26 is connected to 71 peer ranks. Expected number of connected peer ranks is : 71
+38: [Gloo] Rank 38 is connected to 71 peer ranks. Expected number of connected peer ranks is : 71
+40: [Gloo] Rank 40 is connected to 71 peer ranks. Expected number of connected peer ranks is : 71
+27: [Gloo] Rank 27 is connected to 71 peer ranks. Expected number of connected peer ranks is : 71
+30: [Gloo] Rank 30 is connected to 71 peer ranks. Expected number of connected peer ranks is : 71
+39: [Gloo] Rank 39 is connected to 71 peer ranks. Expected number of connected peer ranks is : 71
+29: [Gloo] Rank 29 is connected to 71 peer ranks. Expected number of connected peer ranks is : 71
+41: [Gloo] Rank 41 is connected to 71 peer ranks. Expected number of connected peer ranks is : 71
+42: [Gloo] Rank 42 is connected to 71 peer ranks. Expected number of connected peer ranks is : 71
+43: [Gloo] Rank 43 is connected to 71 peer ranks. Expected number of connected peer ranks is : 71
+44: [Gloo] Rank 44 is connected to 71 peer ranks. Expected number of connected peer ranks is : 71
+45: [Gloo] Rank 45 is connected to 71 peer ranks. Expected number of connected peer ranks is : 71
+52: [Gloo] Rank 52 is connected to 71 peer ranks. Expected number of connected peer ranks is : 71
+46: [Gloo] Rank 46 is connected to 71 peer ranks. Expected number of connected peer ranks is : 71
+53: [Gloo] Rank 53 is connected to 71 peer ranks. Expected number of connected peer ranks is : 71
+47: [Gloo] Rank 47 is connected to 71 peer ranks. Expected number of connected peer ranks is : 71
+54: [Gloo] Rank 54 is connected to 71 peer ranks. Expected number of connected peer ranks is : 71
+55: [Gloo] Rank 55 is connected to 71 peer ranks. Expected number of connected peer ranks is : 71
+48: [Gloo] Rank 48 is connected to 71 peer ranks. Expected number of connected peer ranks is : 71
+49: [Gloo] Rank 49 is connected to 71 peer ranks. Expected number of connected peer ranks is : 71
+56: [Gloo] Rank 56 is connected to 71 peer ranks. Expected number of connected peer ranks is : 71
+50: [Gloo] Rank 50 is connected to 71 peer ranks. Expected number of connected peer ranks is : 71
+60: [Gloo] Rank 60 is connected to 71 peer ranks. Expected number of connected peer ranks is : 71
+57: [Gloo] Rank 57 is connected to 71 peer ranks. Expected number of connected peer ranks is : 71
+51: [Gloo] Rank 51 is connected to 71 peer ranks. Expected number of connected peer ranks is : 71
+61: [Gloo] Rank 61 is connected to 71 peer ranks. Expected number of connected peer ranks is : 71
+58: [Gloo] Rank 58 is connected to 71 peer ranks. Expected number of connected peer ranks is : 71
+59: [Gloo] Rank 59 is connected to 71 peer ranks. Expected number of connected peer ranks is : 71
+62: [Gloo] Rank 62 is connected to 71 peer ranks. Expected number of connected peer ranks is : 71
+64: [Gloo] Rank 64 is connected to 71 peer ranks. Expected number of connected peer ranks is : 71
+63: [Gloo] Rank 63 is connected to 71 peer ranks. Expected number of connected peer ranks is : 71
+65: [Gloo] Rank 65 is connected to 71 peer ranks. Expected number of connected peer ranks is : 71
+66: [Gloo] Rank 66 is connected to 71 peer ranks. Expected number of connected peer ranks is : 71
+67: [Gloo] Rank 67 is connected to 71 peer ranks. Expected number of connected peer ranks is : 71
+70: [Gloo] Rank 70 is connected to 71 peer ranks. Expected number of connected peer ranks is : 71
+68: [Gloo] Rank 68 is connected to 71 peer ranks. Expected number of connected peer ranks is : 71
+69: [Gloo] Rank 69 is connected to 71 peer ranks. Expected number of connected peer ranks is : 71
+71: [Gloo] Rank 71 is connected to 71 peer ranks. Expected number of connected peer ranks is : 71
+ 0: [Gloo] Rank 0 is connected to 8 peer ranks. Expected number of connected peer ranks is : 8
+ 8: [Gloo] Rank 1 is connected to 8 peer ranks. Expected number of connected peer ranks is : 8
+ 4: [Gloo] Rank 0 is connected to 8 peer ranks. Expected number of connected peer ranks is : 8
+16: [Gloo] Rank 2 is connected to 8 peer ranks. Expected number of connected peer ranks is : 8
+ 2: [Gloo] Rank 0 is connected to 8 peer ranks. Expected number of connected peer ranks is : 8
+24: [Gloo] Rank 3 is connected to 8 peer ranks. Expected number of connected peer ranks is : 8
+32: [Gloo] Rank 4 is connected to 8 peer ranks. Expected number of connected peer ranks is : 8
+12: [Gloo] Rank 1 is connected to 8 peer ranks. Expected number of connected peer ranks is : 8
+ 1: [Gloo] Rank 0 is connected to 8 peer ranks. Expected number of connected peer ranks is : 8
+64: [Gloo] Rank 8 is connected to 8 peer ranks. Expected number of connected peer ranks is : 8
+48: [Gloo] Rank 6 is connected to 8 peer ranks. Expected number of connected peer ranks is : 8
+ 9: [Gloo] Rank 1 is connected to 8 peer ranks. Expected number of connected peer ranks is : 8
+ 3: [Gloo] Rank 0 is connected to 8 peer ranks. Expected number of connected peer ranks is : 8
+20: [Gloo] Rank 2 is connected to 8 peer ranks. Expected number of connected peer ranks is : 8
+28: [Gloo] Rank 3 is connected to 8 peer ranks. Expected number of connected peer ranks is : 8
+40: [Gloo] Rank 5 is connected to 8 peer ranks. Expected number of connected peer ranks is : 8
+18: [Gloo] Rank 2 is connected to 8 peer ranks. Expected number of connected peer ranks is : 8
+56: [Gloo] Rank 7 is connected to 8 peer ranks. Expected number of connected peer ranks is : 8
+10: [Gloo] Rank 1 is connected to 8 peer ranks. Expected number of connected peer ranks is : 8
+26: [Gloo] Rank 3 is connected to 8 peer ranks. Expected number of connected peer ranks is : 8
+ 5: [Gloo] Rank 0 is connected to 8 peer ranks. Expected number of connected peer ranks is : 8
+17: [Gloo] Rank 2 is connected to 8 peer ranks. Expected number of connected peer ranks is : 8
+11: [Gloo] Rank 1 is connected to 8 peer ranks. Expected number of connected peer ranks is : 8
+25: [Gloo] Rank 3 is connected to 8 peer ranks. Expected number of connected peer ranks is : 8
+57: [Gloo] Rank 7 is connected to 8 peer ranks. Expected number of connected peer ranks is : 8
+65: [Gloo] Rank 8 is connected to 8 peer ranks. Expected number of connected peer ranks is : 8
+33: [Gloo] Rank 4 is connected to 8 peer ranks. Expected number of connected peer ranks is : 8
+19: [Gloo] Rank 2 is connected to 8 peer ranks. Expected number of connected peer ranks is : 8
+13: [Gloo] Rank 1 is connected to 8 peer ranks. Expected number of connected peer ranks is : 8
+36: [Gloo] Rank 4 is connected to 8 peer ranks. Expected number of connected peer ranks is : 8
+27: [Gloo] Rank 3 is connected to 8 peer ranks. Expected number of connected peer ranks is : 8
+42: [Gloo] Rank 5 is connected to 8 peer ranks. Expected number of connected peer ranks is : 8
+ 7: [Gloo] Rank 0 is connected to 8 peer ranks. Expected number of connected peer ranks is : 8
+49: [Gloo] Rank 6 is connected to 8 peer ranks. Expected number of connected peer ranks is : 8
+34: [Gloo] Rank 4 is connected to 8 peer ranks. Expected number of connected peer ranks is : 8
+21: [Gloo] Rank 2 is connected to 8 peer ranks. Expected number of connected peer ranks is : 8
+44: [Gloo] Rank 5 is connected to 8 peer ranks. Expected number of connected peer ranks is : 8
+58: [Gloo] Rank 7 is connected to 8 peer ranks. Expected number of connected peer ranks is : 8
+41: [Gloo] Rank 5 is connected to 8 peer ranks. Expected number of connected peer ranks is : 8
+ 6: [Gloo] Rank 0 is connected to 8 peer ranks. Expected number of connected peer ranks is : 8
+50: [Gloo] Rank 6 is connected to 8 peer ranks. Expected number of connected peer ranks is : 8
+29: [Gloo] Rank 3 is connected to 8 peer ranks. Expected number of connected peer ranks is : 8
+60: [Gloo] Rank 7 is connected to 8 peer ranks. Expected number of connected peer ranks is : 8
+15: [Gloo] Rank 1 is connected to 8 peer ranks. Expected number of connected peer ranks is : 8
+35: [Gloo] Rank 4 is connected to 8 peer ranks. Expected number of connected peer ranks is : 8
+66: [Gloo] Rank 8 is connected to 8 peer ranks. Expected number of connected peer ranks is : 8
+68: [Gloo] Rank 8 is connected to 8 peer ranks. Expected number of connected peer ranks is : 8
+52: [Gloo] Rank 6 is connected to 8 peer ranks. Expected number of connected peer ranks is : 8
+14: [Gloo] Rank 1 is connected to 8 peer ranks. Expected number of connected peer ranks is : 8
+22: [Gloo] Rank 2 is connected to 8 peer ranks. Expected number of connected peer ranks is : 8
+31: [Gloo] Rank 3 is connected to 8 peer ranks. Expected number of connected peer ranks is : 8
+51: [Gloo] Rank 6 is connected to 8 peer ranks. Expected number of connected peer ranks is : 8
+59: [Gloo] Rank 7 is connected to 8 peer ranks. Expected number of connected peer ranks is : 8
+43: [Gloo] Rank 5 is connected to 8 peer ranks. Expected number of connected peer ranks is : 8
+67: [Gloo] Rank 8 is connected to 8 peer ranks. Expected number of connected peer ranks is : 8
+23: [Gloo] Rank 2 is connected to 8 peer ranks. Expected number of connected peer ranks is : 8
+37: [Gloo] Rank 4 is connected to 8 peer ranks. Expected number of connected peer ranks is : 8
+30: [Gloo] Rank 3 is connected to 8 peer ranks. Expected number of connected peer ranks is : 8
+45: [Gloo] Rank 5 is connected to 8 peer ranks. Expected number of connected peer ranks is : 8
+39: [Gloo] Rank 4 is connected to 8 peer ranks. Expected number of connected peer ranks is : 8
+53: [Gloo] Rank 6 is connected to 8 peer ranks. Expected number of connected peer ranks is : 8
+38: [Gloo] Rank 4 is connected to 8 peer ranks. Expected number of connected peer ranks is : 8
+46: [Gloo] Rank 5 is connected to 8 peer ranks. Expected number of connected peer ranks is : 8
+69: [Gloo] Rank 8 is connected to 8 peer ranks. Expected number of connected peer ranks is : 8
+61: [Gloo] Rank 7 is connected to 8 peer ranks. Expected number of connected peer ranks is : 8
+55: [Gloo] Rank 6 is connected to 8 peer ranks. Expected number of connected peer ranks is : 8
+47: [Gloo] Rank 5 is connected to 8 peer ranks. Expected number of connected peer ranks is : 8
+71: [Gloo] Rank 8 is connected to 8 peer ranks. Expected number of connected peer ranks is : 8
+54: [Gloo] Rank 6 is connected to 8 peer ranks. Expected number of connected peer ranks is : 8
+63: [Gloo] Rank 7 is connected to 8 peer ranks. Expected number of connected peer ranks is : 8
+70: [Gloo] Rank 8 is connected to 8 peer ranks. Expected number of connected peer ranks is : 8
+62: [Gloo] Rank 7 is connected to 8 peer ranks. Expected number of connected peer ranks is : 8
+ 1: [Gloo] Rank 1 is connected to 71 peer ranks. Expected number of connected peer ranks is : 71
+ 2: [Gloo] Rank 2 is connected to 71 peer ranks. Expected number of connected peer ranks is : 71
+ 4: [Gloo] Rank 4 is connected to 71 peer ranks. Expected number of connected peer ranks is : 71
+ 3: [Gloo] Rank 3 is connected to 71 peer ranks. Expected number of connected peer ranks is : 71
+ 5: [Gloo] Rank 5 is connected to 71 peer ranks. Expected number of connected peer ranks is : 71
+ 6: [Gloo] Rank 6 is connected to 71 peer ranks. Expected number of connected peer ranks is : 71
+ 7: [Gloo] Rank 7 is connected to 71 peer ranks. Expected number of connected peer ranks is : 71
+ 8: [Gloo] Rank 8 is connected to 71 peer ranks. Expected number of connected peer ranks is : 71
+12: [Gloo] Rank 12 is connected to 71 peer ranks. Expected number of connected peer ranks is : 71
+ 9: [Gloo] Rank 9 is connected to 71 peer ranks. Expected number of connected peer ranks is : 71
+10: [Gloo] Rank 10 is connected to 71 peer ranks. Expected number of connected peer ranks is : 71
+11: [Gloo] Rank 11 is connected to 71 peer ranks. Expected number of connected peer ranks is : 71
+13: [Gloo] Rank 13 is connected to 71 peer ranks. Expected number of connected peer ranks is : 71
+16: [Gloo] Rank 16 is connected to 71 peer ranks. Expected number of connected peer ranks is : 71
+14: [Gloo] Rank 14 is connected to 71 peer ranks. Expected number of connected peer ranks is : 71
+17: [Gloo] Rank 17 is connected to 71 peer ranks. Expected number of connected peer ranks is : 71
+18: [Gloo] Rank 18 is connected to 71 peer ranks. Expected number of connected peer ranks is : 71
+15: [Gloo] Rank 15 is connected to 71 peer ranks. Expected number of connected peer ranks is : 71
+19: [Gloo] Rank 19 is connected to 71 peer ranks. Expected number of connected peer ranks is : 71
+22: [Gloo] Rank 22 is connected to 71 peer ranks. Expected number of connected peer ranks is : 71
+20: [Gloo] Rank 20 is connected to 71 peer ranks. Expected number of connected peer ranks is : 71
+21: [Gloo] Rank 21 is connected to 71 peer ranks. Expected number of connected peer ranks is : 71
+24: [Gloo] Rank 24 is connected to 71 peer ranks. Expected number of connected peer ranks is : 71
+23: [Gloo] Rank 23 is connected to 71 peer ranks. Expected number of connected peer ranks is : 71
+25: [Gloo] Rank 25 is connected to 71 peer ranks. Expected number of connected peer ranks is : 71
+26: [Gloo] Rank 26 is connected to 71 peer ranks. Expected number of connected peer ranks is : 71
+28: [Gloo] Rank 28 is connected to 71 peer ranks. Expected number of connected peer ranks is : 71
+27: [Gloo] Rank 27 is connected to 71 peer ranks. Expected number of connected peer ranks is : 71
+29: [Gloo] Rank 29 is connected to 71 peer ranks. Expected number of connected peer ranks is : 71
+30: [Gloo] Rank 30 is connected to 71 peer ranks. Expected number of connected peer ranks is : 71
+31: [Gloo] Rank 31 is connected to 71 peer ranks. Expected number of connected peer ranks is : 71
+32: [Gloo] Rank 32 is connected to 71 peer ranks. Expected number of connected peer ranks is : 71
+33: [Gloo] Rank 33 is connected to 71 peer ranks. Expected number of connected peer ranks is : 71
+34: [Gloo] Rank 34 is connected to 71 peer ranks. Expected number of connected peer ranks is : 71
+35: [Gloo] Rank 35 is connected to 71 peer ranks. Expected number of connected peer ranks is : 71
+36: [Gloo] Rank 36 is connected to 71 peer ranks. Expected number of connected peer ranks is : 71
+37: [Gloo] Rank 37 is connected to 71 peer ranks. Expected number of connected peer ranks is : 71
+38: [Gloo] Rank 38 is connected to 71 peer ranks. Expected number of connected peer ranks is : 71
+39: [Gloo] Rank 39 is connected to 71 peer ranks. Expected number of connected peer ranks is : 71
+40: [Gloo] Rank 40 is connected to 71 peer ranks. Expected number of connected peer ranks is : 71
+41: [Gloo] Rank 41 is connected to 71 peer ranks. Expected number of connected peer ranks is : 71
+42: [Gloo] Rank 42 is connected to 71 peer ranks. Expected number of connected peer ranks is : 71
+43: [Gloo] Rank 43 is connected to 71 peer ranks. Expected number of connected peer ranks is : 71
+44: [Gloo] Rank 44 is connected to 71 peer ranks. Expected number of connected peer ranks is : 71
+45: [Gloo] Rank 45 is connected to 71 peer ranks. Expected number of connected peer ranks is : 71
+69: [Gloo] Rank 69 is connected to 71 peer ranks. Expected number of connected peer ranks is : 71
+46: [Gloo] Rank 46 is connected to 71 peer ranks. Expected number of connected peer ranks is : 71
+47: [Gloo] Rank 47 is connected to 71 peer ranks. Expected number of connected peer ranks is : 71
+48: [Gloo] Rank 48 is connected to 71 peer ranks. Expected number of connected peer ranks is : 71
+60: [Gloo] Rank 60 is connected to 71 peer ranks. Expected number of connected peer ranks is : 71
+49: [Gloo] Rank 49 is connected to 71 peer ranks. Expected number of connected peer ranks is : 71
+50: [Gloo] Rank 50 is connected to 71 peer ranks. Expected number of connected peer ranks is : 71
+51: [Gloo] Rank 51 is connected to 71 peer ranks. Expected number of connected peer ranks is : 71
+63: [Gloo] Rank 63 is connected to 71 peer ranks. Expected number of connected peer ranks is : 71
+52: [Gloo] Rank 52 is connected to 71 peer ranks. Expected number of connected peer ranks is : 71
+64: [Gloo] Rank 64 is connected to 71 peer ranks. Expected number of connected peer ranks is : 71
+65: [Gloo] Rank 65 is connected to 71 peer ranks. Expected number of connected peer ranks is : 71
+53: [Gloo] Rank 53 is connected to 71 peer ranks. Expected number of connected peer ranks is : 71
+66: [Gloo] Rank 66 is connected to 71 peer ranks. Expected number of connected peer ranks is : 71
+54: [Gloo] Rank 54 is connected to 71 peer ranks. Expected number of connected peer ranks is : 71
+67: [Gloo] Rank 67 is connected to 71 peer ranks. Expected number of connected peer ranks is : 71
+68: [Gloo] Rank 68 is connected to 71 peer ranks. Expected number of connected peer ranks is : 71
+55: [Gloo] Rank 55 is connected to 71 peer ranks. Expected number of connected peer ranks is : 71
+56: [Gloo] Rank 56 is connected to 71 peer ranks. Expected number of connected peer ranks is : 71
+70: [Gloo] Rank 70 is connected to 71 peer ranks. Expected number of connected peer ranks is : 71
+71: [Gloo] Rank 71 is connected to 71 peer ranks. Expected number of connected peer ranks is : 71
+57: [Gloo] Rank 57 is connected to 71 peer ranks. Expected number of connected peer ranks is : 71
+58: [Gloo] Rank 58 is connected to 71 peer ranks. Expected number of connected peer ranks is : 71
+59: [Gloo] Rank 59 is connected to 71 peer ranks. Expected number of connected peer ranks is : 71
+61: [Gloo] Rank 61 is connected to 71 peer ranks. Expected number of connected peer ranks is : 71
+62: [Gloo] Rank 62 is connected to 71 peer ranks. Expected number of connected peer ranks is : 71
+ 0: [Gloo] Rank 0 is connected to 71 peer ranks. Expected number of connected peer ranks is : 71
+ 0: [Gloo] Rank 0 is connected to 71 peer ranks. Expected number of connected peer ranks is : 71
+ 1: [Gloo] Rank 1 is connected to 71 peer ranks. Expected number of connected peer ranks is : 71
+ 2: [Gloo] Rank 2 is connected to 71 peer ranks. Expected number of connected peer ranks is : 71
+ 3: [Gloo] Rank 3 is connected to 71 peer ranks. Expected number of connected peer ranks is : 71
+ 4: [Gloo] Rank 4 is connected to 71 peer ranks. Expected number of connected peer ranks is : 71
+ 5: [Gloo] Rank 5 is connected to 71 peer ranks. Expected number of connected peer ranks is : 71
+ 6: [Gloo] Rank 6 is connected to 71 peer ranks. Expected number of connected peer ranks is : 71
+ 7: [Gloo] Rank 7 is connected to 71 peer ranks. Expected number of connected peer ranks is : 71
+ 8: [Gloo] Rank 8 is connected to 71 peer ranks. Expected number of connected peer ranks is : 71
+ 9: [Gloo] Rank 9 is connected to 71 peer ranks. Expected number of connected peer ranks is : 71
+10: [Gloo] Rank 10 is connected to 71 peer ranks. Expected number of connected peer ranks is : 71
+12: [Gloo] Rank 12 is connected to 71 peer ranks. Expected number of connected peer ranks is : 71
+11: [Gloo] Rank 11 is connected to 71 peer ranks. Expected number of connected peer ranks is : 71
+13: [Gloo] Rank 13 is connected to 71 peer ranks. Expected number of connected peer ranks is : 71
+68: [Gloo] Rank 68 is connected to 71 peer ranks. Expected number of connected peer ranks is : 71
+14: [Gloo] Rank 14 is connected to 71 peer ranks. Expected number of connected peer ranks is : 71
+69: [Gloo] Rank 69 is connected to 71 peer ranks. Expected number of connected peer ranks is : 71
+15: [Gloo] Rank 15 is connected to 71 peer ranks. Expected number of connected peer ranks is : 71
+16: [Gloo] Rank 16 is connected to 71 peer ranks. Expected number of connected peer ranks is : 71
+17: [Gloo] Rank 17 is connected to 71 peer ranks. Expected number of connected peer ranks is : 71
+18: [Gloo] Rank 18 is connected to 71 peer ranks. Expected number of connected peer ranks is : 71
+19: [Gloo] Rank 19 is connected to 71 peer ranks. Expected number of connected peer ranks is : 71
+20: [Gloo] Rank 20 is connected to 71 peer ranks. Expected number of connected peer ranks is : 71
+21: [Gloo] Rank 21 is connected to 71 peer ranks. Expected number of connected peer ranks is : 71
+22: [Gloo] Rank 22 is connected to 71 peer ranks. Expected number of connected peer ranks is : 71
+23: [Gloo] Rank 23 is connected to 71 peer ranks. Expected number of connected peer ranks is : 71
+24: [Gloo] Rank 24 is connected to 71 peer ranks. Expected number of connected peer ranks is : 71
+25: [Gloo] Rank 25 is connected to 71 peer ranks. Expected number of connected peer ranks is : 71
+26: [Gloo] Rank 26 is connected to 71 peer ranks. Expected number of connected peer ranks is : 71
+27: [Gloo] Rank 27 is connected to 71 peer ranks. Expected number of connected peer ranks is : 71
+29: [Gloo] Rank 29 is connected to 71 peer ranks. Expected number of connected peer ranks is : 71
+28: [Gloo] Rank 28 is connected to 71 peer ranks. Expected number of connected peer ranks is : 71
+30: [Gloo] Rank 30 is connected to 71 peer ranks. Expected number of connected peer ranks is : 71
+32: [Gloo] Rank 32 is connected to 71 peer ranks. Expected number of connected peer ranks is : 71
+31: [Gloo] Rank 31 is connected to 71 peer ranks. Expected number of connected peer ranks is : 71
+33: [Gloo] Rank 33 is connected to 71 peer ranks. Expected number of connected peer ranks is : 71
+34: [Gloo] Rank 34 is connected to 71 peer ranks. Expected number of connected peer ranks is : 71
+35: [Gloo] Rank 35 is connected to 71 peer ranks. Expected number of connected peer ranks is : 71
+36: [Gloo] Rank 36 is connected to 71 peer ranks. Expected number of connected peer ranks is : 71
+37: [Gloo] Rank 37 is connected to 71 peer ranks. Expected number of connected peer ranks is : 71
+38: [Gloo] Rank 38 is connected to 71 peer ranks. Expected number of connected peer ranks is : 71
+39: [Gloo] Rank 39 is connected to 71 peer ranks. Expected number of connected peer ranks is : 71
+40: [Gloo] Rank 40 is connected to 71 peer ranks. Expected number of connected peer ranks is : 71
+41: [Gloo] Rank 41 is connected to 71 peer ranks. Expected number of connected peer ranks is : 71
+42: [Gloo] Rank 42 is connected to 71 peer ranks. Expected number of connected peer ranks is : 71
+43: [Gloo] Rank 43 is connected to 71 peer ranks. Expected number of connected peer ranks is : 71
+44: [Gloo] Rank 44 is connected to 71 peer ranks. Expected number of connected peer ranks is : 71
+45: [Gloo] Rank 45 is connected to 71 peer ranks. Expected number of connected peer ranks is : 71
+61: [Gloo] Rank 61 is connected to 71 peer ranks. Expected number of connected peer ranks is : 71
+46: [Gloo] Rank 46 is connected to 71 peer ranks. Expected number of connected peer ranks is : 71
+63: [Gloo] Rank 63 is connected to 71 peer ranks. Expected number of connected peer ranks is : 71
+47: [Gloo] Rank 47 is connected to 71 peer ranks. Expected number of connected peer ranks is : 71
+48: [Gloo] Rank 48 is connected to 71 peer ranks. Expected number of connected peer ranks is : 71
+64: [Gloo] Rank 64 is connected to 71 peer ranks. Expected number of connected peer ranks is : 71
+49: [Gloo] Rank 49 is connected to 71 peer ranks. Expected number of connected peer ranks is : 71
+65: [Gloo] Rank 65 is connected to 71 peer ranks. Expected number of connected peer ranks is : 71
+50: [Gloo] Rank 50 is connected to 71 peer ranks. Expected number of connected peer ranks is : 71
+51: [Gloo] Rank 51 is connected to 71 peer ranks. Expected number of connected peer ranks is : 71
+52: [Gloo] Rank 52 is connected to 71 peer ranks. Expected number of connected peer ranks is : 71
+70: [Gloo] Rank 70 is connected to 71 peer ranks. Expected number of connected peer ranks is : 71
+66: [Gloo] Rank 66 is connected to 71 peer ranks. Expected number of connected peer ranks is : 71
+67: [Gloo] Rank 67 is connected to 71 peer ranks. Expected number of connected peer ranks is : 71
+53: [Gloo] Rank 53 is connected to 71 peer ranks. Expected number of connected peer ranks is : 71
+71: [Gloo] Rank 71 is connected to 71 peer ranks. Expected number of connected peer ranks is : 71
+60: [Gloo] Rank 60 is connected to 71 peer ranks. Expected number of connected peer ranks is : 71
+62: [Gloo] Rank 62 is connected to 71 peer ranks. Expected number of connected peer ranks is : 71
+54: [Gloo] Rank 54 is connected to 71 peer ranks. Expected number of connected peer ranks is : 71
+55: [Gloo] Rank 55 is connected to 71 peer ranks. Expected number of connected peer ranks is : 71
+59: [Gloo] Rank 59 is connected to 71 peer ranks. Expected number of connected peer ranks is : 71
+56: [Gloo] Rank 56 is connected to 71 peer ranks. Expected number of connected peer ranks is : 71
+57: [Gloo] Rank 57 is connected to 71 peer ranks. Expected number of connected peer ranks is : 71
+58: [Gloo] Rank 58 is connected to 71 peer ranks. Expected number of connected peer ranks is : 71
+ 0: [NeMo I 2025-10-07 16:26:38 nemo_logging:393] Setting up ModelTransform for stage: TrainerFn.FITTING
+ 0: [NeMo I 2025-10-07 16:26:38 nemo_logging:393] Found model_transform attribute on pl_module
+ 0: [NeMo I 2025-10-07 16:26:38 nemo_logging:393] Set model_transform to: <function _call_counter.<locals>.wrapper at 0xfff5b70a7600>
+ 0: :::MLLOG {"namespace": "", "time_ms": 1759854398119, "event_type": "POINT_IN_TIME", "key": "tracked_stats", "value": {"before_model_init": 9.09597707499779}, "metadata": {"file": "/usr/local/lib/python3.12/dist-packages/mlperf_common/callbacks/logging.py", "lineno": 163, "step": 0}}
+ 0: [NeMo I 2025-10-07 16:26:38 nemo_logging:393] Padded vocab_size: 32000, original vocab_size: 32000, dummy tokens: 0.
+31: LOCAL_RANK: 3 - CUDA_VISIBLE_DEVICES: [0,1,2,3]
+29: LOCAL_RANK: 1 - CUDA_VISIBLE_DEVICES: [0,1,2,3]
+30: LOCAL_RANK: 2 - CUDA_VISIBLE_DEVICES: [0,1,2,3]
+28: LOCAL_RANK: 0 - CUDA_VISIBLE_DEVICES: [0,1,2,3]
+11: LOCAL_RANK: 3 - CUDA_VISIBLE_DEVICES: [0,1,2,3]
+ 8: LOCAL_RANK: 0 - CUDA_VISIBLE_DEVICES: [0,1,2,3]
+ 1: LOCAL_RANK: 1 - CUDA_VISIBLE_DEVICES: [0,1,2,3]
+20: LOCAL_RANK: 0 - CUDA_VISIBLE_DEVICES: [0,1,2,3]
+ 9: LOCAL_RANK: 1 - CUDA_VISIBLE_DEVICES: [0,1,2,3]
+34: LOCAL_RANK: 2 - CUDA_VISIBLE_DEVICES: [0,1,2,3]
+45: LOCAL_RANK: 1 - CUDA_VISIBLE_DEVICES: [0,1,2,3]
+10: LOCAL_RANK: 2 - CUDA_VISIBLE_DEVICES: [0,1,2,3]
+69: LOCAL_RANK: 1 - CUDA_VISIBLE_DEVICES: [0,1,2,3]
+70: LOCAL_RANK: 2 - CUDA_VISIBLE_DEVICES: [0,1,2,3]
+52: LOCAL_RANK: 0 - CUDA_VISIBLE_DEVICES: [0,1,2,3]
+38: LOCAL_RANK: 2 - CUDA_VISIBLE_DEVICES: [0,1,2,3]
+18: LOCAL_RANK: 2 - CUDA_VISIBLE_DEVICES: [0,1,2,3]
+19: LOCAL_RANK: 3 - CUDA_VISIBLE_DEVICES: [0,1,2,3]
+16: LOCAL_RANK: 0 - CUDA_VISIBLE_DEVICES: [0,1,2,3]
+17: LOCAL_RANK: 1 - CUDA_VISIBLE_DEVICES: [0,1,2,3]
+66: LOCAL_RANK: 2 - CUDA_VISIBLE_DEVICES: [0,1,2,3]
+64: LOCAL_RANK: 0 - CUDA_VISIBLE_DEVICES: [0,1,2,3]
+65: LOCAL_RANK: 1 - CUDA_VISIBLE_DEVICES: [0,1,2,3]
+ 4: LOCAL_RANK: 0 - CUDA_VISIBLE_DEVICES: [0,1,2,3]
+ 5: LOCAL_RANK: 1 - CUDA_VISIBLE_DEVICES: [0,1,2,3]
+ 6: LOCAL_RANK: 2 - CUDA_VISIBLE_DEVICES: [0,1,2,3]
+ 7: LOCAL_RANK: 3 - CUDA_VISIBLE_DEVICES: [0,1,2,3]
+ 3: LOCAL_RANK: 3 - CUDA_VISIBLE_DEVICES: [0,1,2,3]
+ 2: LOCAL_RANK: 2 - CUDA_VISIBLE_DEVICES: [0,1,2,3]
+67: LOCAL_RANK: 3 - CUDA_VISIBLE_DEVICES: [0,1,2,3]
+21: LOCAL_RANK: 1 - CUDA_VISIBLE_DEVICES: [0,1,2,3]
+23: LOCAL_RANK: 3 - CUDA_VISIBLE_DEVICES: [0,1,2,3]
+68: LOCAL_RANK: 0 - CUDA_VISIBLE_DEVICES: [0,1,2,3]
+47: LOCAL_RANK: 3 - CUDA_VISIBLE_DEVICES: [0,1,2,3]
+44: LOCAL_RANK: 0 - CUDA_VISIBLE_DEVICES: [0,1,2,3]
+46: LOCAL_RANK: 2 - CUDA_VISIBLE_DEVICES: [0,1,2,3]
+32: LOCAL_RANK: 0 - CUDA_VISIBLE_DEVICES: [0,1,2,3]
+33: LOCAL_RANK: 1 - CUDA_VISIBLE_DEVICES: [0,1,2,3]
+25: LOCAL_RANK: 1 - CUDA_VISIBLE_DEVICES: [0,1,2,3]
+24: LOCAL_RANK: 0 - CUDA_VISIBLE_DEVICES: [0,1,2,3]
+26: LOCAL_RANK: 2 - CUDA_VISIBLE_DEVICES: [0,1,2,3]
+27: LOCAL_RANK: 3 - CUDA_VISIBLE_DEVICES: [0,1,2,3]
+ 0: :::MLLOG {"namespace": "", "time_ms": 1759854429122, "event_type": "POINT_IN_TIME", "key": "tracked_stats", "value": {"after_model_init": 31.002741017997323}, "metadata": {"file": "/usr/local/lib/python3.12/dist-packages/mlperf_common/callbacks/logging.py", "lineno": 163, "step": 0}}
+ 0: LOCAL_RANK: 0 - CUDA_VISIBLE_DEVICES: [0,1,2,3]
+ 0: [NeMo I 2025-10-07 16:27:09 nemo_logging:393] Copying Trainer's 'max_steps' (800) to LR scheduler's 'max_steps'.
+ 0: [NeMo I 2025-10-07 16:27:09 num_microbatches_calculator:228] setting number of microbatches to constant 1
+ 0: [NeMo I 2025-10-07 16:27:09 nemo_logging:393] Doing selective restore from RestoreConfig(path='/ckpt', load_model_state=True, load_optim_state=False, load_artifacts=False)
+ 0: [NeMo W 2025-10-07 16:27:09 serialization:184] DEPRECATED: Passing 'checkpoint_dir' as a Path object in load_common_state_dict will no longer be supported in a future release. Please pass it as a string instead.
+ 0: [NeMo W 2025-10-07 16:27:09 zarr:80] `zarr` distributed checkpoint backend is deprecated. Please switch to PyTorch Distributed format (`torch_dist`).
+ 0: [NeMo I 2025-10-07 16:27:09 nemo_logging:393] Loaded sharded_state_dict_metadata from checkpoint: None
+ 0: [NeMo W 2025-10-07 16:27:09 mapping:155] ShardedTensor.prepend_axis_num greater than 0 is deprecated. In Megatron-Core this can be prevented by setting sharded_state_dict metadata['singleton_local_shards'] to True.
+53: LOCAL_RANK: 1 - CUDA_VISIBLE_DEVICES: [0,1,2,3]
+55: LOCAL_RANK: 3 - CUDA_VISIBLE_DEVICES: [0,1,2,3]
+54: LOCAL_RANK: 2 - CUDA_VISIBLE_DEVICES: [0,1,2,3]
+39: LOCAL_RANK: 3 - CUDA_VISIBLE_DEVICES: [0,1,2,3]
+36: LOCAL_RANK: 0 - CUDA_VISIBLE_DEVICES: [0,1,2,3]
+37: LOCAL_RANK: 1 - CUDA_VISIBLE_DEVICES: [0,1,2,3]
+35: LOCAL_RANK: 3 - CUDA_VISIBLE_DEVICES: [0,1,2,3]
+22: LOCAL_RANK: 2 - CUDA_VISIBLE_DEVICES: [0,1,2,3]
+ 0: [NeMo W 2025-10-07 16:27:09 zarr:80] `zarr` distributed checkpoint backend is deprecated. Please switch to PyTorch Distributed format (`torch_dist`).
+71: LOCAL_RANK: 3 - CUDA_VISIBLE_DEVICES: [0,1,2,3]
+59: LOCAL_RANK: 3 - CUDA_VISIBLE_DEVICES: [0,1,2,3]
+56: LOCAL_RANK: 0 - CUDA_VISIBLE_DEVICES: [0,1,2,3]
+57: LOCAL_RANK: 1 - CUDA_VISIBLE_DEVICES: [0,1,2,3]
+58: LOCAL_RANK: 2 - CUDA_VISIBLE_DEVICES: [0,1,2,3]
+13: LOCAL_RANK: 1 - CUDA_VISIBLE_DEVICES: [0,1,2,3]
+14: LOCAL_RANK: 2 - CUDA_VISIBLE_DEVICES: [0,1,2,3]
+15: LOCAL_RANK: 3 - CUDA_VISIBLE_DEVICES: [0,1,2,3]
+12: LOCAL_RANK: 0 - CUDA_VISIBLE_DEVICES: [0,1,2,3]
+61: LOCAL_RANK: 1 - CUDA_VISIBLE_DEVICES: [0,1,2,3]
+63: LOCAL_RANK: 3 - CUDA_VISIBLE_DEVICES: [0,1,2,3]
+60: LOCAL_RANK: 0 - CUDA_VISIBLE_DEVICES: [0,1,2,3]
+62: LOCAL_RANK: 2 - CUDA_VISIBLE_DEVICES: [0,1,2,3]
+40: LOCAL_RANK: 0 - CUDA_VISIBLE_DEVICES: [0,1,2,3]
+42: LOCAL_RANK: 2 - CUDA_VISIBLE_DEVICES: [0,1,2,3]
+43: LOCAL_RANK: 3 - CUDA_VISIBLE_DEVICES: [0,1,2,3]
+41: LOCAL_RANK: 1 - CUDA_VISIBLE_DEVICES: [0,1,2,3]
+48: LOCAL_RANK: 0 - CUDA_VISIBLE_DEVICES: [0,1,2,3]
+50: LOCAL_RANK: 2 - CUDA_VISIBLE_DEVICES: [0,1,2,3]
+51: LOCAL_RANK: 3 - CUDA_VISIBLE_DEVICES: [0,1,2,3]
+49: LOCAL_RANK: 1 - CUDA_VISIBLE_DEVICES: [0,1,2,3]
+ 0: Loading distributed checkpoint with TensorStoreLoadShardedStrategy
+ 0: [NeMo I 2025-10-07 16:30:22 nemo_logging:393] Global Checkpoint Load : Rank : 0 : Start time : 1759854429.158s : Time spent in load_checkpoint: 192.853s
+ 0: [NeMo I 2025-10-07 16:30:22 nemo_logging:393] Restoring model weights from RestoreConfig(path='/ckpt', load_model_state=True, load_optim_state=False, load_artifacts=False)
+ 0: [NeMo I 2025-10-07 16:30:24 nemo_logging:393] Finished restoring from RestoreConfig(path='/ckpt', load_model_state=True, load_optim_state=False, load_artifacts=False), cleaning up.
+48: SLURM auto-requeueing enabled. Setting signal handlers.
+12: SLURM auto-requeueing enabled. Setting signal handlers.
+33: SLURM auto-requeueing enabled. Setting signal handlers.
+21: SLURM auto-requeueing enabled. Setting signal handlers.
+ 1: SLURM auto-requeueing enabled. Setting signal handlers.
+16: SLURM auto-requeueing enabled. Setting signal handlers.
+50: SLURM auto-requeueing enabled. Setting signal handlers.
+60: SLURM auto-requeueing enabled. Setting signal handlers.
+35: SLURM auto-requeueing enabled. Setting signal handlers.
+ 4: SLURM auto-requeueing enabled. Setting signal handlers.
+45: SLURM auto-requeueing enabled. Setting signal handlers.
+56: SLURM auto-requeueing enabled. Setting signal handlers.
+52: SLURM auto-requeueing enabled. Setting signal handlers.
+14: SLURM auto-requeueing enabled. Setting signal handlers.
+22: SLURM auto-requeueing enabled. Setting signal handlers.
+28: SLURM auto-requeueing enabled. Setting signal handlers.
+49: SLURM auto-requeueing enabled. Setting signal handlers.
+68: SLURM auto-requeueing enabled. Setting signal handlers.
+37: SLURM auto-requeueing enabled. Setting signal handlers.
+25: SLURM auto-requeueing enabled. Setting signal handlers.
+61: SLURM auto-requeueing enabled. Setting signal handlers.
+55: SLURM auto-requeueing enabled. Setting signal handlers.
+17: SLURM auto-requeueing enabled. Setting signal handlers.
+47: SLURM auto-requeueing enabled. Setting signal handlers.
+ 5: SLURM auto-requeueing enabled. Setting signal handlers.
+69: SLURM auto-requeueing enabled. Setting signal handlers.
+32: SLURM auto-requeueing enabled. Setting signal handlers.
+23: SLURM auto-requeueing enabled. Setting signal handlers.
+51: SLURM auto-requeueing enabled. Setting signal handlers.
+58: SLURM auto-requeueing enabled. Setting signal handlers.
+13: SLURM auto-requeueing enabled. Setting signal handlers.
+ 2: SLURM auto-requeueing enabled. Setting signal handlers.
+31: SLURM auto-requeueing enabled. Setting signal handlers.
+27: SLURM auto-requeueing enabled. Setting signal handlers.
+38: SLURM auto-requeueing enabled. Setting signal handlers.
+53: SLURM auto-requeueing enabled. Setting signal handlers.
+19: SLURM auto-requeueing enabled. Setting signal handlers.
+63: SLURM auto-requeueing enabled. Setting signal handlers.
+20: SLURM auto-requeueing enabled. Setting signal handlers.
+70: SLURM auto-requeueing enabled. Setting signal handlers.
+34: SLURM auto-requeueing enabled. Setting signal handlers.
+15: SLURM auto-requeueing enabled. Setting signal handlers.
+57: SLURM auto-requeueing enabled. Setting signal handlers.
+41: SLURM auto-requeueing enabled. Setting signal handlers.
+24: SLURM auto-requeueing enabled. Setting signal handlers.
+ 6: SLURM auto-requeueing enabled. Setting signal handlers.
+39: SLURM auto-requeueing enabled. Setting signal handlers.
+29: SLURM auto-requeueing enabled. Setting signal handlers.
+ 3: SLURM auto-requeueing enabled. Setting signal handlers.
+62: SLURM auto-requeueing enabled. Setting signal handlers.
+54: SLURM auto-requeueing enabled. Setting signal handlers.
+18: SLURM auto-requeueing enabled. Setting signal handlers.
+71: SLURM auto-requeueing enabled. Setting signal handlers.
+59: SLURM auto-requeueing enabled. Setting signal handlers.
+42: SLURM auto-requeueing enabled. Setting signal handlers.
+26: SLURM auto-requeueing enabled. Setting signal handlers.
+ 7: SLURM auto-requeueing enabled. Setting signal handlers.
+ 9: SLURM auto-requeueing enabled. Setting signal handlers.
+36: SLURM auto-requeueing enabled. Setting signal handlers.
+30: SLURM auto-requeueing enabled. Setting signal handlers.
+ 0: SLURM auto-requeueing enabled. Setting signal handlers.
+43: SLURM auto-requeueing enabled. Setting signal handlers.
+11: SLURM auto-requeueing enabled. Setting signal handlers.
+64: SLURM auto-requeueing enabled. Setting signal handlers.
+44: SLURM auto-requeueing enabled. Setting signal handlers.
+66: SLURM auto-requeueing enabled. Setting signal handlers.
+46: SLURM auto-requeueing enabled. Setting signal handlers.
+67: SLURM auto-requeueing enabled. Setting signal handlers.
+65: SLURM auto-requeueing enabled. Setting signal handlers.
+ 8: SLURM auto-requeueing enabled. Setting signal handlers.
+40: SLURM auto-requeueing enabled. Setting signal handlers.
+10: SLURM auto-requeueing enabled. Setting signal handlers.
+ 0: Optimized config:
+ 0: skip_evals: 3
+ 0: load_ckpt: true
+ 0: data_root: /data
+ 0: ckpt_root: /ckpt
+ 0: trainer:
+ 0:   devices: 4
+ 0:   num_nodes: 18
+ 0:   max_steps: 800
+ 0:   val_check_interval: 172
+ 0:   limit_val_batches: 1.0
+ 0: model:
+ 0:   num_layers: 80
+ 0:   seed: 3249
+ 0:   tensor_model_parallel_size: 1
+ 0:   pipeline_model_parallel_size: 1
+ 0:   context_parallel_size: 8
+ 0:   eval_cp: null
+ 0:   global_batch_size: 9
+ 0:   micro_batch_size: 1
+ 0:   val_micro_batch_size: 1
+ 0:   val_global_batch_size: 9
+ 0:   max_position_embeddings: 8192
+ 0:   encoder_seq_length: 8192
+ 0:   sequence_parallel: 0
+ 0:   ub_tp_comm_overlap: false
+ 0:   first_last_layers_bf16: false
+ 0:   num_layers_at_start_in_bf16: 0
+ 0:   num_layers_at_end_in_bf16: 0
+ 0:   fp4: false
+ 0:   fp4_recipe: nvfp4
+ 0:   fp4_param: false
+ 0:   healing_iter: 0
+ 0:   healing_precision: FP8_DS
+ 0:   pre_quantized_model: false
+ 0:   fp8: true
+ 0:   fp8_param_gather: 0
+ 0:   fp8_recipe: delayed
+ 0:   fp8_hybrid: true
+ 0:   fp8_amax_history_len: 4
+ 0:   fp8_amax_compute_algo: max
+ 0:   reduce_amax: true
+ 0:   fp8_e4m3: false
+ 0:   fp8_interval: 1
+ 0:   fp8_margin: 0
+ 0:   fp8_dot_product_attention: 1
+ 0:   cp_comm_type: a2a
+ 0:   activation_func_fp8_input_store: 0
+ 0:   external_cuda_graph: false
+ 0:   enable_cuda_graph: 1
+ 0:   cuda_graph_scope: full_iteration
+ 0:   use_te_rng_tracker: true
+ 0:   enable_cg_fp8_weight_caching: 0
+ 0:   cpu_offloading: false
+ 0:   cpu_offloading_num_layers: 20
+ 0:   cpu_offloading_double_buffering: false
+ 0:   cpu_offloading_activations: true
+ 0:   cpu_offloading_weights: false
+ 0:   dropout_recompute: false
+ 0:   recompute_granularity: null
+ 0:   recompute_method: null
+ 0:   recompute_num_layers: null
+ 0:   distribute_saved_activations: false
+ 0:   recompute_modules: null
+ 0:   use_transformer_engine_op_fuser: 1
+ 0:   fused_single_qkv_rope: 1
+ 0:   fsdp: null
+ 0:   use_sharp: false
+ 0:   memory_profile:
+ 0:     enabled: false
+ 0:     start_step: 1
+ 0:     end_step: 4
+ 0:     rank: 0
+ 0:     output_path: /results/
+ 0:   custom:
+ 0:     warmup: true
+ 0:     warmup_healing: false
+ 0:     warmup_train_steps: 5
+ 0:     warmup_validation_steps: 5
+ 0:     reset_fp8_stats_after_warmup: 1
+ 0: optim:
+ 0:   lr: 0.0005
+ 0:   use_distributed_optimizer: true
+ 0:   overlap_param_gather_with_optimizer_step: false
+ 0:   sched:
+ 0:     warmup_steps: 0
+ 0: ddp:
+ 0:   overlap_grad_reduce: false
+ 0:   overlap_param_gather: false
+ 0:   fp8_param_gather: 0
+ 0:   average_in_collective: false
+ 0:   nccl_ub: false
+ 0: dataloader:
+ 0:   num_workers: 2
+ 0: 
+ 0: 
+ 0: MCore config:
+ 0: Llama2Config70B(tensor_model_parallel_size=1,
+ 0:                 pipeline_model_parallel_comm_backend=None,
+ 0:                 pipeline_model_parallel_size=1,
+ 0:                 virtual_pipeline_model_parallel_size=None,
+ 0:                 sequence_parallel=0,
+ 0:                 context_parallel_size=8,
+ 0:                 hierarchical_context_parallel_sizes=None,
+ 0:                 expert_model_parallel_size=1,
+ 0:                 expert_tensor_parallel_size=1,
+ 0:                 moe_extended_tp=False,
+ 0:                 perform_initialization=True,
+ 0:                 use_cpu_initialization=False,
+ 0:                 fp16=False,
+ 0:                 bf16=True,
+ 0:                 params_dtype=torch.bfloat16,
+ 0:                 timers=<megatron.core.timers.Timers object at 0xfff77dd437d0>,
+ 0:                 finalize_model_grads_func=None,
+ 0:                 grad_scale_func=None,
+ 0:                 no_sync_func=None,
+ 0:                 grad_sync_func=None,
+ 0:                 param_sync_func=None,
+ 0:                 deterministic_mode=False,
+ 0:                 enable_autocast=False,
+ 0:                 autocast_dtype=torch.bfloat16,
+ 0:                 num_microbatches_with_partial_activation_checkpoints=None,
+ 0:                 gradient_accumulation_fusion=False,
+ 0:                 async_tensor_model_parallel_allreduce=False,
+ 0:                 use_te_rng_tracker=True,
+ 0:                 tp_comm_overlap=False,
+ 0:                 tp_comm_bulk_wgrad=True,
+ 0:                 tp_comm_bulk_dgrad=True,
+ 0:                 tp_comm_overlap_ag=True,
+ 0:                 tp_comm_overlap_rs=True,
+ 0:                 tp_comm_overlap_rs_dgrad=False,
+ 0:                 tp_comm_split_ag=True,
+ 0:                 tp_comm_atomic_ag=False,
+ 0:                 tp_comm_split_rs=True,
+ 0:                 tp_comm_atomic_rs=False,
+ 0:                 cross_entropy_loss_fusion=False,
+ 0:                 cross_entropy_fusion_impl='native',
+ 0:                 tp_comm_overlap_disable_qkv=True,
+ 0:                 tp_comm_overlap_disable_fc1=False,
+ 0:                 tp_comm_bootstrap_backend='nccl',
+ 0:                 overlap_moe_expert_parallel_comm=False,
+ 0:                 delay_wgrad_compute=False,
+ 0:                 pipeline_dtype=torch.bfloat16,
+ 0:                 variable_seq_lengths=False,
+ 0:                 overlap_p2p_comm=False,
+ 0:                 batch_p2p_comm=True,
+ 0:                 batch_p2p_sync=True,
+ 0:                 use_ring_exchange_p2p=False,
+ 0:                 deallocate_pipeline_outputs=True,
+ 0:                 defer_embedding_wgrad_compute=False,
+ 0:                 wgrad_deferral_limit=0,
+ 0:                 overlap_p2p_comm_warmup_flush=False,
+ 0:                 microbatch_group_size_per_vp_stage=1,
+ 0:                 cpu_offloading=False,
+ 0:                 cpu_offloading_num_layers=20,
+ 0:                 _cpu_offloading_context=None,
+ 0:                 cpu_offloading_activations=True,
+ 0:                 cpu_offloading_weights=False,
+ 0:                 cpu_offloading_double_buffering=False,
+ 0:                 barrier_with_L1_time=True,
+ 0:                 num_layers=80,
+ 0:                 mtp_num_layers=None,
+ 0:                 mtp_loss_scaling_factor=None,
+ 0:                 num_layers_in_first_pipeline_stage=None,
+ 0:                 num_layers_in_last_pipeline_stage=None,
+ 0:                 pipeline_model_parallel_layout=None,
+ 0:                 account_for_embedding_in_pipeline_split=False,
+ 0:                 account_for_loss_in_pipeline_split=False,
+ 0:                 hidden_size=8192,
+ 0:                 num_attention_heads=64,
+ 0:                 attention_backend=<AttnBackend.auto: 5>,
+ 0:                 softmax_scale=None,
+ 0:                 softmax_type='vanilla',
+ 0:                 num_query_groups=8,
+ 0:                 ffn_hidden_size=28672,
+ 0:                 kv_channels=128,
+ 0:                 hidden_dropout=0.0,
+ 0:                 attention_dropout=0.0,
+ 0:                 fp32_residual_connection=False,
+ 0:                 apply_residual_connection_post_layernorm=False,
+ 0:                 layernorm_epsilon=1e-05,
+ 0:                 layernorm_zero_centered_gamma=False,
+ 0:                 add_bias_linear=False,
+ 0:                 add_qkv_bias=False,
+ 0:                 gated_linear_unit=True,
+ 0:                 activation_func=<function silu at 0xfffabddc8ea0>,
+ 0:                 activation_func_fp8_input_store=0,
+ 0:                 glu_linear_offset=0.0,
+ 0:                 activation_func_clamp_value=None,
+ 0:                 num_moe_experts=None,
+ 0:                 rotary_interleaved=False,
+ 0:                 window_size=None,
+ 0:                 window_attn_skip_freq=None,
+ 0:                 normalization='RMSNorm',
+ 0:                 qk_layernorm=False,
+ 0:                 test_mode=False,
+ 0:                 calculate_per_token_loss=False,
+ 0:                 multi_latent_attention=False,
+ 0:                 no_rope_freq=None,
+ 0:                 moe_deepep_num_sms=20,
+ 0:                 init_method=functools.partial(<function normal_ at 0xfffabdc55800>, mean=0.0, std=0.02),
+ 0:                 output_layer_init_method=functools.partial(<function normal_ at 0xfffabdc55800>, mean=0.0, std=0.0015811388300841897),
+ 0:                 init_method_std=0.02,
+ 0:                 embedding_init_method=functools.partial(<function normal_ at 0xfffabdc55800>, mean=0.0, std=0.02),
+ 0:                 embedding_init_method_std=0.02,
+ 0:                 init_model_with_meta_device=False,
+ 0:                 apply_query_key_layer_scaling=False,
+ 0:                 attention_softmax_in_fp32=False,
+ 0:                 disable_bf16_reduced_precision_matmul=False,
+ 0:                 bias_activation_fusion=True,
+ 0:                 masked_softmax_fusion=True,
+ 0:                 persist_layer_norm=True,
+ 0:                 memory_efficient_layer_norm=False,
+ 0:                 bias_dropout_fusion=True,
+ 0:                 apply_rope_fusion=True,
+ 0:                 use_fused_weighted_squared_relu=False,
+ 0:                 fused_single_qkv_rope=1,
+ 0:                 recompute_granularity=None,
+ 0:                 recompute_method=None,
+ 0:                 recompute_num_layers=None,
+ 0:                 distribute_saved_activations=False,
+ 0:                 recompute_modules=['core_attn'],
+ 0:                 fp8='hybrid',
+ 0:                 fp8_recipe='delayed',
+ 0:                 fp8_param=False,
+ 0:                 fp8_margin=0,
+ 0:                 fp8_interval=1,
+ 0:                 fp8_amax_history_len=4,
+ 0:                 fp8_amax_compute_algo='max',
+ 0:                 fp8_wgrad=True,
+ 0:                 fp8_dot_product_attention=1,
+ 0:                 fp8_multi_head_attention=False,
+ 0:                 tp_only_amax_red=False,
+ 0:                 first_last_layers_bf16=False,
+ 0:                 num_layers_at_start_in_bf16=0,
+ 0:                 num_layers_at_end_in_bf16=0,
+ 0:                 use_kitchen=False,
+ 0:                 fp4=None,
+ 0:                 fp4_recipe='nvfp4',
+ 0:                 fp4_param=False,
+ 0:                 moe_shared_expert_intermediate_size=None,
+ 0:                 moe_shared_expert_overlap=False,
+ 0:                 moe_layer_freq=1,
+ 0:                 moe_ffn_hidden_size=None,
+ 0:                 moe_router_load_balancing_type='aux_loss',
+ 0:                 moe_router_topk=2,
+ 0:                 moe_router_topk_limited_devices=None,
+ 0:                 moe_router_padding_for_fp8=False,
+ 0:                 moe_router_num_groups=None,
+ 0:                 moe_router_group_topk=None,
+ 0:                 moe_router_pre_softmax=False,
+ 0:                 moe_router_topk_scaling_factor=None,
+ 0:                 moe_router_score_function='softmax',
+ 0:                 moe_router_dtype=None,
+ 0:                 moe_router_enable_expert_bias=False,
+ 0:                 moe_router_bias_update_rate=0.001,
+ 0:                 moe_router_force_load_balancing=False,
+ 0:                 moe_grouped_gemm=False,
+ 0:                 moe_use_legacy_grouped_gemm=False,
+ 0:                 moe_aux_loss_coeff=0.0,
+ 0:                 moe_z_loss_coeff=None,
+ 0:                 moe_input_jitter_eps=None,
+ 0:                 moe_token_dropping=False,
+ 0:                 moe_token_dispatcher_type='allgather',
+ 0:                 moe_enable_deepep=False,
+ 0:                 moe_per_layer_logging=False,
+ 0:                 moe_expert_capacity_factor=None,
+ 0:                 moe_pad_expert_input_to_capacity=False,
+ 0:                 moe_token_drop_policy='probs',
+ 0:                 moe_layer_recompute=False,
+ 0:                 moe_permute_fusion=False,
+ 0:                 moe_router_fusion=False,
+ 0:                 moe_apply_probs_on_input=False,
+ 0:                 cp_comm_type='a2a',
+ 0:                 enable_cuda_graph=1,
+ 0:                 cuda_graph_use_single_mempool=False,
+ 0:                 cuda_graph_retain_backward_graph=False,
+ 0:                 cuda_graph_warmup_steps=3,
+ 0:                 external_cuda_graph=False,
+ 0:                 cuda_graph_scope='full_iteration',
+ 0:                 clone_scatter_output_in_embedding=True,
+ 0:                 disable_parameter_transpose_cache=False,
+ 0:                 config_logger_dir='',
+ 0:                 flash_decode=False,
+ 0:                 use_te_activation_func=False,
+ 0:                 inference_rng_tracker=False,
+ 0:                 inference_sampling_seed=42,
+ 0:                 symmetric_ar_type=None,
+ 0:                 mrope_section=None,
+ 0:                 is_hybrid_model=False,
+ 0:                 mamba_state_dim=128,
+ 0:                 mamba_head_dim=64,
+ 0:                 mamba_num_groups=8,
+ 0:                 mamba_num_heads=None,
+ 0:                 use_mamba_mem_eff_path=True,
+ 0:                 mlp_chunks_for_prefill=1,
+ 0:                 heterogeneous_block_specs=False,
+ 0:                 hetereogenous_dist_checkpoint=False,
+ 0:                 quant_recipe=None,
+ 0:                 transformer_impl='transformer_engine',
+ 0:                 fp16_lm_cross_entropy=False,
+ 0:                 parallel_output=True,
+ 0:                 share_embeddings_and_output_weights=False,
+ 0:                 make_vocab_size_divisible_by=128,
+ 0:                 position_embedding_type='rope',
+ 0:                 rotary_base=10000,
+ 0:                 rotary_percent=1.0,
+ 0:                 seq_len_interpolation_factor=None,
+ 0:                 seq_length=8192,
+ 0:                 scatter_embedding_sequence_parallel=True,
+ 0:                 use_transformer_engine_full_layer_spec=False,
+ 0:                 transformer_layer_spec=<function default_layer_spec at 0xfff77f22c680>,
+ 0:                 forward_step_fn=<function gpt_forward_step at 0xfff77f222e80>,
+ 0:                 data_step_fn=<function gpt_data_step at 0xfff77f222b60>,
+ 0:                 generation_config=None,
+ 0:                 vocab_size=None,
+ 0:                 tp_comm_overlap_cfg=None,
+ 0:                 use_transformer_engine_op_fuser=1)
+ 0: [NeMo I 2025-10-07 16:30:42 nemo_logging:393] Adding lora to: module.decoder.layers.0.self_attention.linear_proj
+ 0: [NeMo I 2025-10-07 16:30:42 nemo_logging:393] Adding lora to: module.decoder.layers.0.self_attention.linear_qkv
+ 0: [NeMo I 2025-10-07 16:30:42 nemo_logging:393] Adding lora to: module.decoder.layers.1.self_attention.linear_proj
+ 0: [NeMo I 2025-10-07 16:30:42 nemo_logging:393] Adding lora to: module.decoder.layers.1.self_attention.linear_qkv
+ 0: [NeMo I 2025-10-07 16:30:42 nemo_logging:393] Adding lora to: module.decoder.layers.2.self_attention.linear_proj
+ 0: [NeMo I 2025-10-07 16:30:42 nemo_logging:393] Adding lora to: module.decoder.layers.2.self_attention.linear_qkv
+ 0: [NeMo I 2025-10-07 16:30:42 nemo_logging:393] Adding lora to: module.decoder.layers.3.self_attention.linear_proj
+ 0: [NeMo I 2025-10-07 16:30:42 nemo_logging:393] Adding lora to: module.decoder.layers.3.self_attention.linear_qkv
+ 0: [NeMo I 2025-10-07 16:30:42 nemo_logging:393] Adding lora to: module.decoder.layers.4.self_attention.linear_proj
+ 0: [NeMo I 2025-10-07 16:30:42 nemo_logging:393] Adding lora to: module.decoder.layers.4.self_attention.linear_qkv
+ 0: [NeMo I 2025-10-07 16:30:42 nemo_logging:393] Adding lora to: module.decoder.layers.5.self_attention.linear_proj
+ 0: [NeMo I 2025-10-07 16:30:42 nemo_logging:393] Adding lora to: module.decoder.layers.5.self_attention.linear_qkv
+ 0: [NeMo I 2025-10-07 16:30:42 nemo_logging:393] Adding lora to: module.decoder.layers.6.self_attention.linear_proj
+ 0: [NeMo I 2025-10-07 16:30:42 nemo_logging:393] Adding lora to: module.decoder.layers.6.self_attention.linear_qkv
+ 0: [NeMo I 2025-10-07 16:30:42 nemo_logging:393] Adding lora to: module.decoder.layers.7.self_attention.linear_proj
+ 0: [NeMo I 2025-10-07 16:30:42 nemo_logging:393] Adding lora to: module.decoder.layers.7.self_attention.linear_qkv
+ 0: [NeMo I 2025-10-07 16:30:42 nemo_logging:393] Adding lora to: module.decoder.layers.8.self_attention.linear_proj
+ 0: [NeMo I 2025-10-07 16:30:42 nemo_logging:393] Adding lora to: module.decoder.layers.8.self_attention.linear_qkv
+ 0: [NeMo I 2025-10-07 16:30:42 nemo_logging:393] Adding lora to: module.decoder.layers.9.self_attention.linear_proj
+ 0: [NeMo I 2025-10-07 16:30:42 nemo_logging:393] Adding lora to: module.decoder.layers.9.self_attention.linear_qkv
+ 0: [NeMo I 2025-10-07 16:30:42 nemo_logging:393] Adding lora to: module.decoder.layers.10.self_attention.linear_proj
+ 0: [NeMo I 2025-10-07 16:30:42 nemo_logging:393] Adding lora to: module.decoder.layers.10.self_attention.linear_qkv
+ 0: [NeMo I 2025-10-07 16:30:42 nemo_logging:393] Adding lora to: module.decoder.layers.11.self_attention.linear_proj
+ 0: [NeMo I 2025-10-07 16:30:42 nemo_logging:393] Adding lora to: module.decoder.layers.11.self_attention.linear_qkv
+ 0: [NeMo I 2025-10-07 16:30:42 nemo_logging:393] Adding lora to: module.decoder.layers.12.self_attention.linear_proj
+ 0: [NeMo I 2025-10-07 16:30:42 nemo_logging:393] Adding lora to: module.decoder.layers.12.self_attention.linear_qkv
+ 0: [NeMo I 2025-10-07 16:30:42 nemo_logging:393] Adding lora to: module.decoder.layers.13.self_attention.linear_proj
+ 0: [NeMo I 2025-10-07 16:30:42 nemo_logging:393] Adding lora to: module.decoder.layers.13.self_attention.linear_qkv
+ 0: [NeMo I 2025-10-07 16:30:42 nemo_logging:393] Adding lora to: module.decoder.layers.14.self_attention.linear_proj
+ 0: [NeMo I 2025-10-07 16:30:42 nemo_logging:393] Adding lora to: module.decoder.layers.14.self_attention.linear_qkv
+ 0: [NeMo I 2025-10-07 16:30:42 nemo_logging:393] Adding lora to: module.decoder.layers.15.self_attention.linear_proj
+ 0: [NeMo I 2025-10-07 16:30:42 nemo_logging:393] Adding lora to: module.decoder.layers.15.self_attention.linear_qkv
+ 0: [NeMo I 2025-10-07 16:30:42 nemo_logging:393] Adding lora to: module.decoder.layers.16.self_attention.linear_proj
+ 0: [NeMo I 2025-10-07 16:30:42 nemo_logging:393] Adding lora to: module.decoder.layers.16.self_attention.linear_qkv
+ 0: [NeMo I 2025-10-07 16:30:42 nemo_logging:393] Adding lora to: module.decoder.layers.17.self_attention.linear_proj
+ 0: [NeMo I 2025-10-07 16:30:42 nemo_logging:393] Adding lora to: module.decoder.layers.17.self_attention.linear_qkv
+ 0: [NeMo I 2025-10-07 16:30:42 nemo_logging:393] Adding lora to: module.decoder.layers.18.self_attention.linear_proj
+ 0: [NeMo I 2025-10-07 16:30:42 nemo_logging:393] Adding lora to: module.decoder.layers.18.self_attention.linear_qkv
+ 0: [NeMo I 2025-10-07 16:30:42 nemo_logging:393] Adding lora to: module.decoder.layers.19.self_attention.linear_proj
+ 0: [NeMo I 2025-10-07 16:30:42 nemo_logging:393] Adding lora to: module.decoder.layers.19.self_attention.linear_qkv
+ 0: [NeMo I 2025-10-07 16:30:42 nemo_logging:393] Adding lora to: module.decoder.layers.20.self_attention.linear_proj
+ 0: [NeMo I 2025-10-07 16:30:42 nemo_logging:393] Adding lora to: module.decoder.layers.20.self_attention.linear_qkv
+ 0: [NeMo I 2025-10-07 16:30:42 nemo_logging:393] Adding lora to: module.decoder.layers.21.self_attention.linear_proj
+ 0: [NeMo I 2025-10-07 16:30:42 nemo_logging:393] Adding lora to: module.decoder.layers.21.self_attention.linear_qkv
+ 0: [NeMo I 2025-10-07 16:30:42 nemo_logging:393] Adding lora to: module.decoder.layers.22.self_attention.linear_proj
+ 0: [NeMo I 2025-10-07 16:30:42 nemo_logging:393] Adding lora to: module.decoder.layers.22.self_attention.linear_qkv
+ 0: [NeMo I 2025-10-07 16:30:42 nemo_logging:393] Adding lora to: module.decoder.layers.23.self_attention.linear_proj
+ 0: [NeMo I 2025-10-07 16:30:42 nemo_logging:393] Adding lora to: module.decoder.layers.23.self_attention.linear_qkv
+ 0: [NeMo I 2025-10-07 16:30:42 nemo_logging:393] Adding lora to: module.decoder.layers.24.self_attention.linear_proj
+ 0: [NeMo I 2025-10-07 16:30:42 nemo_logging:393] Adding lora to: module.decoder.layers.24.self_attention.linear_qkv
+ 0: [NeMo I 2025-10-07 16:30:42 nemo_logging:393] Adding lora to: module.decoder.layers.25.self_attention.linear_proj
+ 0: [NeMo I 2025-10-07 16:30:42 nemo_logging:393] Adding lora to: module.decoder.layers.25.self_attention.linear_qkv
+ 0: [NeMo I 2025-10-07 16:30:42 nemo_logging:393] Adding lora to: module.decoder.layers.26.self_attention.linear_proj
+ 0: [NeMo I 2025-10-07 16:30:42 nemo_logging:393] Adding lora to: module.decoder.layers.26.self_attention.linear_qkv
+ 0: [NeMo I 2025-10-07 16:30:42 nemo_logging:393] Adding lora to: module.decoder.layers.27.self_attention.linear_proj
+ 0: [NeMo I 2025-10-07 16:30:42 nemo_logging:393] Adding lora to: module.decoder.layers.27.self_attention.linear_qkv
+ 0: [NeMo I 2025-10-07 16:30:42 nemo_logging:393] Adding lora to: module.decoder.layers.28.self_attention.linear_proj
+ 0: [NeMo I 2025-10-07 16:30:42 nemo_logging:393] Adding lora to: module.decoder.layers.28.self_attention.linear_qkv
+ 0: [NeMo I 2025-10-07 16:30:42 nemo_logging:393] Adding lora to: module.decoder.layers.29.self_attention.linear_proj
+ 0: [NeMo I 2025-10-07 16:30:42 nemo_logging:393] Adding lora to: module.decoder.layers.29.self_attention.linear_qkv
+ 0: [NeMo I 2025-10-07 16:30:42 nemo_logging:393] Adding lora to: module.decoder.layers.30.self_attention.linear_proj
+ 0: [NeMo I 2025-10-07 16:30:42 nemo_logging:393] Adding lora to: module.decoder.layers.30.self_attention.linear_qkv
+ 0: [NeMo I 2025-10-07 16:30:42 nemo_logging:393] Adding lora to: module.decoder.layers.31.self_attention.linear_proj
+ 0: [NeMo I 2025-10-07 16:30:42 nemo_logging:393] Adding lora to: module.decoder.layers.31.self_attention.linear_qkv
+ 0: [NeMo I 2025-10-07 16:30:42 nemo_logging:393] Adding lora to: module.decoder.layers.32.self_attention.linear_proj
+ 0: [NeMo I 2025-10-07 16:30:42 nemo_logging:393] Adding lora to: module.decoder.layers.32.self_attention.linear_qkv
+ 0: [NeMo I 2025-10-07 16:30:42 nemo_logging:393] Adding lora to: module.decoder.layers.33.self_attention.linear_proj
+ 0: [NeMo I 2025-10-07 16:30:42 nemo_logging:393] Adding lora to: module.decoder.layers.33.self_attention.linear_qkv
+ 0: [NeMo I 2025-10-07 16:30:42 nemo_logging:393] Adding lora to: module.decoder.layers.34.self_attention.linear_proj
+ 0: [NeMo I 2025-10-07 16:30:42 nemo_logging:393] Adding lora to: module.decoder.layers.34.self_attention.linear_qkv
+ 0: [NeMo I 2025-10-07 16:30:42 nemo_logging:393] Adding lora to: module.decoder.layers.35.self_attention.linear_proj
+ 0: [NeMo I 2025-10-07 16:30:42 nemo_logging:393] Adding lora to: module.decoder.layers.35.self_attention.linear_qkv
+ 0: [NeMo I 2025-10-07 16:30:42 nemo_logging:393] Adding lora to: module.decoder.layers.36.self_attention.linear_proj
+ 0: [NeMo I 2025-10-07 16:30:42 nemo_logging:393] Adding lora to: module.decoder.layers.36.self_attention.linear_qkv
+ 0: [NeMo I 2025-10-07 16:30:42 nemo_logging:393] Adding lora to: module.decoder.layers.37.self_attention.linear_proj
+ 0: [NeMo I 2025-10-07 16:30:42 nemo_logging:393] Adding lora to: module.decoder.layers.37.self_attention.linear_qkv
+ 0: [NeMo I 2025-10-07 16:30:42 nemo_logging:393] Adding lora to: module.decoder.layers.38.self_attention.linear_proj
+ 0: [NeMo I 2025-10-07 16:30:42 nemo_logging:393] Adding lora to: module.decoder.layers.38.self_attention.linear_qkv
+ 0: [NeMo I 2025-10-07 16:30:42 nemo_logging:393] Adding lora to: module.decoder.layers.39.self_attention.linear_proj
+ 0: [NeMo I 2025-10-07 16:30:42 nemo_logging:393] Adding lora to: module.decoder.layers.39.self_attention.linear_qkv
+ 0: [NeMo I 2025-10-07 16:30:42 nemo_logging:393] Adding lora to: module.decoder.layers.40.self_attention.linear_proj
+ 0: [NeMo I 2025-10-07 16:30:42 nemo_logging:393] Adding lora to: module.decoder.layers.40.self_attention.linear_qkv
+ 0: [NeMo I 2025-10-07 16:30:42 nemo_logging:393] Adding lora to: module.decoder.layers.41.self_attention.linear_proj
+ 0: [NeMo I 2025-10-07 16:30:42 nemo_logging:393] Adding lora to: module.decoder.layers.41.self_attention.linear_qkv
+ 0: [NeMo I 2025-10-07 16:30:42 nemo_logging:393] Adding lora to: module.decoder.layers.42.self_attention.linear_proj
+ 0: [NeMo I 2025-10-07 16:30:42 nemo_logging:393] Adding lora to: module.decoder.layers.42.self_attention.linear_qkv
+ 0: [NeMo I 2025-10-07 16:30:42 nemo_logging:393] Adding lora to: module.decoder.layers.43.self_attention.linear_proj
+ 0: [NeMo I 2025-10-07 16:30:42 nemo_logging:393] Adding lora to: module.decoder.layers.43.self_attention.linear_qkv
+ 0: [NeMo I 2025-10-07 16:30:42 nemo_logging:393] Adding lora to: module.decoder.layers.44.self_attention.linear_proj
+ 0: [NeMo I 2025-10-07 16:30:42 nemo_logging:393] Adding lora to: module.decoder.layers.44.self_attention.linear_qkv
+ 0: [NeMo I 2025-10-07 16:30:42 nemo_logging:393] Adding lora to: module.decoder.layers.45.self_attention.linear_proj
+ 0: [NeMo I 2025-10-07 16:30:42 nemo_logging:393] Adding lora to: module.decoder.layers.45.self_attention.linear_qkv
+ 0: [NeMo I 2025-10-07 16:30:42 nemo_logging:393] Adding lora to: module.decoder.layers.46.self_attention.linear_proj
+ 0: [NeMo I 2025-10-07 16:30:42 nemo_logging:393] Adding lora to: module.decoder.layers.46.self_attention.linear_qkv
+ 0: [NeMo I 2025-10-07 16:30:42 nemo_logging:393] Adding lora to: module.decoder.layers.47.self_attention.linear_proj
+ 0: [NeMo I 2025-10-07 16:30:42 nemo_logging:393] Adding lora to: module.decoder.layers.47.self_attention.linear_qkv
+ 0: [NeMo I 2025-10-07 16:30:42 nemo_logging:393] Adding lora to: module.decoder.layers.48.self_attention.linear_proj
+ 0: [NeMo I 2025-10-07 16:30:42 nemo_logging:393] Adding lora to: module.decoder.layers.48.self_attention.linear_qkv
+ 0: [NeMo I 2025-10-07 16:30:42 nemo_logging:393] Adding lora to: module.decoder.layers.49.self_attention.linear_proj
+ 0: [NeMo I 2025-10-07 16:30:42 nemo_logging:393] Adding lora to: module.decoder.layers.49.self_attention.linear_qkv
+ 0: [NeMo I 2025-10-07 16:30:42 nemo_logging:393] Adding lora to: module.decoder.layers.50.self_attention.linear_proj
+ 0: [NeMo I 2025-10-07 16:30:42 nemo_logging:393] Adding lora to: module.decoder.layers.50.self_attention.linear_qkv
+ 0: [NeMo I 2025-10-07 16:30:42 nemo_logging:393] Adding lora to: module.decoder.layers.51.self_attention.linear_proj
+ 0: [NeMo I 2025-10-07 16:30:42 nemo_logging:393] Adding lora to: module.decoder.layers.51.self_attention.linear_qkv
+ 0: [NeMo I 2025-10-07 16:30:42 nemo_logging:393] Adding lora to: module.decoder.layers.52.self_attention.linear_proj
+ 0: [NeMo I 2025-10-07 16:30:42 nemo_logging:393] Adding lora to: module.decoder.layers.52.self_attention.linear_qkv
+ 0: [NeMo I 2025-10-07 16:30:42 nemo_logging:393] Adding lora to: module.decoder.layers.53.self_attention.linear_proj
+ 0: [NeMo I 2025-10-07 16:30:42 nemo_logging:393] Adding lora to: module.decoder.layers.53.self_attention.linear_qkv
+ 0: [NeMo I 2025-10-07 16:30:42 nemo_logging:393] Adding lora to: module.decoder.layers.54.self_attention.linear_proj
+ 0: [NeMo I 2025-10-07 16:30:42 nemo_logging:393] Adding lora to: module.decoder.layers.54.self_attention.linear_qkv
+ 0: [NeMo I 2025-10-07 16:30:42 nemo_logging:393] Adding lora to: module.decoder.layers.55.self_attention.linear_proj
+ 0: [NeMo I 2025-10-07 16:30:42 nemo_logging:393] Adding lora to: module.decoder.layers.55.self_attention.linear_qkv
+ 0: [NeMo I 2025-10-07 16:30:42 nemo_logging:393] Adding lora to: module.decoder.layers.56.self_attention.linear_proj
+ 0: [NeMo I 2025-10-07 16:30:42 nemo_logging:393] Adding lora to: module.decoder.layers.56.self_attention.linear_qkv
+ 0: [NeMo I 2025-10-07 16:30:42 nemo_logging:393] Adding lora to: module.decoder.layers.57.self_attention.linear_proj
+ 0: [NeMo I 2025-10-07 16:30:42 nemo_logging:393] Adding lora to: module.decoder.layers.57.self_attention.linear_qkv
+ 0: [NeMo I 2025-10-07 16:30:42 nemo_logging:393] Adding lora to: module.decoder.layers.58.self_attention.linear_proj
+ 0: [NeMo I 2025-10-07 16:30:42 nemo_logging:393] Adding lora to: module.decoder.layers.58.self_attention.linear_qkv
+ 0: [NeMo I 2025-10-07 16:30:42 nemo_logging:393] Adding lora to: module.decoder.layers.59.self_attention.linear_proj
+ 0: [NeMo I 2025-10-07 16:30:42 nemo_logging:393] Adding lora to: module.decoder.layers.59.self_attention.linear_qkv
+ 0: [NeMo I 2025-10-07 16:30:42 nemo_logging:393] Adding lora to: module.decoder.layers.60.self_attention.linear_proj
+ 0: [NeMo I 2025-10-07 16:30:42 nemo_logging:393] Adding lora to: module.decoder.layers.60.self_attention.linear_qkv
+ 0: [NeMo I 2025-10-07 16:30:42 nemo_logging:393] Adding lora to: module.decoder.layers.61.self_attention.linear_proj
+ 0: [NeMo I 2025-10-07 16:30:42 nemo_logging:393] Adding lora to: module.decoder.layers.61.self_attention.linear_qkv
+ 0: [NeMo I 2025-10-07 16:30:42 nemo_logging:393] Adding lora to: module.decoder.layers.62.self_attention.linear_proj
+ 0: [NeMo I 2025-10-07 16:30:42 nemo_logging:393] Adding lora to: module.decoder.layers.62.self_attention.linear_qkv
+ 0: [NeMo I 2025-10-07 16:30:42 nemo_logging:393] Adding lora to: module.decoder.layers.63.self_attention.linear_proj
+ 0: [NeMo I 2025-10-07 16:30:42 nemo_logging:393] Adding lora to: module.decoder.layers.63.self_attention.linear_qkv
+ 0: [NeMo I 2025-10-07 16:30:42 nemo_logging:393] Adding lora to: module.decoder.layers.64.self_attention.linear_proj
+ 0: [NeMo I 2025-10-07 16:30:42 nemo_logging:393] Adding lora to: module.decoder.layers.64.self_attention.linear_qkv
+ 0: [NeMo I 2025-10-07 16:30:42 nemo_logging:393] Adding lora to: module.decoder.layers.65.self_attention.linear_proj
+ 0: [NeMo I 2025-10-07 16:30:42 nemo_logging:393] Adding lora to: module.decoder.layers.65.self_attention.linear_qkv
+ 0: [NeMo I 2025-10-07 16:30:42 nemo_logging:393] Adding lora to: module.decoder.layers.66.self_attention.linear_proj
+ 0: [NeMo I 2025-10-07 16:30:42 nemo_logging:393] Adding lora to: module.decoder.layers.66.self_attention.linear_qkv
+ 0: [NeMo I 2025-10-07 16:30:42 nemo_logging:393] Adding lora to: module.decoder.layers.67.self_attention.linear_proj
+ 0: [NeMo I 2025-10-07 16:30:42 nemo_logging:393] Adding lora to: module.decoder.layers.67.self_attention.linear_qkv
+ 0: [NeMo I 2025-10-07 16:30:42 nemo_logging:393] Adding lora to: module.decoder.layers.68.self_attention.linear_proj
+ 0: [NeMo I 2025-10-07 16:30:42 nemo_logging:393] Adding lora to: module.decoder.layers.68.self_attention.linear_qkv
+ 0: [NeMo I 2025-10-07 16:30:42 nemo_logging:393] Adding lora to: module.decoder.layers.69.self_attention.linear_proj
+ 0: [NeMo I 2025-10-07 16:30:42 nemo_logging:393] Adding lora to: module.decoder.layers.69.self_attention.linear_qkv
+ 0: [NeMo I 2025-10-07 16:30:42 nemo_logging:393] Adding lora to: module.decoder.layers.70.self_attention.linear_proj
+ 0: [NeMo I 2025-10-07 16:30:42 nemo_logging:393] Adding lora to: module.decoder.layers.70.self_attention.linear_qkv
+ 0: [NeMo I 2025-10-07 16:30:42 nemo_logging:393] Adding lora to: module.decoder.layers.71.self_attention.linear_proj
+ 0: [NeMo I 2025-10-07 16:30:42 nemo_logging:393] Adding lora to: module.decoder.layers.71.self_attention.linear_qkv
+ 0: [NeMo I 2025-10-07 16:30:42 nemo_logging:393] Adding lora to: module.decoder.layers.72.self_attention.linear_proj
+ 0: [NeMo I 2025-10-07 16:30:42 nemo_logging:393] Adding lora to: module.decoder.layers.72.self_attention.linear_qkv
+ 0: [NeMo I 2025-10-07 16:30:42 nemo_logging:393] Adding lora to: module.decoder.layers.73.self_attention.linear_proj
+ 0: [NeMo I 2025-10-07 16:30:42 nemo_logging:393] Adding lora to: module.decoder.layers.73.self_attention.linear_qkv
+ 0: [NeMo I 2025-10-07 16:30:42 nemo_logging:393] Adding lora to: module.decoder.layers.74.self_attention.linear_proj
+ 0: [NeMo I 2025-10-07 16:30:42 nemo_logging:393] Adding lora to: module.decoder.layers.74.self_attention.linear_qkv
+ 0: [NeMo I 2025-10-07 16:30:42 nemo_logging:393] Adding lora to: module.decoder.layers.75.self_attention.linear_proj
+ 0: [NeMo I 2025-10-07 16:30:42 nemo_logging:393] Adding lora to: module.decoder.layers.75.self_attention.linear_qkv
+ 0: [NeMo I 2025-10-07 16:30:42 nemo_logging:393] Adding lora to: module.decoder.layers.76.self_attention.linear_proj
+ 0: [NeMo I 2025-10-07 16:30:42 nemo_logging:393] Adding lora to: module.decoder.layers.76.self_attention.linear_qkv
+ 0: [NeMo I 2025-10-07 16:30:42 nemo_logging:393] Adding lora to: module.decoder.layers.77.self_attention.linear_proj
+ 0: [NeMo I 2025-10-07 16:30:42 nemo_logging:393] Adding lora to: module.decoder.layers.77.self_attention.linear_qkv
+ 0: [NeMo I 2025-10-07 16:30:42 nemo_logging:393] Adding lora to: module.decoder.layers.78.self_attention.linear_proj
+ 0: [NeMo I 2025-10-07 16:30:42 nemo_logging:393] Adding lora to: module.decoder.layers.78.self_attention.linear_qkv
+ 0: [NeMo I 2025-10-07 16:30:42 nemo_logging:393] Adding lora to: module.decoder.layers.79.self_attention.linear_proj
+ 0: [NeMo I 2025-10-07 16:30:42 nemo_logging:393] Adding lora to: module.decoder.layers.79.self_attention.linear_qkv
+ 0: [NeMo I 2025-10-07 16:30:42 nemo_logging:393] After applying model_transform:
+ 0:     
+ 0:       | Name   | Type     | Params | Mode 
+ 0:     --------------------------------------------
+ 0:     0 | module | GPTModel | 69.0 B | train
+ 0:     --------------------------------------------
+ 0:     44.6 M    Trainable params
+ 0:     69.0 B    Non-trainable params
+ 0:     69.0 B    Total params
+ 0:     276,084.851Total estimated model params size (MB)
+ 0:     2569      Modules in train mode
+ 0:     0         Modules in eval mode
+ 0: [NeMo I 2025-10-07 16:30:42 nemo_logging:393] Initializing model parallel
+ 0: [NeMo I 2025-10-07 16:30:42 nemo_logging:393]  > number of parameters on (tensor, pipeline) model parallel rank (0 ,0): 69021212672
+ 0: [NeMo I 2025-10-07 16:30:42 nemo_logging:393]  > number of trainable parameters: 44564480 (0.06% of total)
+ 0: [NeMo I 2025-10-07 16:30:42 utils:662] Setting up DistributedDataParallel with config DistributedDataParallelConfig(grad_reduce_in_fp32=False, overlap_grad_reduce=False, overlap_param_gather=False, align_param_gather=False, use_distributed_optimizer=True, num_distributed_optimizer_instances=1, check_for_nan_in_grad=False, check_for_large_grads=False, bucket_size=None, pad_buckets_for_high_nccl_busbw=False, average_in_collective=False, fp8_param_gather=0, reuse_grad_buf_for_mxfp8_param_ag=False, use_megatron_fsdp=False, use_custom_fsdp=False, data_parallel_sharding_strategy='no_shard', gradient_reduce_div_fusion=True, suggested_communication_unit_size=None, preserve_fp32_weights=True, keep_fp8_transpose_cache=False, nccl_ub=False, fsdp_double_buffer=False, outer_dp_sharding_strategy='no_shard', disable_symmetric_registration=False, delay_wgrad_compute=False)
+ 0: [NeMo I 2025-10-07 16:30:42 utils:695] Number of buckets for gradient all-reduce / reduce-scatter: 1
+ 0:     Params for bucket 1 (44564480 elements, 44565120 padded size):
+ 0:     	module.decoder.layers.51.self_attention.linear_proj.adapter.linear_in.weight
+ 0:     	module.decoder.layers.24.self_attention.linear_qkv.adapter.linear_in.weight
+ 0:     	module.decoder.layers.12.self_attention.linear_qkv.adapter.linear_out.weight
+ 0:     	module.decoder.layers.74.self_attention.linear_qkv.adapter.linear_out.weight
+ 0:     	module.decoder.layers.53.self_attention.linear_qkv.adapter.linear_in.weight
+ 0:     	module.decoder.layers.31.self_attention.linear_proj.adapter.linear_in.weight
+ 0:     	module.decoder.layers.19.self_attention.linear_proj.adapter.linear_out.weight
+ 0:     	module.decoder.layers.62.self_attention.linear_proj.adapter.linear_out.weight
+ 0:     	module.decoder.layers.37.self_attention.linear_qkv.adapter.linear_in.weight
+ 0:     	module.decoder.layers.7.self_attention.linear_proj.adapter.linear_out.weight
+ 0:     	module.decoder.layers.68.self_attention.linear_proj.adapter.linear_in.weight
+ 0:     	module.decoder.layers.50.self_attention.linear_qkv.adapter.linear_in.weight
+ 0:     	module.decoder.layers.25.self_attention.linear_qkv.adapter.linear_out.weight
+ 0:     	module.decoder.layers.12.self_attention.linear_proj.adapter.linear_in.weight
+ 0:     	module.decoder.layers.74.self_attention.linear_qkv.adapter.linear_in.weight
+ 0:     	module.decoder.layers.68.self_attention.linear_proj.adapter.linear_out.weight
+ 0:     	module.decoder.layers.55.self_attention.linear_proj.adapter.linear_out.weight
+ 0:     	module.decoder.layers.32.self_attention.linear_proj.adapter.linear_out.weight
+ 0:     	module.decoder.layers.0.self_attention.linear_qkv.adapter.linear_out.weight
+ 0:     	module.decoder.layers.18.self_attention.linear_qkv.adapter.linear_in.weight
+ 0:     	module.decoder.layers.62.self_attention.linear_proj.adapter.linear_in.weight
+ 0:     	module.decoder.layers.38.self_attention.linear_qkv.adapter.linear_out.weight
+ 0:     	module.decoder.layers.6.self_attention.linear_qkv.adapter.linear_in.weight
+ 0:     	module.decoder.layers.68.self_attention.linear_qkv.adapter.linear_out.weight
+ 0:     	module.decoder.layers.25.self_attention.linear_proj.adapter.linear_in.weight
+ 0:     	module.decoder.layers.13.self_attention.linear_proj.adapter.linear_out.weight
+ 0:     	module.decoder.layers.75.self_attention.linear_proj.adapter.linear_out.weight
+ 0:     	module.decoder.layers.55.self_attention.linear_qkv.adapter.linear_out.weight
+ 0:     	module.decoder.layers.31.self_attention.linear_qkv.adapter.linear_in.weight
+ 0:     	module.decoder.layers.1.self_attention.linear_proj.adapter.linear_out.weight
+ 0:     	module.decoder.layers.19.self_attention.linear_qkv.adapter.linear_out.weight
+ 0:     	module.decoder.layers.62.self_attention.linear_qkv.adapter.linear_out.weight
+ 0:     	module.decoder.layers.38.self_attention.linear_proj.adapter.linear_in.weight
+ 0:     	module.decoder.layers.7.self_attention.linear_qkv.adapter.linear_out.weight
+ 0:     	module.decoder.layers.68.self_attention.linear_qkv.adapter.linear_in.weight
+ 0:     	module.decoder.layers.52.self_attention.linear_proj.adapter.linear_out.weight
+ 0:     	module.decoder.layers.43.self_attention.linear_qkv.adapter.linear_out.weight
+ 0:     	module.decoder.layers.26.self_attention.linear_proj.adapter.linear_out.weight
+ 0:     	module.decoder.layers.12.self_attention.linear_qkv.adapter.linear_in.weight
+ 0:     	module.decoder.layers.75.self_attention.linear_proj.adapter.linear_in.weight
+ 0:     	module.decoder.layers.55.self_attention.linear_proj.adapter.linear_in.weight
+ 0:     	module.decoder.layers.32.self_attention.linear_qkv.adapter.linear_out.weight
+ 0:     	module.decoder.layers.0.self_attention.linear_qkv.adapter.linear_in.weight
+ 0:     	module.decoder.layers.19.self_attention.linear_proj.adapter.linear_in.weight
+ 0:     	module.decoder.layers.7.self_attention.linear_proj.adapter.linear_in.weight
+ 0:     	module.decoder.layers.62.self_attention.linear_qkv.adapter.linear_in.weight
+ 0:     	module.decoder.layers.39.self_attention.linear_qkv.adapter.linear_out.weight
+ 0:     	module.decoder.layers.69.self_attention.linear_proj.adapter.linear_out.weight
+ 0:     	module.decoder.layers.53.self_attention.linear_qkv.adapter.linear_out.weight
+ 0:     	module.decoder.layers.52.self_attention.linear_proj.adapter.linear_in.weight
+ 0:     	module.decoder.layers.25.self_attention.linear_qkv.adapter.linear_in.weight
+ 0:     	module.decoder.layers.13.self_attention.linear_qkv.adapter.linear_out.weight
+ 0:     	module.decoder.layers.75.self_attention.linear_qkv.adapter.linear_out.weight
+ 0:     	module.decoder.layers.56.self_attention.linear_proj.adapter.linear_out.weight
+ 0:     	module.decoder.layers.32.self_attention.linear_proj.adapter.linear_in.weight
+ 0:     	module.decoder.layers.1.self_attention.linear_qkv.adapter.linear_out.weight
+ 0:     	module.decoder.layers.20.self_attention.linear_proj.adapter.linear_out.weight
+ 0:     	module.decoder.layers.63.self_attention.linear_proj.adapter.linear_out.weight
+ 0:     	module.decoder.layers.38.self_attention.linear_qkv.adapter.linear_in.weight
+ 0:     	module.decoder.layers.8.self_attention.linear_proj.adapter.linear_out.weight
+ 0:     	module.decoder.layers.69.self_attention.linear_proj.adapter.linear_in.weight
+ 0:     	module.decoder.layers.51.self_attention.linear_qkv.adapter.linear_in.weight
+ 0:     	module.decoder.layers.44.self_attention.linear_proj.adapter.linear_out.weight
+ 0:     	module.decoder.layers.26.self_attention.linear_qkv.adapter.linear_out.weight
+ 0:     	module.decoder.layers.13.self_attention.linear_proj.adapter.linear_in.weight
+ 0:     	module.decoder.layers.75.self_attention.linear_qkv.adapter.linear_in.weight
+ 0:     	module.decoder.layers.55.self_attention.linear_qkv.adapter.linear_in.weight
+ 0:     	module.decoder.layers.33.self_attention.linear_proj.adapter.linear_out.weight
+ 0:     	module.decoder.layers.1.self_attention.linear_proj.adapter.linear_in.weight
+ 0:     	module.decoder.layers.46.self_attention.linear_qkv.adapter.linear_out.weight
+ 0:     	module.decoder.layers.19.self_attention.linear_qkv.adapter.linear_in.weight
+ 0:     	module.decoder.layers.63.self_attention.linear_proj.adapter.linear_in.weight
+ 0:     	module.decoder.layers.39.self_attention.linear_proj.adapter.linear_in.weight
+ 0:     	module.decoder.layers.7.self_attention.linear_qkv.adapter.linear_in.weight
+ 0:     	module.decoder.layers.69.self_attention.linear_qkv.adapter.linear_out.weight
+ 0:     	module.decoder.layers.59.self_attention.linear_proj.adapter.linear_in.weight
+ 0:     	module.decoder.layers.44.self_attention.linear_proj.adapter.linear_in.weight
+ 0:     	module.decoder.layers.26.self_attention.linear_proj.adapter.linear_in.weight
+ 0:     	module.decoder.layers.14.self_attention.linear_proj.adapter.linear_out.weight
+ 0:     	module.decoder.layers.76.self_attention.linear_proj.adapter.linear_out.weight
+ 0:     	module.decoder.layers.56.self_attention.linear_qkv.adapter.linear_out.weight
+ 0:     	module.decoder.layers.32.self_attention.linear_qkv.adapter.linear_in.weight
+ 0:     	module.decoder.layers.2.self_attention.linear_proj.adapter.linear_out.weight
+ 0:     	module.decoder.layers.20.self_attention.linear_qkv.adapter.linear_out.weight
+ 0:     	module.decoder.layers.63.self_attention.linear_qkv.adapter.linear_out.weight
+ 0:     	module.decoder.layers.40.self_attention.linear_proj.adapter.linear_out.weight
+ 0:     	module.decoder.layers.8.self_attention.linear_qkv.adapter.linear_out.weight
+ 0:     	module.decoder.layers.69.self_attention.linear_qkv.adapter.linear_in.weight
+ 0:     	module.decoder.layers.51.self_attention.linear_qkv.adapter.linear_out.weight
+ 0:     	module.decoder.layers.27.self_attention.linear_proj.adapter.linear_out.weight
+ 0:     	module.decoder.layers.13.self_attention.linear_qkv.adapter.linear_in.weight
+ 0:     	module.decoder.layers.76.self_attention.linear_proj.adapter.linear_in.weight
+ 0:     	module.decoder.layers.56.self_attention.linear_proj.adapter.linear_in.weight
+ 0:     	module.decoder.layers.33.self_attention.linear_qkv.adapter.linear_out.weight
+ 0:     	module.decoder.layers.1.self_attention.linear_qkv.adapter.linear_in.weight
+ 0:     	module.decoder.layers.20.self_attention.linear_proj.adapter.linear_in.weight
+ 0:     	module.decoder.layers.63.self_attention.linear_qkv.adapter.linear_in.weight
+ 0:     	module.decoder.layers.39.self_attention.linear_qkv.adapter.linear_in.weight
+ 0:     	module.decoder.layers.8.self_attention.linear_proj.adapter.linear_in.weight
+ 0:     	module.decoder.layers.70.self_attention.linear_proj.adapter.linear_out.weight
+ 0:     	module.decoder.layers.26.self_attention.linear_qkv.adapter.linear_in.weight
+ 0:     	module.decoder.layers.14.self_attention.linear_qkv.adapter.linear_out.weight
+ 0:     	module.decoder.layers.76.self_attention.linear_qkv.adapter.linear_out.weight
+ 0:     	module.decoder.layers.57.self_attention.linear_proj.adapter.linear_out.weight
+ 0:     	module.decoder.layers.33.self_attention.linear_proj.adapter.linear_in.weight
+ 0:     	module.decoder.layers.2.self_attention.linear_qkv.adapter.linear_out.weight
+ 0:     	module.decoder.layers.21.self_attention.linear_proj.adapter.linear_out.weight
+ 0:     	module.decoder.layers.64.self_attention.linear_proj.adapter.linear_out.weight
+ 0:     	module.decoder.layers.40.self_attention.linear_qkv.adapter.linear_out.weight
+ 0:     	module.decoder.layers.9.self_attention.linear_proj.adapter.linear_out.weight
+ 0:     	module.decoder.layers.70.self_attention.linear_proj.adapter.linear_in.weight
+ 0:     	module.decoder.layers.44.self_attention.linear_qkv.adapter.linear_out.weight
+ 0:     	module.decoder.layers.27.self_attention.linear_qkv.adapter.linear_out.weight
+ 0:     	module.decoder.layers.14.self_attention.linear_proj.adapter.linear_in.weight
+ 0:     	module.decoder.layers.76.self_attention.linear_qkv.adapter.linear_in.weight
+ 0:     	module.decoder.layers.56.self_attention.linear_qkv.adapter.linear_in.weight
+ 0:     	module.decoder.layers.34.self_attention.linear_proj.adapter.linear_out.weight
+ 0:     	module.decoder.layers.2.self_attention.linear_proj.adapter.linear_in.weight
+ 0:     	module.decoder.layers.20.self_attention.linear_qkv.adapter.linear_in.weight
+ 0:     	module.decoder.layers.64.self_attention.linear_proj.adapter.linear_in.weight
+ 0:     	module.decoder.layers.40.self_attention.linear_proj.adapter.linear_in.weight
+ 0:     	module.decoder.layers.8.self_attention.linear_qkv.adapter.linear_in.weight
+ 0:     	module.decoder.layers.70.self_attention.linear_qkv.adapter.linear_out.weight
+ 0:     	module.decoder.layers.27.self_attention.linear_proj.adapter.linear_in.weight
+ 0:     	module.decoder.layers.15.self_attention.linear_proj.adapter.linear_out.weight
+ 0:     	module.decoder.layers.3.self_attention.linear_proj.adapter.linear_out.weight
+ 0:     	module.decoder.layers.77.self_attention.linear_proj.adapter.linear_out.weight
+ 0:     	module.decoder.layers.57.self_attention.linear_qkv.adapter.linear_out.weight
+ 0:     	module.decoder.layers.33.self_attention.linear_qkv.adapter.linear_in.weight
+ 0:     	module.decoder.layers.47.self_attention.linear_qkv.adapter.linear_out.weight
+ 0:     	module.decoder.layers.21.self_attention.linear_qkv.adapter.linear_out.weight
+ 0:     	module.decoder.layers.64.self_attention.linear_qkv.adapter.linear_out.weight
+ 0:     	module.decoder.layers.41.self_attention.linear_proj.adapter.linear_out.weight
+ 0:     	module.decoder.layers.9.self_attention.linear_qkv.adapter.linear_out.weight
+ 0:     	module.decoder.layers.70.self_attention.linear_qkv.adapter.linear_in.weight
+ 0:     	module.decoder.layers.52.self_attention.linear_qkv.adapter.linear_in.weight
+ 0:     	module.decoder.layers.28.self_attention.linear_proj.adapter.linear_out.weight
+ 0:     	module.decoder.layers.14.self_attention.linear_qkv.adapter.linear_in.weight
+ 0:     	module.decoder.layers.77.self_attention.linear_proj.adapter.linear_in.weight
+ 0:     	module.decoder.layers.57.self_attention.linear_proj.adapter.linear_in.weight
+ 0:     	module.decoder.layers.34.self_attention.linear_qkv.adapter.linear_out.weight
+ 0:     	module.decoder.layers.2.self_attention.linear_qkv.adapter.linear_in.weight
+ 0:     	module.decoder.layers.47.self_attention.linear_proj.adapter.linear_out.weight
+ 0:     	module.decoder.layers.21.self_attention.linear_proj.adapter.linear_in.weight
+ 0:     	module.decoder.layers.64.self_attention.linear_qkv.adapter.linear_in.weight
+ 0:     	module.decoder.layers.40.self_attention.linear_qkv.adapter.linear_in.weight
+ 0:     	module.decoder.layers.9.self_attention.linear_proj.adapter.linear_in.weight
+ 0:     	module.decoder.layers.71.self_attention.linear_proj.adapter.linear_out.weight
+ 0:     	module.decoder.layers.59.self_attention.linear_proj.adapter.linear_out.weight
+ 0:     	module.decoder.layers.46.self_attention.linear_qkv.adapter.linear_in.weight
+ 0:     	module.decoder.layers.27.self_attention.linear_qkv.adapter.linear_in.weight
+ 0:     	module.decoder.layers.0.self_attention.linear_proj.adapter.linear_out.weight
+ 0:     	module.decoder.layers.15.self_attention.linear_qkv.adapter.linear_out.weight
+ 0:     	module.decoder.layers.3.self_attention.linear_qkv.adapter.linear_out.weight
+ 0:     	module.decoder.layers.77.self_attention.linear_qkv.adapter.linear_out.weight
+ 0:     	module.decoder.layers.58.self_attention.linear_proj.adapter.linear_in.weight
+ 0:     	module.decoder.layers.34.self_attention.linear_proj.adapter.linear_in.weight
+ 0:     	module.decoder.layers.47.self_attention.linear_proj.adapter.linear_in.weight
+ 0:     	module.decoder.layers.22.self_attention.linear_proj.adapter.linear_out.weight
+ 0:     	module.decoder.layers.65.self_attention.linear_proj.adapter.linear_out.weight
+ 0:     	module.decoder.layers.41.self_attention.linear_qkv.adapter.linear_out.weight
+ 0:     	module.decoder.layers.39.self_attention.linear_proj.adapter.linear_out.weight
+ 0:     	module.decoder.layers.71.self_attention.linear_proj.adapter.linear_in.weight
+ 0:     	module.decoder.layers.58.self_attention.linear_proj.adapter.linear_out.weight
+ 0:     	module.decoder.layers.51.self_attention.linear_proj.adapter.linear_out.weight
+ 0:     	module.decoder.layers.28.self_attention.linear_qkv.adapter.linear_out.weight
+ 0:     	module.decoder.layers.15.self_attention.linear_proj.adapter.linear_in.weight
+ 0:     	module.decoder.layers.77.self_attention.linear_qkv.adapter.linear_in.weight
+ 0:     	module.decoder.layers.57.self_attention.linear_qkv.adapter.linear_in.weight
+ 0:     	module.decoder.layers.35.self_attention.linear_proj.adapter.linear_out.weight
+ 0:     	module.decoder.layers.3.self_attention.linear_proj.adapter.linear_in.weight
+ 0:     	module.decoder.layers.48.self_attention.linear_proj.adapter.linear_out.weight
+ 0:     	module.decoder.layers.21.self_attention.linear_qkv.adapter.linear_in.weight
+ 0:     	module.decoder.layers.65.self_attention.linear_proj.adapter.linear_in.weight
+ 0:     	module.decoder.layers.41.self_attention.linear_proj.adapter.linear_in.weight
+ 0:     	module.decoder.layers.9.self_attention.linear_qkv.adapter.linear_in.weight
+ 0:     	module.decoder.layers.71.self_attention.linear_qkv.adapter.linear_out.weight
+ 0:     	module.decoder.layers.52.self_attention.linear_qkv.adapter.linear_out.weight
+ 0:     	module.decoder.layers.44.self_attention.linear_qkv.adapter.linear_in.weight
+ 0:     	module.decoder.layers.28.self_attention.linear_proj.adapter.linear_in.weight
+ 0:     	module.decoder.layers.0.self_attention.linear_proj.adapter.linear_in.weight
+ 0:     	module.decoder.layers.16.self_attention.linear_proj.adapter.linear_out.weight
+ 0:     	module.decoder.layers.78.self_attention.linear_proj.adapter.linear_out.weight
+ 0:     	module.decoder.layers.34.self_attention.linear_qkv.adapter.linear_in.weight
+ 0:     	module.decoder.layers.4.self_attention.linear_proj.adapter.linear_out.weight
+ 0:     	module.decoder.layers.47.self_attention.linear_qkv.adapter.linear_in.weight
+ 0:     	module.decoder.layers.22.self_attention.linear_qkv.adapter.linear_out.weight
+ 0:     	module.decoder.layers.65.self_attention.linear_qkv.adapter.linear_out.weight
+ 0:     	module.decoder.layers.42.self_attention.linear_proj.adapter.linear_out.weight
+ 0:     	module.decoder.layers.10.self_attention.linear_proj.adapter.linear_out.weight
+ 0:     	module.decoder.layers.71.self_attention.linear_qkv.adapter.linear_in.weight
+ 0:     	module.decoder.layers.54.self_attention.linear_proj.adapter.linear_out.weight
+ 0:     	module.decoder.layers.29.self_attention.linear_proj.adapter.linear_out.weight
+ 0:     	module.decoder.layers.15.self_attention.linear_qkv.adapter.linear_in.weight
+ 0:     	module.decoder.layers.3.self_attention.linear_qkv.adapter.linear_in.weight
+ 0:     	module.decoder.layers.78.self_attention.linear_proj.adapter.linear_in.weight
+ 0:     	module.decoder.layers.58.self_attention.linear_qkv.adapter.linear_in.weight
+ 0:     	module.decoder.layers.35.self_attention.linear_qkv.adapter.linear_out.weight
+ 0:     	module.decoder.layers.48.self_attention.linear_qkv.adapter.linear_out.weight
+ 0:     	module.decoder.layers.22.self_attention.linear_proj.adapter.linear_in.weight
+ 0:     	module.decoder.layers.65.self_attention.linear_qkv.adapter.linear_in.weight
+ 0:     	module.decoder.layers.41.self_attention.linear_qkv.adapter.linear_in.weight
+ 0:     	module.decoder.layers.10.self_attention.linear_qkv.adapter.linear_out.weight
+ 0:     	module.decoder.layers.72.self_attention.linear_proj.adapter.linear_out.weight
+ 0:     	module.decoder.layers.54.self_attention.linear_qkv.adapter.linear_out.weight
+ 0:     	module.decoder.layers.45.self_attention.linear_proj.adapter.linear_out.weight
+ 0:     	module.decoder.layers.28.self_attention.linear_qkv.adapter.linear_in.weight
+ 0:     	module.decoder.layers.16.self_attention.linear_qkv.adapter.linear_out.weight
+ 0:     	module.decoder.layers.78.self_attention.linear_qkv.adapter.linear_out.weight
+ 0:     	module.decoder.layers.59.self_attention.linear_qkv.adapter.linear_out.weight
+ 0:     	module.decoder.layers.35.self_attention.linear_proj.adapter.linear_in.weight
+ 0:     	module.decoder.layers.4.self_attention.linear_qkv.adapter.linear_out.weight
+ 0:     	module.decoder.layers.48.self_attention.linear_proj.adapter.linear_in.weight
+ 0:     	module.decoder.layers.23.self_attention.linear_proj.adapter.linear_out.weight
+ 0:     	module.decoder.layers.10.self_attention.linear_proj.adapter.linear_in.weight
+ 0:     	module.decoder.layers.66.self_attention.linear_proj.adapter.linear_out.weight
+ 0:     	module.decoder.layers.42.self_attention.linear_qkv.adapter.linear_out.weight
+ 0:     	module.decoder.layers.72.self_attention.linear_proj.adapter.linear_in.weight
+ 0:     	module.decoder.layers.53.self_attention.linear_proj.adapter.linear_in.weight
+ 0:     	module.decoder.layers.45.self_attention.linear_proj.adapter.linear_in.weight
+ 0:     	module.decoder.layers.29.self_attention.linear_qkv.adapter.linear_out.weight
+ 0:     	module.decoder.layers.16.self_attention.linear_proj.adapter.linear_in.weight
+ 0:     	module.decoder.layers.78.self_attention.linear_qkv.adapter.linear_in.weight
+ 0:     	module.decoder.layers.59.self_attention.linear_qkv.adapter.linear_in.weight
+ 0:     	module.decoder.layers.36.self_attention.linear_proj.adapter.linear_out.weight
+ 0:     	module.decoder.layers.4.self_attention.linear_proj.adapter.linear_in.weight
+ 0:     	module.decoder.layers.49.self_attention.linear_proj.adapter.linear_out.weight
+ 0:     	module.decoder.layers.22.self_attention.linear_qkv.adapter.linear_in.weight
+ 0:     	module.decoder.layers.66.self_attention.linear_proj.adapter.linear_in.weight
+ 0:     	module.decoder.layers.42.self_attention.linear_proj.adapter.linear_in.weight
+ 0:     	module.decoder.layers.72.self_attention.linear_qkv.adapter.linear_out.weight
+ 0:     	module.decoder.layers.58.self_attention.linear_qkv.adapter.linear_out.weight
+ 0:     	module.decoder.layers.45.self_attention.linear_qkv.adapter.linear_in.weight
+ 0:     	module.decoder.layers.29.self_attention.linear_proj.adapter.linear_in.weight
+ 0:     	module.decoder.layers.17.self_attention.linear_proj.adapter.linear_out.weight
+ 0:     	module.decoder.layers.5.self_attention.linear_proj.adapter.linear_out.weight
+ 0:     	module.decoder.layers.79.self_attention.linear_proj.adapter.linear_out.weight
+ 0:     	module.decoder.layers.60.self_attention.linear_proj.adapter.linear_out.weight
+ 0:     	module.decoder.layers.35.self_attention.linear_qkv.adapter.linear_in.weight
+ 0:     	module.decoder.layers.48.self_attention.linear_qkv.adapter.linear_in.weight
+ 0:     	module.decoder.layers.23.self_attention.linear_qkv.adapter.linear_out.weight
+ 0:     	module.decoder.layers.10.self_attention.linear_qkv.adapter.linear_in.weight
+ 0:     	module.decoder.layers.66.self_attention.linear_qkv.adapter.linear_out.weight
+ 0:     	module.decoder.layers.43.self_attention.linear_proj.adapter.linear_out.weight
+ 0:     	module.decoder.layers.72.self_attention.linear_qkv.adapter.linear_in.weight
+ 0:     	module.decoder.layers.30.self_attention.linear_proj.adapter.linear_out.weight
+ 0:     	module.decoder.layers.16.self_attention.linear_qkv.adapter.linear_in.weight
+ 0:     	module.decoder.layers.79.self_attention.linear_proj.adapter.linear_in.weight
+ 0:     	module.decoder.layers.60.self_attention.linear_proj.adapter.linear_in.weight
+ 0:     	module.decoder.layers.36.self_attention.linear_qkv.adapter.linear_out.weight
+ 0:     	module.decoder.layers.4.self_attention.linear_qkv.adapter.linear_in.weight
+ 0:     	module.decoder.layers.49.self_attention.linear_qkv.adapter.linear_out.weight
+ 0:     	module.decoder.layers.23.self_attention.linear_proj.adapter.linear_in.weight
+ 0:     	module.decoder.layers.66.self_attention.linear_qkv.adapter.linear_in.weight
+ 0:     	module.decoder.layers.42.self_attention.linear_qkv.adapter.linear_in.weight
+ 0:     	module.decoder.layers.11.self_attention.linear_proj.adapter.linear_out.weight
+ 0:     	module.decoder.layers.73.self_attention.linear_proj.adapter.linear_out.weight
+ 0:     	module.decoder.layers.54.self_attention.linear_proj.adapter.linear_in.weight
+ 0:     	module.decoder.layers.29.self_attention.linear_qkv.adapter.linear_in.weight
+ 0:     	module.decoder.layers.17.self_attention.linear_qkv.adapter.linear_out.weight
+ 0:     	module.decoder.layers.79.self_attention.linear_qkv.adapter.linear_out.weight
+ 0:     	module.decoder.layers.60.self_attention.linear_qkv.adapter.linear_out.weight
+ 0:     	module.decoder.layers.36.self_attention.linear_proj.adapter.linear_in.weight
+ 0:     	module.decoder.layers.5.self_attention.linear_qkv.adapter.linear_out.weight
+ 0:     	module.decoder.layers.49.self_attention.linear_proj.adapter.linear_in.weight
+ 0:     	module.decoder.layers.24.self_attention.linear_proj.adapter.linear_out.weight
+ 0:     	module.decoder.layers.67.self_attention.linear_proj.adapter.linear_out.weight
+ 0:     	module.decoder.layers.73.self_attention.linear_proj.adapter.linear_in.weight
+ 0:     	module.decoder.layers.30.self_attention.linear_qkv.adapter.linear_out.weight
+ 0:     	module.decoder.layers.17.self_attention.linear_proj.adapter.linear_in.weight
+ 0:     	module.decoder.layers.79.self_attention.linear_qkv.adapter.linear_in.weight
+ 0:     	module.decoder.layers.60.self_attention.linear_qkv.adapter.linear_in.weight
+ 0:     	module.decoder.layers.37.self_attention.linear_proj.adapter.linear_out.weight
+ 0:     	module.decoder.layers.5.self_attention.linear_proj.adapter.linear_in.weight
+ 0:     	module.decoder.layers.50.self_attention.linear_proj.adapter.linear_out.weight
+ 0:     	module.decoder.layers.23.self_attention.linear_qkv.adapter.linear_in.weight
+ 0:     	module.decoder.layers.67.self_attention.linear_proj.adapter.linear_in.weight
+ 0:     	module.decoder.layers.43.self_attention.linear_proj.adapter.linear_in.weight
+ 0:     	module.decoder.layers.11.self_attention.linear_proj.adapter.linear_in.weight
+ 0:     	module.decoder.layers.73.self_attention.linear_qkv.adapter.linear_out.weight
+ 0:     	module.decoder.layers.46.self_attention.linear_proj.adapter.linear_in.weight
+ 0:     	module.decoder.layers.30.self_attention.linear_proj.adapter.linear_in.weight
+ 0:     	module.decoder.layers.18.self_attention.linear_proj.adapter.linear_out.weight
+ 0:     	module.decoder.layers.61.self_attention.linear_proj.adapter.linear_out.weight
+ 0:     	module.decoder.layers.36.self_attention.linear_qkv.adapter.linear_in.weight
+ 0:     	module.decoder.layers.6.self_attention.linear_proj.adapter.linear_out.weight
+ 0:     	module.decoder.layers.49.self_attention.linear_qkv.adapter.linear_in.weight
+ 0:     	module.decoder.layers.24.self_attention.linear_qkv.adapter.linear_out.weight
+ 0:     	module.decoder.layers.67.self_attention.linear_qkv.adapter.linear_out.weight
+ 0:     	module.decoder.layers.11.self_attention.linear_qkv.adapter.linear_out.weight
+ 0:     	module.decoder.layers.73.self_attention.linear_qkv.adapter.linear_in.weight
+ 0:     	module.decoder.layers.54.self_attention.linear_qkv.adapter.linear_in.weight
+ 0:     	module.decoder.layers.46.self_attention.linear_proj.adapter.linear_out.weight
+ 0:     	module.decoder.layers.45.self_attention.linear_qkv.adapter.linear_out.weight
+ 0:     	module.decoder.layers.31.self_attention.linear_proj.adapter.linear_out.weight
+ 0:     	module.decoder.layers.17.self_attention.linear_qkv.adapter.linear_in.weight
+ 0:     	module.decoder.layers.5.self_attention.linear_qkv.adapter.linear_in.weight
+ 0:     	module.decoder.layers.61.self_attention.linear_proj.adapter.linear_in.weight
+ 0:     	module.decoder.layers.37.self_attention.linear_qkv.adapter.linear_out.weight
+ 0:     	module.decoder.layers.50.self_attention.linear_qkv.adapter.linear_out.weight
+ 0:     	module.decoder.layers.24.self_attention.linear_proj.adapter.linear_in.weight
+ 0:     	module.decoder.layers.67.self_attention.linear_qkv.adapter.linear_in.weight
+ 0:     	module.decoder.layers.43.self_attention.linear_qkv.adapter.linear_in.weight
+ 0:     	module.decoder.layers.12.self_attention.linear_proj.adapter.linear_out.weight
+ 0:     	module.decoder.layers.74.self_attention.linear_proj.adapter.linear_out.weight
+ 0:     	module.decoder.layers.53.self_attention.linear_proj.adapter.linear_out.weight
+ 0:     	module.decoder.layers.30.self_attention.linear_qkv.adapter.linear_in.weight
+ 0:     	module.decoder.layers.18.self_attention.linear_qkv.adapter.linear_out.weight
+ 0:     	module.decoder.layers.61.self_attention.linear_qkv.adapter.linear_out.weight
+ 0:     	module.decoder.layers.37.self_attention.linear_proj.adapter.linear_in.weight
+ 0:     	module.decoder.layers.6.self_attention.linear_qkv.adapter.linear_out.weight
+ 0:     	module.decoder.layers.50.self_attention.linear_proj.adapter.linear_in.weight
+ 0:     	module.decoder.layers.25.self_attention.linear_proj.adapter.linear_out.weight
+ 0:     	module.decoder.layers.11.self_attention.linear_qkv.adapter.linear_in.weight
+ 0:     	module.decoder.layers.74.self_attention.linear_proj.adapter.linear_in.weight
+ 0:     	module.decoder.layers.31.self_attention.linear_qkv.adapter.linear_out.weight
+ 0:     	module.decoder.layers.18.self_attention.linear_proj.adapter.linear_in.weight
+ 0:     	module.decoder.layers.61.self_attention.linear_qkv.adapter.linear_in.weight
+ 0:     	module.decoder.layers.38.self_attention.linear_proj.adapter.linear_out.weight
+ 0:     	module.decoder.layers.6.self_attention.linear_proj.adapter.linear_in.weight
+ 0: [NeMo I 2025-10-07 16:30:42 nemo_logging:393] Setting up optimizers
+ 0: [NeMo I 2025-10-07 16:30:42 utils:662] Setting up optimizer with config OptimizerConfig(optimizer='adam', lr=0.0005, min_lr=None, decoupled_lr=None, decoupled_min_lr=None, weight_decay=0.0001, fp8_recipe='delayed', fp16=False, bf16=True, reuse_grad_buf_for_mxfp8_param_ag=False, params_dtype=torch.bfloat16, use_precision_aware_optimizer=False, store_param_remainders=True, main_grads_dtype=torch.float32, main_params_dtype=torch.float32, exp_avg_dtype=torch.float32, exp_avg_sq_dtype=torch.float32, loss_scale=None, initial_loss_scale=4294967296, min_loss_scale=1.0, loss_scale_window=1000, hysteresis=2, adam_beta1=0.9, adam_beta2=0.999, adam_eps=1e-08, sgd_momentum=0.9, use_distributed_optimizer=True, overlap_param_gather=False, overlap_param_gather_with_optimizer_step=False, optimizer_cpu_offload=False, optimizer_offload_fraction=0.0, use_torch_optimizer_for_cpu_offload=False, overlap_cpu_optimizer_d2h_h2d=False, pin_cpu_grads=True, pin_cpu_params=True, clip_grad=0.3, log_num_zeros_in_grad=False, barrier_with_L1_
+ 0: time=False, timers=None, config_logger_dir='')
+ 0: [NeMo I 2025-10-07 16:31:10 full_cuda_graph:164] Capture CUDA graph for training!!!
+ 0: [NeMo I 2025-10-07 16:31:23 full_cuda_graph:182] CUDA graph capture done!!!
+ 0: [NeMo I 2025-10-07 16:31:24 num_microbatches_calculator:228] setting number of microbatches to constant 1
+ 0: [NeMo I 2025-10-07 16:31:26 full_cuda_graph:164] Capture CUDA graph for validation!!!
+ 0: [NeMo I 2025-10-07 16:31:27 full_cuda_graph:182] CUDA graph capture done!!!
+ 0: [NeMo I 2025-10-07 16:31:27 num_microbatches_calculator:228] setting number of microbatches to constant 1
+ 0: :::MLLOG {"namespace": "", "time_ms": 1759854687611, "event_type": "POINT_IN_TIME", "key": "tracked_stats", "value": {"warmup_time": 258.4888598300022}, "metadata": {"file": "/usr/local/lib/python3.12/dist-packages/mlperf_common/callbacks/logging.py", "lineno": 163, "step": 0}}
+ 0: :::MLLOG {"namespace": "", "time_ms": 1759854687611, "event_type": "POINT_IN_TIME", "key": "tracked_stats", "value": {"init_finished": 0.0003716490027727559}, "metadata": {"file": "/usr/local/lib/python3.12/dist-packages/mlperf_common/callbacks/logging.py", "lineno": 163, "step": 0}}
+ 0: :::MLLOG {"namespace": "", "time_ms": 1759854687633, "event_type": "INTERVAL_END", "key": "init_stop", "value": null, "metadata": {"file": "/usr/local/lib/python3.12/dist-packages/mlperf_common/callbacks/logging.py", "lineno": 83}}
+ 0: :::MLLOG {"namespace": "", "time_ms": 1759854687633, "event_type": "INTERVAL_START", "key": "run_start", "value": null, "metadata": {"file": "/usr/local/lib/python3.12/dist-packages/mlperf_common/callbacks/logging.py", "lineno": 83}}
+ 0: :::MLLOG {"namespace": "", "time_ms": 1759854687633, "event_type": "INTERVAL_START", "key": "block_start", "value": null, "metadata": {"file": "/usr/local/lib/python3.12/dist-packages/mlperf_common/callbacks/logging.py", "lineno": 185, "samples_count": 1548, "step": 0}}
+ 0: :::MLLOG {"namespace": "", "time_ms": 1759854689428, "event_type": "POINT_IN_TIME", "key": "tracked_stats", "value": {"train_loss": 14.787530899047852}, "metadata": {"file": "/workspace/ft-llm/custom_callbacks.py", "lineno": 259, "samples_count": 90, "lr": 0.0004998072590601808, "step": 10}}
+ 0: :::MLLOG {"namespace": "", "time_ms": 1759854691236, "event_type": "POINT_IN_TIME", "key": "tracked_stats", "value": {"train_loss": 13.002656936645508}, "metadata": {"file": "/workspace/ft-llm/custom_callbacks.py", "lineno": 259, "samples_count": 180, "lr": 0.000499229333433282, "step": 20}}
+ 0: :::MLLOG {"namespace": "", "time_ms": 1759854693030, "event_type": "POINT_IN_TIME", "key": "tracked_stats", "value": {"train_loss": 10.196257591247559}, "metadata": {"file": "/workspace/ft-llm/custom_callbacks.py", "lineno": 259, "samples_count": 270, "lr": 0.0004982671142387316, "step": 30}}
+ 0: :::MLLOG {"namespace": "", "time_ms": 1759854694834, "event_type": "POINT_IN_TIME", "key": "tracked_stats", "value": {"train_loss": 10.534090042114258}, "metadata": {"file": "/workspace/ft-llm/custom_callbacks.py", "lineno": 259, "samples_count": 360, "lr": 0.0004969220851487844, "step": 40}}
+ 0: :::MLLOG {"namespace": "", "time_ms": 1759854696636, "event_type": "POINT_IN_TIME", "key": "tracked_stats", "value": {"train_loss": 11.166914939880371}, "metadata": {"file": "/workspace/ft-llm/custom_callbacks.py", "lineno": 259, "samples_count": 450, "lr": 0.0004951963201008077, "step": 50}}
+ 0: :::MLLOG {"namespace": "", "time_ms": 1759854698431, "event_type": "POINT_IN_TIME", "key": "tracked_stats", "value": {"train_loss": 9.386140823364258}, "metadata": {"file": "/workspace/ft-llm/custom_callbacks.py", "lineno": 259, "samples_count": 540, "lr": 0.0004930924800994192, "step": 60}}
+ 0: :::MLLOG {"namespace": "", "time_ms": 1759854700225, "event_type": "POINT_IN_TIME", "key": "tracked_stats", "value": {"train_loss": 11.006125450134277}, "metadata": {"file": "/workspace/ft-llm/custom_callbacks.py", "lineno": 259, "samples_count": 630, "lr": 0.0004906138091134118, "step": 70}}
+ 0: :::MLLOG {"namespace": "", "time_ms": 1759854702043, "event_type": "POINT_IN_TIME", "key": "tracked_stats", "value": {"train_loss": 11.271466255187988}, "metadata": {"file": "/workspace/ft-llm/custom_callbacks.py", "lineno": 259, "samples_count": 720, "lr": 0.0004877641290737884, "step": 80}}
+ 0: :::MLLOG {"namespace": "", "time_ms": 1759854703856, "event_type": "POINT_IN_TIME", "key": "tracked_stats", "value": {"train_loss": 12.602462768554688}, "metadata": {"file": "/workspace/ft-llm/custom_callbacks.py", "lineno": 259, "samples_count": 810, "lr": 0.0004845478339806211, "step": 90}}
+ 0: :::MLLOG {"namespace": "", "time_ms": 1759854705657, "event_type": "POINT_IN_TIME", "key": "tracked_stats", "value": {"train_loss": 11.609286308288574}, "metadata": {"file": "/workspace/ft-llm/custom_callbacks.py", "lineno": 259, "samples_count": 900, "lr": 0.0004809698831278217, "step": 100}}
+ 0: :::MLLOG {"namespace": "", "time_ms": 1759854707456, "event_type": "POINT_IN_TIME", "key": "tracked_stats", "value": {"train_loss": 8.522647857666016}, "metadata": {"file": "/workspace/ft-llm/custom_callbacks.py", "lineno": 259, "samples_count": 990, "lr": 0.00047703579345627036, "step": 110}}
+ 0: :::MLLOG {"namespace": "", "time_ms": 1759854709269, "event_type": "POINT_IN_TIME", "key": "tracked_stats", "value": {"train_loss": 7.78543758392334}, "metadata": {"file": "/workspace/ft-llm/custom_callbacks.py", "lineno": 259, "samples_count": 1080, "lr": 0.00047275163104709196, "step": 120}}
+ 0: :::MLLOG {"namespace": "", "time_ms": 1759854711065, "event_type": "POINT_IN_TIME", "key": "tracked_stats", "value": {"train_loss": 11.148528099060059}, "metadata": {"file": "/workspace/ft-llm/custom_callbacks.py", "lineno": 259, "samples_count": 1170, "lr": 0.0004681240017681993, "step": 130}}
+ 0: :::MLLOG {"namespace": "", "time_ms": 1759854712868, "event_type": "POINT_IN_TIME", "key": "tracked_stats", "value": {"train_loss": 9.590062141418457}, "metadata": {"file": "/workspace/ft-llm/custom_callbacks.py", "lineno": 259, "samples_count": 1260, "lr": 0.00046316004108852305, "step": 140}}
+ 0: :::MLLOG {"namespace": "", "time_ms": 1759854714673, "event_type": "POINT_IN_TIME", "key": "tracked_stats", "value": {"train_loss": 10.920083045959473}, "metadata": {"file": "/workspace/ft-llm/custom_callbacks.py", "lineno": 259, "samples_count": 1350, "lr": 0.00045786740307563633, "step": 150}}
+ 0: :::MLLOG {"namespace": "", "time_ms": 1759854716488, "event_type": "POINT_IN_TIME", "key": "tracked_stats", "value": {"train_loss": 9.80212688446045}, "metadata": {"file": "/workspace/ft-llm/custom_callbacks.py", "lineno": 259, "samples_count": 1440, "lr": 0.0004522542485937369, "step": 160}}
+ 0: :::MLLOG {"namespace": "", "time_ms": 1759854718291, "event_type": "POINT_IN_TIME", "key": "tracked_stats", "value": {"train_loss": 9.715985298156738}, "metadata": {"file": "/workspace/ft-llm/custom_callbacks.py", "lineno": 259, "samples_count": 1530, "lr": 0.0004463292327201862, "step": 170}}
+ 0: :::MLLOG {"namespace": "", "time_ms": 1759854718755, "event_type": "POINT_IN_TIME", "key": "tracked_stats", "value": {"train_step_time": 0.18106614387207354}, "metadata": {"file": "/usr/local/lib/python3.12/dist-packages/mlperf_common/callbacks/logging.py", "lineno": 210, "samples_count": 1548}}
+ 0: :::MLLOG {"namespace": "", "time_ms": 1759854718756, "event_type": "INTERVAL_END", "key": "block_stop", "value": null, "metadata": {"file": "/usr/local/lib/python3.12/dist-packages/mlperf_common/callbacks/logging.py", "lineno": 194, "samples_count": 1548, "step": 172}}
+ 0: :::MLLOG {"namespace": "", "time_ms": 1759854718756, "event_type": "INTERVAL_START", "key": "eval_start", "value": null, "metadata": {"file": "/usr/local/lib/python3.12/dist-packages/mlperf_common/callbacks/logging.py", "lineno": 131, "samples_count": 1548, "step": 172}}
+ 0: [NeMo I 2025-10-07 16:31:58 num_microbatches_calculator:228] setting number of microbatches to constant 1
+ 0: :::MLLOG {"namespace": "", "time_ms": 1759854720480, "event_type": "POINT_IN_TIME", "key": "eval_accuracy", "value": 0.9396794490042449, "metadata": {"file": "/usr/local/lib/python3.12/dist-packages/mlperf_common/callbacks/logging.py", "lineno": 272, "samples_count": 1548}}
+ 0: [NeMo I 2025-10-07 16:32:00 num_microbatches_calculator:228] setting number of microbatches to constant 1
+ 0: :::MLLOG {"namespace": "", "time_ms": 1759854720481, "event_type": "POINT_IN_TIME", "key": "tracked_stats", "value": {"validation_time": 1.7267546010043588}, "metadata": {"file": "/usr/local/lib/python3.12/dist-packages/mlperf_common/callbacks/logging.py", "lineno": 163, "step": 172}}
+ 0: :::MLLOG {"namespace": "", "time_ms": 1759854720481, "event_type": "INTERVAL_END", "key": "eval_stop", "value": null, "metadata": {"file": "/usr/local/lib/python3.12/dist-packages/mlperf_common/callbacks/logging.py", "lineno": 148, "samples_count": 1548, "step": 172}}
+ 0: :::MLLOG {"namespace": "", "time_ms": 1759854720481, "event_type": "INTERVAL_START", "key": "block_start", "value": null, "metadata": {"file": "/usr/local/lib/python3.12/dist-packages/mlperf_common/callbacks/logging.py", "lineno": 185, "samples_count": 387, "step": 172}}
+ 0: :::MLLOG {"namespace": "", "time_ms": 1759854721941, "event_type": "POINT_IN_TIME", "key": "tracked_stats", "value": {"train_loss": 10.767916679382324}, "metadata": {"file": "/workspace/ft-llm/custom_callbacks.py", "lineno": 259, "samples_count": 1620, "lr": 0.0004401014914000078, "step": 180}}
+ 0: :::MLLOG {"namespace": "", "time_ms": 1759854723735, "event_type": "POINT_IN_TIME", "key": "tracked_stats", "value": {"train_loss": 9.480034828186035}, "metadata": {"file": "/workspace/ft-llm/custom_callbacks.py", "lineno": 259, "samples_count": 1710, "lr": 0.0004335806273589214, "step": 190}}
+ 0: :::MLLOG {"namespace": "", "time_ms": 1759854725530, "event_type": "POINT_IN_TIME", "key": "tracked_stats", "value": {"train_loss": 10.22488021850586}, "metadata": {"file": "/workspace/ft-llm/custom_callbacks.py", "lineno": 259, "samples_count": 1800, "lr": 0.00042677669529663686, "step": 200}}
+ 0: :::MLLOG {"namespace": "", "time_ms": 1759854727328, "event_type": "POINT_IN_TIME", "key": "tracked_stats", "value": {"train_loss": 10.757089614868164}, "metadata": {"file": "/workspace/ft-llm/custom_callbacks.py", "lineno": 259, "samples_count": 1890, "lr": 0.00041970018638323546, "step": 210}}
+ 0: :::MLLOG {"namespace": "", "time_ms": 1759854728242, "event_type": "POINT_IN_TIME", "key": "tracked_stats", "value": {"train_step_time": 0.18047212490688083}, "metadata": {"file": "/usr/local/lib/python3.12/dist-packages/mlperf_common/callbacks/logging.py", "lineno": 210, "samples_count": 387}}
+ 0: :::MLLOG {"namespace": "", "time_ms": 1759854728242, "event_type": "INTERVAL_END", "key": "block_stop", "value": null, "metadata": {"file": "/usr/local/lib/python3.12/dist-packages/mlperf_common/callbacks/logging.py", "lineno": 194, "samples_count": 387, "step": 215}}
+ 0: :::MLLOG {"namespace": "", "time_ms": 1759854728242, "event_type": "INTERVAL_START", "key": "eval_start", "value": null, "metadata": {"file": "/usr/local/lib/python3.12/dist-packages/mlperf_common/callbacks/logging.py", "lineno": 131, "samples_count": 1935, "step": 215}}
+ 0: [NeMo I 2025-10-07 16:32:08 num_microbatches_calculator:228] setting number of microbatches to constant 1
+ 0: :::MLLOG {"namespace": "", "time_ms": 1759854729963, "event_type": "POINT_IN_TIME", "key": "eval_accuracy", "value": 0.9350582409456286, "metadata": {"file": "/usr/local/lib/python3.12/dist-packages/mlperf_common/callbacks/logging.py", "lineno": 272, "samples_count": 1935}}
+ 0: [NeMo I 2025-10-07 16:32:09 num_microbatches_calculator:228] setting number of microbatches to constant 1
+ 0: :::MLLOG {"namespace": "", "time_ms": 1759854729964, "event_type": "POINT_IN_TIME", "key": "tracked_stats", "value": {"validation_time": 1.7221148110038484}, "metadata": {"file": "/usr/local/lib/python3.12/dist-packages/mlperf_common/callbacks/logging.py", "lineno": 163, "step": 215}}
+ 0: :::MLLOG {"namespace": "", "time_ms": 1759854729964, "event_type": "INTERVAL_END", "key": "eval_stop", "value": null, "metadata": {"file": "/usr/local/lib/python3.12/dist-packages/mlperf_common/callbacks/logging.py", "lineno": 148, "samples_count": 1935, "step": 215}}
+ 0: :::MLLOG {"namespace": "", "time_ms": 1759854729964, "event_type": "INTERVAL_START", "key": "block_start", "value": null, "metadata": {"file": "/usr/local/lib/python3.12/dist-packages/mlperf_common/callbacks/logging.py", "lineno": 185, "samples_count": 387, "step": 215}}
+ 0: :::MLLOG {"namespace": "", "time_ms": 1759854730878, "event_type": "POINT_IN_TIME", "key": "tracked_stats", "value": {"train_loss": 10.749289512634277}, "metadata": {"file": "/workspace/ft-llm/custom_callbacks.py", "lineno": 259, "samples_count": 1980, "lr": 0.00041236201208254595, "step": 220}}
+ 0: :::MLLOG {"namespace": "", "time_ms": 1759854732675, "event_type": "POINT_IN_TIME", "key": "tracked_stats", "value": {"train_loss": 9.850193977355957}, "metadata": {"file": "/workspace/ft-llm/custom_callbacks.py", "lineno": 259, "samples_count": 2070, "lr": 0.0004047734873274585, "step": 230}}
+ 0: :::MLLOG {"namespace": "", "time_ms": 1759854734466, "event_type": "POINT_IN_TIME", "key": "tracked_stats", "value": {"train_loss": 9.232770919799805}, "metadata": {"file": "/workspace/ft-llm/custom_callbacks.py", "lineno": 259, "samples_count": 2160, "lr": 0.00039694631307311834, "step": 240}}
+ 0: :::MLLOG {"namespace": "", "time_ms": 1759854736270, "event_type": "POINT_IN_TIME", "key": "tracked_stats", "value": {"train_loss": 9.69797420501709}, "metadata": {"file": "/workspace/ft-llm/custom_callbacks.py", "lineno": 259, "samples_count": 2250, "lr": 0.0003888925582549006, "step": 250}}
+ 0: :::MLLOG {"namespace": "", "time_ms": 1759854737723, "event_type": "POINT_IN_TIME", "key": "tracked_stats", "value": {"train_step_time": 0.18045654753476875}, "metadata": {"file": "/usr/local/lib/python3.12/dist-packages/mlperf_common/callbacks/logging.py", "lineno": 210, "samples_count": 387}}
+ 0: :::MLLOG {"namespace": "", "time_ms": 1759854737724, "event_type": "INTERVAL_END", "key": "block_stop", "value": null, "metadata": {"file": "/usr/local/lib/python3.12/dist-packages/mlperf_common/callbacks/logging.py", "lineno": 194, "samples_count": 387, "step": 258}}
+ 0: :::MLLOG {"namespace": "", "time_ms": 1759854737724, "event_type": "INTERVAL_START", "key": "eval_start", "value": null, "metadata": {"file": "/usr/local/lib/python3.12/dist-packages/mlperf_common/callbacks/logging.py", "lineno": 131, "samples_count": 2322, "step": 258}}
+ 0: [NeMo I 2025-10-07 16:32:17 num_microbatches_calculator:228] setting number of microbatches to constant 1
+ 0: :::MLLOG {"namespace": "", "time_ms": 1759854739442, "event_type": "POINT_IN_TIME", "key": "eval_accuracy", "value": 0.9319965164096369, "metadata": {"file": "/usr/local/lib/python3.12/dist-packages/mlperf_common/callbacks/logging.py", "lineno": 272, "samples_count": 2322}}
+ 0: [NeMo I 2025-10-07 16:32:19 num_microbatches_calculator:228] setting number of microbatches to constant 1
+ 0: :::MLLOG {"namespace": "", "time_ms": 1759854739442, "event_type": "POINT_IN_TIME", "key": "tracked_stats", "value": {"validation_time": 1.7190858739995747}, "metadata": {"file": "/usr/local/lib/python3.12/dist-packages/mlperf_common/callbacks/logging.py", "lineno": 163, "step": 258}}
+ 0: :::MLLOG {"namespace": "", "time_ms": 1759854739442, "event_type": "INTERVAL_END", "key": "eval_stop", "value": null, "metadata": {"file": "/usr/local/lib/python3.12/dist-packages/mlperf_common/callbacks/logging.py", "lineno": 148, "samples_count": 2322, "step": 258}}
+ 0: :::MLLOG {"namespace": "", "time_ms": 1759854739443, "event_type": "INTERVAL_START", "key": "block_start", "value": null, "metadata": {"file": "/usr/local/lib/python3.12/dist-packages/mlperf_common/callbacks/logging.py", "lineno": 185, "samples_count": 387, "step": 258}}
+ 0: :::MLLOG {"namespace": "", "time_ms": 1759854739815, "event_type": "POINT_IN_TIME", "key": "tracked_stats", "value": {"train_loss": 10.555461883544922}, "metadata": {"file": "/workspace/ft-llm/custom_callbacks.py", "lineno": 259, "samples_count": 2340, "lr": 0.0003806246411789872, "step": 260}}
+ 0: :::MLLOG {"namespace": "", "time_ms": 1759854741612, "event_type": "POINT_IN_TIME", "key": "tracked_stats", "value": {"train_loss": 9.658957481384277}, "metadata": {"file": "/workspace/ft-llm/custom_callbacks.py", "lineno": 259, "samples_count": 2430, "lr": 0.0003721553103742388, "step": 270}}
+ 0: :::MLLOG {"namespace": "", "time_ms": 1759854743406, "event_type": "POINT_IN_TIME", "key": "tracked_stats", "value": {"train_loss": 9.872477531433105}, "metadata": {"file": "/workspace/ft-llm/custom_callbacks.py", "lineno": 259, "samples_count": 2520, "lr": 0.00036349762493488667, "step": 280}}
+ 0: :::MLLOG {"namespace": "", "time_ms": 1759854745206, "event_type": "POINT_IN_TIME", "key": "tracked_stats", "value": {"train_loss": 10.792228698730469}, "metadata": {"file": "/workspace/ft-llm/custom_callbacks.py", "lineno": 259, "samples_count": 2610, "lr": 0.00035466493438435703, "step": 290}}
+ 0: :::MLLOG {"namespace": "", "time_ms": 1759854747013, "event_type": "POINT_IN_TIME", "key": "tracked_stats", "value": {"train_loss": 10.148028373718262}, "metadata": {"file": "/workspace/ft-llm/custom_callbacks.py", "lineno": 259, "samples_count": 2700, "lr": 0.0003456708580912725, "step": 300}}
+ 0: :::MLLOG {"namespace": "", "time_ms": 1759854747209, "event_type": "POINT_IN_TIME", "key": "tracked_stats", "value": {"train_step_time": 0.18062081818619802}, "metadata": {"file": "/usr/local/lib/python3.12/dist-packages/mlperf_common/callbacks/logging.py", "lineno": 210, "samples_count": 387}}
+ 0: :::MLLOG {"namespace": "", "time_ms": 1759854747209, "event_type": "INTERVAL_END", "key": "block_stop", "value": null, "metadata": {"file": "/usr/local/lib/python3.12/dist-packages/mlperf_common/callbacks/logging.py", "lineno": 194, "samples_count": 387, "step": 301}}
+ 0: :::MLLOG {"namespace": "", "time_ms": 1759854747210, "event_type": "INTERVAL_START", "key": "eval_start", "value": null, "metadata": {"file": "/usr/local/lib/python3.12/dist-packages/mlperf_common/callbacks/logging.py", "lineno": 131, "samples_count": 2709, "step": 301}}
+ 0: [NeMo I 2025-10-07 16:32:27 num_microbatches_calculator:228] setting number of microbatches to constant 1
+ 0: :::MLLOG {"namespace": "", "time_ms": 1759854748944, "event_type": "POINT_IN_TIME", "key": "eval_accuracy", "value": 0.9283288503657876, "metadata": {"file": "/usr/local/lib/python3.12/dist-packages/mlperf_common/callbacks/logging.py", "lineno": 272, "samples_count": 2709}}
+ 0: [NeMo I 2025-10-07 16:32:28 num_microbatches_calculator:228] setting number of microbatches to constant 1
+ 0: :::MLLOG {"namespace": "", "time_ms": 1759854748945, "event_type": "POINT_IN_TIME", "key": "tracked_stats", "value": {"validation_time": 1.7363342789976741}, "metadata": {"file": "/usr/local/lib/python3.12/dist-packages/mlperf_common/callbacks/logging.py", "lineno": 163, "step": 301}}
+ 0: :::MLLOG {"namespace": "", "time_ms": 1759854748946, "event_type": "INTERVAL_END", "key": "eval_stop", "value": null, "metadata": {"file": "/usr/local/lib/python3.12/dist-packages/mlperf_common/callbacks/logging.py", "lineno": 148, "samples_count": 2709, "step": 301}}
+ 0: :::MLLOG {"namespace": "", "time_ms": 1759854748946, "event_type": "INTERVAL_START", "key": "block_start", "value": null, "metadata": {"file": "/usr/local/lib/python3.12/dist-packages/mlperf_common/callbacks/logging.py", "lineno": 185, "samples_count": 387, "step": 301}}
+ 0: :::MLLOG {"namespace": "", "time_ms": 1759854750588, "event_type": "POINT_IN_TIME", "key": "tracked_stats", "value": {"train_loss": 9.209300994873047}, "metadata": {"file": "/workspace/ft-llm/custom_callbacks.py", "lineno": 259, "samples_count": 2790, "lr": 0.0003365292642693733, "step": 310}}
+ 0: :::MLLOG {"namespace": "", "time_ms": 1759854752401, "event_type": "POINT_IN_TIME", "key": "tracked_stats", "value": {"train_loss": 11.381567001342773}, "metadata": {"file": "/workspace/ft-llm/custom_callbacks.py", "lineno": 259, "samples_count": 2880, "lr": 0.00032725424859373687, "step": 320}}
+ 0: :::MLLOG {"namespace": "", "time_ms": 1759854754200, "event_type": "POINT_IN_TIME", "key": "tracked_stats", "value": {"train_loss": 11.039045333862305}, "metadata": {"file": "/workspace/ft-llm/custom_callbacks.py", "lineno": 259, "samples_count": 2970, "lr": 0.00031786011246626866, "step": 330}}
+ 0: :::MLLOG {"namespace": "", "time_ms": 1759854756008, "event_type": "POINT_IN_TIME", "key": "tracked_stats", "value": {"train_loss": 10.216964721679688}, "metadata": {"file": "/workspace/ft-llm/custom_callbacks.py", "lineno": 259, "samples_count": 3060, "lr": 0.0003083613409639764, "step": 340}}
+ 0: :::MLLOG {"namespace": "", "time_ms": 1759854756742, "event_type": "POINT_IN_TIME", "key": "tracked_stats", "value": {"train_step_time": 0.18130849434880453}, "metadata": {"file": "/usr/local/lib/python3.12/dist-packages/mlperf_common/callbacks/logging.py", "lineno": 210, "samples_count": 387}}
+ 0: :::MLLOG {"namespace": "", "time_ms": 1759854756742, "event_type": "INTERVAL_END", "key": "block_stop", "value": null, "metadata": {"file": "/usr/local/lib/python3.12/dist-packages/mlperf_common/callbacks/logging.py", "lineno": 194, "samples_count": 387, "step": 344}}
+ 0: :::MLLOG {"namespace": "", "time_ms": 1759854756742, "event_type": "INTERVAL_START", "key": "eval_start", "value": null, "metadata": {"file": "/usr/local/lib/python3.12/dist-packages/mlperf_common/callbacks/logging.py", "lineno": 131, "samples_count": 3096, "step": 344}}
+ 0: [NeMo I 2025-10-07 16:32:36 num_microbatches_calculator:228] setting number of microbatches to constant 1
+ 0: :::MLLOG {"namespace": "", "time_ms": 1759854758462, "event_type": "POINT_IN_TIME", "key": "eval_accuracy", "value": 0.9240587708577944, "metadata": {"file": "/usr/local/lib/python3.12/dist-packages/mlperf_common/callbacks/logging.py", "lineno": 272, "samples_count": 3096}}
+ 0: [NeMo I 2025-10-07 16:32:38 num_microbatches_calculator:228] setting number of microbatches to constant 1
+ 0: :::MLLOG {"namespace": "", "time_ms": 1759854758462, "event_type": "POINT_IN_TIME", "key": "tracked_stats", "value": {"validation_time": 1.7208233830024255}, "metadata": {"file": "/usr/local/lib/python3.12/dist-packages/mlperf_common/callbacks/logging.py", "lineno": 163, "step": 344}}
+ 0: :::MLLOG {"namespace": "", "time_ms": 1759854758463, "event_type": "INTERVAL_END", "key": "eval_stop", "value": null, "metadata": {"file": "/usr/local/lib/python3.12/dist-packages/mlperf_common/callbacks/logging.py", "lineno": 148, "samples_count": 3096, "step": 344}}
+ 0: :::MLLOG {"namespace": "", "time_ms": 1759854758511, "event_type": "INTERVAL_END", "key": "run_stop", "value": null, "metadata": {"file": "/usr/local/lib/python3.12/dist-packages/mlperf_common/callbacks/logging.py", "lineno": 106, "step": 344, "samples_count": 3096, "status": "success"}}
+++ date +%s
++ echo 'RUNANDTIME_STOP 1759854766'
+RUNANDTIME_STOP 1759854766
++ set -e
