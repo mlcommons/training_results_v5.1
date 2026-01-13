@@ -1,10 +1,10 @@
-## Running NVIDIA Large Language Model Llama 3.1 405B PyTorch MLPerf Benchmark
+## Running NVIDIA Large Language Model Llama 3.1 8B PyTorch MLPerf Benchmark
 
-This file contains the instructions for running the NVIDIA Large Language Model Llama 3.1 405B PyTorch MLPerf Benchmark on NVIDIA hardware.
+This file contains the instructions for running the NVIDIA Large Language Model Llama 3.1 8B PyTorch MLPerf Benchmark on NVIDIA hardware.
 
 ## 1. Hardware Requirements
 
-- At least 2.5TB disk space is required.
+- At least 100GB disk space is required.
 - NVIDIA GPU with at least 80GB memory is strongly recommended.
 - GPUs are not required for dataset preparation.
 
@@ -20,9 +20,9 @@ This file contains the instructions for running the NVIDIA Large Language Model 
 Replace `<docker/registry>` with your container registry and build:
 
 ```bash
-docker build -t <docker/registry>/mlperf-nvidia:llama31_405b-pyt .
-# optionally: docker push <docker/registry>/mlperf-nvidia:llama31_405b-pyt
-export CONT=<docker/registry>/mlperf-nvidia:llama31_405b-pyt
+docker build -t <docker/registry>/mlperf-nvidia:llama31_8b-pyt .
+# optionally: docker push <docker/registry>/mlperf-nvidia:llama31_8b-pyt
+export CONT=<docker/registry>/mlperf-nvidia:llama31_8b-pyt
 ```
 
 make sure that container is accessible on your Slurm system.
@@ -37,28 +37,31 @@ export DATADIR=<path/to/dataset>
 To download the dataset and align the directories with the layout the benchmark expects, run:
 
 ```bash
-bash data_scripts/download.sh
+bash data_scripts/download_8b.sh
 ```
 
-The final content under `${DATADIR}/405b` should be:
+At the end, the directory structure should look like:
 
-```
-$tree 405b
-405b
+```bash
+$tree 8b/
+8b/
+|-- LICENSE.txt
+|-- NOTICE.txt
 |-- c4-train.en_6_text_document.bin
 |-- c4-train.en_6_text_document.idx
-|-- c4-train.en_7_text_document.bin
-|-- c4-train.en_7_text_document.idx
 |-- c4-validation-91205-samples.en_text_document.bin
 |-- c4-validation-91205-samples.en_text_document.idx
+|-- llama-3-1-8b-preprocessed-c4-dataset.md5
 `-- tokenizer
+    |-- LICENSE
+    |-- README.md
+    |-- USE_POLICY.md
+    |-- llama-3-1-8b-tokenizer.md5
     |-- special_tokens_map.json
     |-- tokenizer.json
-    |-- tokenizer.model
-    |-- tokenizer.model.v1
     `-- tokenizer_config.json
 
-2 directories, 11 files
+2 directories, 14 files
 ```
 
 ### 3.3 Model and checkpoint preparation
@@ -69,34 +72,11 @@ $tree 405b
 
 #### 3.3.2 List of Layers
 
-The model largely follows the [Llama 3.1 405B paper](https://arxiv.org/abs/2407.21783). The only difference is that we replace the paper's TikTokenizer with the Mixtral 8x22b tokenizer in this benchmark. Please refer to the [Model details section](https://github.com/mlcommons/training/tree/master/large_language_model_pretraining/nemo#model-details) from the reference for more details. 
+The model largely follows the paper titled [The Llama 3 Herd of Models](https://arxiv.org/abs/2407.21783).  
 
 #### 3.3.3 Model checkpoint
-In the benchmarking region, we resume training from Meta's official HuggingFace checkpoint. Please refer to the [instructions](https://github.com/mlcommons/training/tree/master/large_language_model_pretraining/nemo#checkpoint-download) from the reference to download the BF16 model checkpoint. 
 
-**NOTE**: Before you proceed, make sure that your current working directory is able to hold >1.5TB of data. 
-
-Assuming that you are running the download command under a given directory, with its location stored under `LOAD_CHECKPOINTS_PATH` environment variable. After the checkpoint is downloaded, you should be able to find a `405b` folder which holds a `context` and `weights` subfolder under the current directory: 
-
-```
-<LOAD_CHECKPOINTS_PATH>
-└── 405b
-    ├── context
-    │   ├── nemo_tokenizer
-    │   │   ├── special_tokens_map.json
-    │   │   ├── tokenizer_config.json
-    │   │   └── tokenizer.json
-    │   ├── io.json
-    │   └── model.yaml
-    └── weights
-        ├── __0_0.distcp
-        ├── __0_1.distcp
-        ├── .metadata
-        ├── common.pt
-        └── metadata.json
-```
-
-By default, when we run the container, we will mount `LOAD_CHECKPOINTS_PATH` to `/load_checkpoints` in the container. Thus, you should set `export LOAD_CHECKPOINT="/load_checkpoints/405b"` to ensure that the `405b` folder is accessed in the container. 
+The LLama3.1 8B is trained from scratch and is not using a checkpoint.
 
 ## 4. Launch training
 
@@ -106,16 +86,12 @@ Navigate to the directory where `run.sub` is stored.
 
 The launch command structure:
 ```bash
-export DATADIR="<desired/dataset/path>"
-export LOAD_CHECKPOINTS_PATH="</path/to/your/downloaded/checkpoint>"
-export LOAD_CHECKPOINT="/load_checkpoints/405b"
-export LOGDIR="</path/to/output/dir>" # set the place where the output logs will be saved
-export CONT=$CONT
-source config_GB200_128x4x144xtp4pp8cp2_cg.sh  # select config and source it
+export LOGDIR=</path/to/output/dir>  # set the place where the output logs will be saved
+export DATADIR=<as/set/above>
+export CONT=<as/set/above>
+source config_GB200_2x4x2xtp1pp1cp1_8b.sh  # select config and source it
 sbatch -N ${DGXNNODES} --time=${WALLTIME} run.sub  # you may be required to set --account and --partition here
 ```
-
-Replace `<desired/dataset/path>` and `</path/to/your/downloaded/checkpoint>` with your paths set up in Section 3.
 
 All configuration files follow the format `config_<SYSTEM_NAME>_<NODES>x<GPUS/NODE>x<BATCH/GPU>xtpXppYcpZ.sh`, where X represents tensor parallel, Y represents pipeline parallel, and Z represents context parallel.
 
@@ -125,13 +101,13 @@ All configuration files follow the format `config_<SYSTEM_NAME>_<NODES>x<GPUS/NO
 Log Perplexity
 
 ### Quality target
-5.6
+3.3
 
 ### Evaluation frequency
-Evaluate after every 46,080 sequences (=377.49B tokens)
+Evaluate after every 12,288 sequences (=100M tokens)
 
 ### Evaluation thoroughness
-Evaluation on the validation subset that consists of 5,760 sequences (=47.19B tokens).
+Evaluation on the validation subset that consists of 1024 sequences (=8.4M tokens).
 
 
 # 6. Additional notes
